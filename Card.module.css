@@ -759,11 +759,16 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  /* Opaque enough on its own (0.75 alpha) that backdrop-filter added nothing
+     visible here. backdrop-filter is very expensive to keep alive on an
+     element that sits inside a continuously rotating 3D face (.coverFront),
+     since the compositor has to resample the blur every single frame of
+     the cover-open animation instead of caching a static layer -- this was
+     the main source of the frame-by-frame stutter during the cover open. */
   background: rgba(10, 18, 32, 0.75);
   padding: 7px 18px;
   border-radius: 999px;
   border: 1px solid rgba(56, 189, 248, 0.35);
-  backdrop-filter: blur(8px);
 }
 
 .coverBack {
