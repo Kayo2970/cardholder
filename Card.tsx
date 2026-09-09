@@ -348,10 +348,16 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
           {/* 3D Flipping Leather Front Cover Leaf */}
           <div className={styles.coverLeaf}>
             
-            {/* Front Side: Dark Blue Leather + Deep Heat-Stamped Debossed Logo */}
+            {/* Front Side: True Physical Blind Debossed Leather Logo */}
             <div className={styles.coverFront}>
               <div className={styles.coverStitch} />
-              <img src={debossedLogoSrc} alt="LEADS Next Gen Centre" className={styles.debossedLeatherLogo} />
+              
+              <div className={styles.debossedLeatherMark} aria-label="LEADS Next Gen Centre RUAS">
+                <div className={styles.debossHighlightBevel} />
+                <div className={styles.debossShadowBevel} />
+                <div className={styles.debossCavity} />
+              </div>
+
               <div className={styles.coverPrompt}>Tap to Open &rarr;</div>
             </div>
 

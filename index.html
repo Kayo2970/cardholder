@@ -768,26 +768,90 @@
       box-shadow: 1px 0 0 rgba(255, 255, 255, 0.06);
     }
 
-    /* Deep Stamped Logo on Cover */
-    .debossed-leather-logo {
-      width: 220px;
-      height: auto;
-      max-height: 220px;
-      object-fit: contain;
-      filter: 
-        drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98))
-        drop-shadow(-1px -1.5px 1px rgba(255, 255, 255, 0.4))
-        drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.85));
-      transition: transform 0.4s ease, filter 0.4s ease;
+    /* ==========================================================================
+       TRUE PHYSICAL BLIND DEBOSSED LEATHER LOGO
+       - Uses exact alpha artwork of leads-logo-clean.png as a physical stamp mask
+       - Continues the exact dark-blue-leather texture seamlessly across the logo
+       - Subtle upper crevice shadow + subtle lower edge bevel highlight
+       - No black fill, no neon glow, no plastic/foil
+       ========================================================================== */
+    .debossed-leather-mark {
+      position: relative;
+      width: 225px;
+      height: 225px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      user-select: none;
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    .cover-front:hover .debossed-leather-logo {
-      transform: scale(1.03);
+    .cover-front:hover .debossed-leather-mark {
+      transform: scale(1.02);
+    }
+
+    /* Subtle light catching the bottom/opposite lip of the stamped cavity */
+    .deboss-highlight-bevel {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: translate(0px, 1.2px);
+      background-color: rgba(148, 215, 255, 0.35);
+      -webkit-mask-image: url('leads-logo-clean.png');
+      mask-image: url('leads-logo-clean.png');
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      pointer-events: none;
+    }
+
+    /* Dark recessed inner shadow where the stamp cuts into the upper leather */
+    .deboss-shadow-bevel {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: translate(0px, -1.2px);
+      background-color: rgba(0, 0, 0, 0.9);
+      -webkit-mask-image: url('leads-logo-clean.png');
+      mask-image: url('leads-logo-clean.png');
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      pointer-events: none;
+    }
+
+    /* Stamped leather cavity - identical leather grain seamlessly continuing through the deboss */
+    .deboss-cavity {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(145deg, rgba(2, 6, 16, 0.6) 0%, rgba(6, 14, 32, 0.35) 100%),
+        url('dark-blue-leather.jpg');
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: multiply;
+      -webkit-mask-image: url('leads-logo-clean.png');
+      mask-image: url('leads-logo-clean.png');
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
       filter: 
-        drop-shadow(2px 4px 3px rgba(0, 0, 0, 1))
-        drop-shadow(-1px -1.5px 1.5px rgba(255, 255, 255, 0.55))
-        drop-shadow(0 0 15px rgba(56, 189, 248, 0.3));
+        drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.8))
+        drop-shadow(0px -0.5px 0.5px rgba(255, 255, 255, 0.15));
     }
 
     .cover-prompt {
@@ -1204,11 +1268,15 @@
       <!-- 3D Flipping Dark Blue Leather Front Cover Leaf -->
       <div class="cover-leaf" id="coverLeaf">
         
-        <!-- Cover Front: Direct Deep Pressed Leather Logo -->
+        <!-- Cover Front: True Physical Blind Debossed Leather Logo -->
         <div class="cover-front">
           <div class="cover-stitch"></div>
           
-          <img src="leather-debossed-logo.png" alt="LEADS Next Gen Centre RUAS" class="debossed-leather-logo" />
+          <div class="debossed-leather-mark" aria-label="LEADS Next Gen Centre RUAS">
+            <div class="deboss-highlight-bevel"></div>
+            <div class="deboss-shadow-bevel"></div>
+            <div class="deboss-cavity"></div>
+          </div>
 
           <div class="cover-prompt">Tap to Open &rarr;</div>
         </div>
