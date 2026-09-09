@@ -675,7 +675,7 @@
    RESPONSIVENESS: MOBILE, TABLET, LAPTOP, DESKTOP
    ========================================================================== */
 
-/* Mobile Screen Optimization (< 680px) */
+/* Mobile Screen Optimization (< 680px) - Holder on Floor, Card Centered */
 @media (max-width: 680px) {
   .headerPanel {
     top: 14px;
@@ -691,9 +691,9 @@
   }
 
   .experienceStage {
-    height: 520px;
+    height: 580px;
     max-width: 100vw;
-    perspective: 1600px;
+    perspective: 1300px;
   }
 
   .holderWrap {
@@ -701,16 +701,48 @@
   }
 
   .entered {
-    transform: translateY(0) rotateX(4deg) scale(0.82);
+    transform: translateY(-5px) rotateX(8deg) rotateY(0deg) scale(0.85);
   }
 
-  /* translateX(50%) places spine at screen center, clamp scale fits both 180deg flaps in full view */
-  .opened {
-    transform: translateY(0) translateX(50%) rotateX(0deg) scale(clamp(0.48, 92vw / 650, 0.62));
-  }
-
+  /* On mobile when opened: Holder lays down flat on the floor at the bottom */
+  .opened,
   .cardExtracted {
-    transform: translateY(0) translateX(50%) rotateX(0deg) scale(clamp(0.48, 92vw / 650, 0.62));
+    transform: translateY(225px) translateZ(-50px) rotateX(68deg) rotateY(0deg) scale(0.74);
+  }
+
+  /* On mobile: Hide left flap so only pass card is hero */
+  .opened .coverLeaf {
+    transform: rotateY(-180deg) translateZ(-5px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.3, 1), opacity 0.5s ease;
+  }
+
+  /* Mobile Pass Card: Idle peeking when holder is on floor */
+  .opened:not(.cardExtracted):not(.cardExtracting):not(.cardTucking) .passCard {
+    transform: translateZ(12px) translateY(-60px) rotateX(-22deg);
+    animation: cardNudgeMobile 2.4s ease-in-out infinite;
+  }
+
+  /* Mobile Pass Card: Floating upright in absolute center of screen */
+  .cardExtracted:not(.cardExtracting):not(.cardTucking) .passCard {
+    transform: translateY(-310px) translateZ(200px) rotateX(-68deg) scale(1.18);
+    z-index: 100;
+    box-shadow:
+      0 45px 100px -10px rgba(0, 0, 0, 0.98),
+      0 25px 45px rgba(0, 0, 0, 0.75),
+      0 0 0 1px rgba(255, 255, 255, 0.95),
+      0 0 50px rgba(56, 189, 248, 0.35);
+  }
+
+  .cardExtracting .passCard {
+    animation: extractCardFluidMobile 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    z-index: 100;
+  }
+
+  .cardTucking .passCard {
+    animation: tuckCardFluidMobile 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    z-index: 100;
   }
 
   .actionsPanel {
@@ -729,6 +761,52 @@
   }
 }
 
+@keyframes cardNudgeMobile {
+  0%, 60%, 100% {
+    transform: translateZ(12px) translateY(-60px) rotateX(-22deg);
+  }
+  75% {
+    transform: translateZ(16px) translateY(-78px) rotateX(-26deg);
+  }
+  85% {
+    transform: translateZ(12px) translateY(-60px) rotateX(-22deg);
+  }
+}
+
+@keyframes extractCardFluidMobile {
+  0% {
+    transform: translateZ(12px) translateY(-60px) rotateX(-22deg) scale(1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
+  }
+  50% {
+    transform: translateZ(110px) translateY(-190px) rotateX(-45deg) scale(1.1);
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.9);
+  }
+  100% {
+    transform: translateY(-310px) translateZ(200px) rotateX(-68deg) scale(1.18);
+    box-shadow:
+      0 45px 100px -10px rgba(0, 0, 0, 0.98),
+      0 25px 45px rgba(0, 0, 0, 0.75),
+      0 0 0 1px rgba(255, 255, 255, 0.95),
+      0 0 50px rgba(56, 189, 248, 0.35);
+  }
+}
+
+@keyframes tuckCardFluidMobile {
+  0% {
+    transform: translateY(-310px) translateZ(200px) rotateX(-68deg) scale(1.18);
+    box-shadow: 0 45px 100px -10px rgba(0, 0, 0, 0.98), 0 25px 45px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.95);
+  }
+  50% {
+    transform: translateZ(110px) translateY(-190px) rotateX(-45deg) scale(1.1);
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.9);
+  }
+  100% {
+    transform: translateZ(12px) translateY(-60px) rotateX(-22deg) scale(1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
+  }
+}
+
 /* Extra Small / Short Mobile Screens (< 700px height) */
 @media (max-height: 700px) and (max-width: 680px) {
   .headerPanel {
@@ -736,19 +814,20 @@
   }
 
   .experienceStage {
-    height: 440px;
+    height: 480px;
   }
 
   .entered {
-    transform: translateY(0) scale(0.7);
+    transform: translateY(-8px) scale(0.72);
   }
 
-  .opened {
-    transform: translateY(0) translateX(50%) scale(clamp(0.44, 90vw / 650, 0.55));
-  }
-
+  .opened,
   .cardExtracted {
-    transform: translateY(0) translateX(50%) scale(clamp(0.44, 90vw / 650, 0.55));
+    transform: translateY(180px) translateZ(-40px) rotateX(65deg) scale(0.66);
+  }
+
+  .cardExtracted:not(.cardExtracting):not(.cardTucking) .passCard {
+    transform: translateY(-260px) translateZ(170px) rotateX(-65deg) scale(1.14);
   }
 
   .actionsPanel {
