@@ -7,7 +7,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background: radial-gradient(circle at 50% 45%, #151a2a 0%, #050608 100%);
+  background: radial-gradient(circle at 50% 45%, #ffffff 0%, #eaf4ff 45%, #cfe8ff 100%);
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   color: #fff;
   overflow: hidden;
@@ -107,9 +107,10 @@
   transform-style: preserve-3d;
   transform: translateY(120vh) scale(0.95);
   opacity: 0;
-  transition: transform 1.2s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 1.2s ease;
+  transition: transform 1.05s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.05s ease;
   cursor: pointer;
   overflow: visible;
+  will-change: transform, opacity;
 }
 
 .entered {
@@ -258,7 +259,7 @@
   z-index: 10;
   cursor: pointer;
   transform: translateZ(2px) translateY(0);
-  will-change: transform, box-shadow;
+  will-change: transform;
   background: transparent;
 }
 
@@ -272,7 +273,7 @@
     transform: translateZ(2px) translateY(-26px);
   }
   75% {
-    transform: translateZ(3px) translateY(-36px);
+    transform: translateZ(2.5px) translateY(-30px);
   }
   85% {
     transform: translateZ(2px) translateY(-26px);
@@ -280,7 +281,7 @@
 }
 
 .cardExtracting .passCard {
-  animation: extractCardFluid 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: extractCardFluid var(--card-extract-duration, 900ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
   z-index: 100;
 }
 
@@ -302,7 +303,7 @@
 }
 
 .cardTucking .passCard {
-  animation: tuckCardFluid 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: tuckCardFluid var(--card-tuck-duration, 800ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
   z-index: 100;
 }
 
@@ -588,48 +589,44 @@
 }
 
 .opened .coverLeaf {
-  animation: openCoverFromFront 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+  animation: openCoverFromFront var(--cover-open-duration, 1050ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform;
 }
 
 .closing .coverLeaf {
-  animation: closeCoverToFront 1.0s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+  animation: closeCoverToFront var(--cover-close-duration, 950ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform;
 }
 
+/* Transform-only: box-shadow is never animated here (kept static on the child
+   faces) so the browser can composite this purely on the GPU without repainting. */
 @keyframes openCoverFromFront {
   0% {
     transform: translateZ(16px) rotateY(0deg);
-    box-shadow: 12px 18px 45px rgba(0, 0, 0, 0.85);
   }
   38% {
     transform: translateZ(80px) rotateY(-75deg);
-    box-shadow: 35px 45px 85px rgba(0, 0, 0, 0.95);
   }
   72% {
     transform: translateZ(50px) rotateY(-145deg);
-    box-shadow: -15px 30px 60px rgba(0, 0, 0, 0.7);
   }
   100% {
     transform: translateZ(4px) rotateY(-180deg);
-    box-shadow: -10px 20px 45px rgba(0, 0, 0, 0.6);
   }
 }
 
 @keyframes closeCoverToFront {
   0% {
     transform: translateZ(4px) rotateY(-180deg);
-    box-shadow: -10px 20px 45px rgba(0, 0, 0, 0.6);
   }
   38% {
     transform: translateZ(50px) rotateY(-145deg);
-    box-shadow: -15px 30px 60px rgba(0, 0, 0, 0.7);
   }
   72% {
     transform: translateZ(80px) rotateY(-75deg);
-    box-shadow: 35px 45px 85px rgba(0, 0, 0, 0.95);
   }
   100% {
     transform: translateZ(16px) rotateY(0deg);
-    box-shadow: 12px 18px 45px rgba(0, 0, 0, 0.85);
   }
 }
 
@@ -690,64 +687,65 @@
   transform: scale(1.02);
 }
 
-.debossHighlightBevel {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transform: translate(0px, 1.2px);
-  background-color: rgba(148, 215, 255, 0.35);
-  -webkit-mask-image: url('leads-logo-clean.png');
-  mask-image: url('leads-logo-clean.png');
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  pointer-events: none;
-}
-
-.debossShadowBevel {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transform: translate(0px, -1.2px);
-  background-color: rgba(0, 0, 0, 0.9);
-  -webkit-mask-image: url('leads-logo-clean.png');
-  mask-image: url('leads-logo-clean.png');
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  pointer-events: none;
-}
-
+/* Base recessed tint: no drop-shadow filter, no separate image layer.
+   Letting the real dark-blue-leather background of .coverFront show through
+   this semi-transparent fill is what keeps the leather grain "continuing
+   through" the logo instead of looking like a printed/foil mark. */
 .debossCavity {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  background-image:
-    linear-gradient(145deg, rgba(2, 6, 16, 0.6) 0%, rgba(6, 14, 32, 0.35) 100%),
-    url('dark-blue-leather.jpg');
-  background-size: cover;
-  background-position: center;
-  background-blend-mode: multiply;
-  -webkit-mask-image: url('leads-logo-clean.png');
-  mask-image: url('leads-logo-clean.png');
+  background-color: rgba(3, 9, 22, 0.4);
+  -webkit-mask-image: url('leather-debossed-logo.png');
+  mask-image: url('leather-debossed-logo.png');
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-position: center;
   mask-position: center;
-  filter:
-    drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.8))
-    drop-shadow(0px -0.5px 0.5px rgba(255, 255, 255, 0.15));
+  pointer-events: none;
+}
+
+/* Recessed wall: darker blue, offset toward the lower/right so it reads as
+   the shadowed inner edge of the stamped cavity. */
+.debossShadowBevel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: translate(1.5px, 1.5px);
+  background-color: rgba(2, 6, 16, 0.55);
+  -webkit-mask-image: url('leather-debossed-logo.png');
+  mask-image: url('leather-debossed-logo.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  pointer-events: none;
+}
+
+/* Bevel highlight: subtle lighter blue, offset toward the upper/left so it
+   reads as light catching the raised lip of the indentation. */
+.debossHighlightBevel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: translate(-1.5px, -1.5px);
+  background-color: rgba(150, 205, 255, 0.28);
+  -webkit-mask-image: url('leather-debossed-logo.png');
+  mask-image: url('leather-debossed-logo.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  pointer-events: none;
 }
 
 .coverPrompt {
@@ -951,10 +949,6 @@
   .opened,
   .cardExtracted {
     transform: translateY(0) translateX(0) scale(0.82);
-  }
-
-  .opened .coverLeaf {
-    animation: openCoverFromFront 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
   }
 
   .actionsPanel {
