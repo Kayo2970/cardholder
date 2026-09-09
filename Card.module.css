@@ -672,8 +672,8 @@
 /* TRUE PHYSICAL BLIND DEBOSSED LEATHER LOGO */
 .debossedLeatherMark {
   position: relative;
-  width: 225px;
-  height: 225px;
+  width: 220px;
+  height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -686,58 +686,18 @@
   transform: scale(1.02);
 }
 
-/* Base recessed tint: no drop-shadow filter, no separate image layer.
-   Letting the real dark-blue-leather background of .coverFront show through
-   this semi-transparent fill is what keeps the leather grain "continuing
-   through" the logo instead of looking like a printed/foil mark. */
-.debossCavity {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(3, 9, 22, 0.4);
-  -webkit-mask-image: url('leather-debossed-logo.png');
-  mask-image: url('leather-debossed-logo.png');
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  pointer-events: none;
-}
-
-/* Recessed wall: darker blue, offset toward the lower/right so it reads as
-   the shadowed inner edge of the stamped cavity. */
-.debossShadowBevel {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transform: translate(1.5px, 1.5px);
-  background-color: rgba(2, 6, 16, 0.55);
-  -webkit-mask-image: url('leather-debossed-logo.png');
-  mask-image: url('leather-debossed-logo.png');
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  pointer-events: none;
-}
-
-/* Bevel highlight: subtle lighter blue, offset toward the upper/left so it
-   reads as light catching the raised lip of the indentation. */
+/* Lower Rim Highlight: Light catching the bottom & right bevel edges */
 .debossHighlightBevel {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  transform: translate(-1.5px, -1.5px);
-  background-color: rgba(150, 205, 255, 0.28);
-  -webkit-mask-image: url('leather-debossed-logo.png');
-  mask-image: url('leather-debossed-logo.png');
+  transform: translate(0px, 1.5px);
+  background-color: rgba(140, 210, 255, 0.55);
+  -webkit-mask: url(#leads-deboss-mask);
+  mask: url(#leads-deboss-mask);
+  -webkit-mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
+  mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
   -webkit-mask-size: contain;
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;
@@ -745,6 +705,55 @@
   -webkit-mask-position: center;
   mask-position: center;
   pointer-events: none;
+  filter: drop-shadow(0px 1px 1px rgba(180, 230, 255, 0.4));
+}
+
+/* Upper Crevice Shadow: Deep physical recess into the upper leather surface */
+.debossShadowBevel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: translate(0px, -1.5px);
+  background-color: rgba(0, 0, 0, 0.95);
+  -webkit-mask: url(#leads-deboss-mask);
+  mask: url(#leads-deboss-mask);
+  -webkit-mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
+  mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  pointer-events: none;
+}
+
+/* Stamped Leather Cavity: Natural leather grain continuing through the recessed logo */
+.debossCavity {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(145deg, rgba(2, 6, 16, 0.75) 0%, rgba(6, 16, 36, 0.45) 100%),
+    url('dark-blue-leather.jpg');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  -webkit-mask: url(#leads-deboss-mask);
+  mask: url(#leads-deboss-mask);
+  -webkit-mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
+  mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  filter:
+    drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.95))
+    drop-shadow(0px -1px 1px rgba(255, 255, 255, 0.25));
 }
 
 .coverPrompt {

@@ -779,13 +779,13 @@
        TRUE PHYSICAL BLIND DEBOSSED LEATHER LOGO
        - Uses exact alpha artwork of leads-logo-clean.png as a physical stamp mask
        - Continues the exact dark-blue-leather texture seamlessly across the logo
-       - Subtle upper crevice shadow + subtle lower edge bevel highlight
-       - No black fill, no neon glow, no plastic/foil
+       - Subtle upper crevice shadow + crisp lower edge bevel highlight
+       - Clear, rich visibility on dark leather with zero flat-black sticker look
        ========================================================================== */
     .debossed-leather-mark {
       position: relative;
-      width: 225px;
-      height: 225px;
+      width: 220px;
+      height: 220px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -798,58 +798,18 @@
       transform: scale(1.02);
     }
 
-    /* Base recessed tint: no drop-shadow filter, no separate image layer.
-       The real dark-blue-leather background of .cover-front shows through
-       this semi-transparent fill, so the leather grain "continues through"
-       the logo instead of looking like a printed/foil mark. */
-    .deboss-cavity {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(3, 9, 22, 0.4);
-      -webkit-mask-image: url('leather-debossed-logo.png');
-      mask-image: url('leather-debossed-logo.png');
-      -webkit-mask-size: contain;
-      mask-size: contain;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      mask-position: center;
-      pointer-events: none;
-    }
-
-    /* Recessed wall: darker blue, offset toward the lower/right so it reads
-       as the shadowed inner edge of the stamped cavity. */
-    .deboss-shadow-bevel {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      transform: translate(1.5px, 1.5px);
-      background-color: rgba(2, 6, 16, 0.55);
-      -webkit-mask-image: url('leather-debossed-logo.png');
-      mask-image: url('leather-debossed-logo.png');
-      -webkit-mask-size: contain;
-      mask-size: contain;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      mask-position: center;
-      pointer-events: none;
-    }
-
-    /* Bevel highlight: subtle lighter blue, offset toward the upper/left so
-       it reads as light catching the raised lip of the indentation. */
+    /* Lower Rim Highlight: Light catching the bottom & right bevel edges */
     .deboss-highlight-bevel {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      transform: translate(-1.5px, -1.5px);
-      background-color: rgba(150, 205, 255, 0.28);
-      -webkit-mask-image: url('leather-debossed-logo.png');
-      mask-image: url('leather-debossed-logo.png');
+      transform: translate(0px, 1.5px);
+      background-color: rgba(140, 210, 255, 0.55);
+      -webkit-mask: url(#leads-deboss-mask);
+      mask: url(#leads-deboss-mask);
+      -webkit-mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
+      mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
       -webkit-mask-size: contain;
       mask-size: contain;
       -webkit-mask-repeat: no-repeat;
@@ -857,6 +817,55 @@
       -webkit-mask-position: center;
       mask-position: center;
       pointer-events: none;
+      filter: drop-shadow(0px 1px 1px rgba(180, 230, 255, 0.4));
+    }
+
+    /* Upper Crevice Shadow: Deep physical recess into the upper leather surface */
+    .deboss-shadow-bevel {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: translate(0px, -1.5px);
+      background-color: rgba(0, 0, 0, 0.95);
+      -webkit-mask: url(#leads-deboss-mask);
+      mask: url(#leads-deboss-mask);
+      -webkit-mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
+      mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      pointer-events: none;
+    }
+
+    /* Stamped Leather Cavity: Natural leather grain continuing through the recessed logo */
+    .deboss-cavity {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(145deg, rgba(2, 6, 16, 0.75) 0%, rgba(6, 16, 36, 0.45) 100%),
+        url('dark-blue-leather.jpg');
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: multiply;
+      -webkit-mask: url(#leads-deboss-mask);
+      mask: url(#leads-deboss-mask);
+      -webkit-mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
+      mask-image: url(#leads-deboss-mask), url('leads-logo-clean.png');
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      filter: 
+        drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.95))
+        drop-shadow(0px -1px 1px rgba(255, 255, 255, 0.25));
     }
 
     .cover-prompt {
@@ -1163,6 +1172,15 @@
   </style>
 </head>
 <body>
+
+  <!-- Hidden SVG Mask Definition for Cross-Browser Blind Debossed Leather Mark -->
+  <svg width="0" height="0" style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+    <defs>
+      <mask id="leads-deboss-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+        <image href="leads-logo-clean.png" width="1" height="1" preserveAspectRatio="xMidYMid meet" />
+      </mask>
+    </defs>
+  </svg>
 
   <!-- Stage Status & Mobile Toggle Header -->
   <div class="header-panel">

@@ -239,6 +239,15 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
 
   return (
     <div className={styles.stageContainer}>
+      {/* Hidden SVG Mask Definition for Cross-Browser Blind Debossed Leather Mark */}
+      <svg width="0" height="0" style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }} aria-hidden="true">
+        <defs>
+          <mask id="leads-deboss-mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+            <image href="leads-logo-clean.png" width="1" height="1" preserveAspectRatio="xMidYMid meet" />
+          </mask>
+        </defs>
+      </svg>
+
       {/* Top Status Badge & Mobile Switcher */}
       <div className={styles.headerPanel}>
         <div className={styles.statusBadge}>
