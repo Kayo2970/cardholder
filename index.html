@@ -723,11 +723,7 @@
        RESPONSIVENESS: MOBILE, TABLET, LAPTOP, DESKTOP
        ========================================================================== */
     
-    /* ==========================================================================
-       RESPONSIVENESS: MOBILE, TABLET, LAPTOP, DESKTOP
-       ========================================================================== */
-    
-    /* Mobile Screen Optimization (< 680px) - Holder on Floor, Card Centered */
+    /* Mobile Screen Optimization (< 680px) - Realistic Tabletop Leather Holder */
     @media (max-width: 680px) {
       body {
         padding: 6px 0;
@@ -747,38 +743,38 @@
       .experience-stage {
         height: 580px;
         max-width: 100vw;
-        perspective: 1300px;
+        perspective: 1400px;
       }
       .holder-wrap {
-        transform: translateY(130vh) scale(0.74);
+        transform: translateY(120vh) scale(0.8);
       }
       .holder-wrap.entered {
-        transform: translateY(-5px) rotateX(8deg) rotateY(0deg) scale(0.85);
+        transform: translateY(0) rotateX(6deg) scale(0.84);
       }
       
-      /* On mobile when opened: Holder lays down flat on the floor at the bottom */
+      /* STEP 3: Holder settles flat on the tabletop at a natural elevated angle */
       .holder-wrap.opened,
       .holder-wrap.card-extracted {
-        transform: translateY(225px) translateZ(-50px) rotateX(68deg) rotateY(0deg) scale(0.74);
+        transform: translateY(175px) translateZ(-30px) rotateX(48deg) rotateY(0deg) scale(0.82);
       }
 
-      /* On mobile: Hide the left flap completely so it never cuts off and only the card is hero */
+      /* On mobile: cover opens 180deg flat onto the table beside the base */
       .holder-wrap.opened .cover-leaf {
-        transform: rotateY(-180deg) translateZ(-5px);
-        opacity: 0;
-        pointer-events: none;
-        transition: transform 2s cubic-bezier(0.25, 1, 0.3, 1), opacity 1.2s ease;
+        transform: rotateY(-180deg) translateZ(0);
+        opacity: 0.2;
+        transition: transform 2s cubic-bezier(0.25, 1, 0.3, 1), opacity 1.5s ease;
       }
 
-      /* Mobile Pass Card: Idle peeking flat when holder is on floor */
+      /* STEP 4: Card peeking ~5-8% from the pocket with subtle affordance */
       .holder-wrap.opened:not(.card-extracted):not(.card-extracting):not(.card-tucking) .pass-card {
-        transform: translateZ(20px) translateY(-70px) rotateX(-68deg) scale(1.04);
-        animation: card-nudge-mobile 2.4s ease-in-out infinite;
+        transform: translateZ(2px) translateY(-32px);
+        animation: card-peek-breath 3s ease-in-out infinite;
+        touch-action: none;
       }
 
-      /* Mobile Pass Card: Pulled out flat and positioned above pocket, closer to bottom */
+      /* STEP 6: Card fully extracted - rigid, front-facing, perfectly undistorted */
       .holder-wrap.card-extracted:not(.card-extracting):not(.card-tucking) .pass-card {
-        transform: translateY(-235px) translateZ(140px) rotateX(-68deg) scale(1.12);
+        transform: translateY(-285px) translateZ(85px) rotateX(-48deg) scale(1);
         z-index: 100;
         box-shadow: 
           0 35px 80px -10px rgba(0, 0, 0, 0.95),
@@ -788,12 +784,12 @@
       }
 
       .holder-wrap.card-extracting .pass-card {
-        animation: extractCardFluidMobile 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation: extractCardMobileSmooth 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         z-index: 100;
       }
 
       .holder-wrap.card-tucking .pass-card {
-        animation: tuckCardFluidMobile 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation: tuckCardMobileSmooth 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         z-index: 100;
       }
 
@@ -812,29 +808,26 @@
       }
     }
 
-    @keyframes card-nudge-mobile {
-      0%, 60%, 100% {
-        transform: translateZ(20px) translateY(-70px) rotateX(-68deg) scale(1.04);
-      }
-      75% {
-        transform: translateZ(25px) translateY(-90px) rotateX(-68deg) scale(1.05);
+    @keyframes card-peek-breath {
+      0%, 70%, 100% {
+        transform: translateZ(2px) translateY(-32px);
       }
       85% {
-        transform: translateZ(20px) translateY(-70px) rotateX(-68deg) scale(1.04);
+        transform: translateZ(4px) translateY(-40px);
       }
     }
 
-    @keyframes extractCardFluidMobile {
+    @keyframes extractCardMobileSmooth {
       0% {
-        transform: translateZ(20px) translateY(-70px) rotateX(-68deg) scale(1.04);
+        transform: translateZ(2px) translateY(-32px) rotateX(0deg) scale(1);
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
       }
       50% {
-        transform: translateZ(90px) translateY(-160px) rotateX(-68deg) scale(1.08);
+        transform: translateZ(50px) translateY(-160px) rotateX(-24deg) scale(1);
         box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
       100% {
-        transform: translateY(-235px) translateZ(140px) rotateX(-68deg) scale(1.12);
+        transform: translateY(-285px) translateZ(85px) rotateX(-48deg) scale(1);
         box-shadow: 
           0 35px 80px -10px rgba(0, 0, 0, 0.95),
           0 15px 35px rgba(0, 0, 0, 0.65),
@@ -843,17 +836,17 @@
       }
     }
 
-    @keyframes tuckCardFluidMobile {
+    @keyframes tuckCardMobileSmooth {
       0% {
-        transform: translateY(-235px) translateZ(140px) rotateX(-68deg) scale(1.12);
+        transform: translateY(-285px) translateZ(85px) rotateX(-48deg) scale(1);
         box-shadow: 0 35px 80px -10px rgba(0, 0, 0, 0.95), 0 15px 35px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.95);
       }
       50% {
-        transform: translateZ(90px) translateY(-160px) rotateX(-68deg) scale(1.08);
+        transform: translateZ(50px) translateY(-160px) rotateX(-24deg) scale(1);
         box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
       100% {
-        transform: translateZ(20px) translateY(-70px) rotateX(-68deg) scale(1.04);
+        transform: translateZ(2px) translateY(-32px) rotateX(0deg) scale(1);
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
       }
     }
@@ -1129,8 +1122,82 @@
       }
     }
 
+    let isDragging = false;
+    let startY = 0;
+    let currentDeltaY = 0;
+    let hasDragged = false;
+
+    function handlePointerDown(e) {
+      if (state !== 'opened' && state !== 'extracted') return;
+      if (isAnimatingCard) return;
+
+      isDragging = true;
+      hasDragged = false;
+      startY = e.clientY;
+      currentDeltaY = 0;
+      passCard.setPointerCapture(e.pointerId);
+    }
+
+    function handlePointerMove(e) {
+      if (!isDragging) return;
+      const deltaY = startY - e.clientY;
+
+      if (Math.abs(deltaY) > 6) {
+        hasDragged = true;
+      }
+
+      if (state === 'opened') {
+        // Dragging upward to pull card out
+        if (deltaY > 0) {
+          currentDeltaY = Math.min(deltaY, 260);
+          const isMobile = window.innerWidth <= 680;
+          if (isMobile) {
+            const progress = currentDeltaY / 260;
+            const yOffset = -32 - (progress * 253);
+            const zOffset = 2 + (progress * 83);
+            const rotX = -progress * 48;
+            passCard.style.transition = 'none';
+            passCard.style.transform = `translateY(${yOffset}px) translateZ(${zOffset}px) rotateX(${rotX}deg) scale(1)`;
+          } else {
+            const progress = currentDeltaY / 260;
+            const yOffset = -26 - (progress * 50);
+            const zOffset = 2 + (progress * 88);
+            passCard.style.transition = 'none';
+            passCard.style.transform = `translateZ(${zOffset}px) translateY(${yOffset}px) scale(${1 + progress * 0.03})`;
+          }
+        }
+      }
+    }
+
+    function handlePointerUp(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      passCard.releasePointerCapture(e.pointerId);
+      passCard.style.transition = '';
+
+      if (hasDragged) {
+        if (state === 'opened') {
+          if (currentDeltaY > 45) {
+            passCard.style.transform = '';
+            extractCard(e);
+          } else {
+            passCard.style.transform = '';
+          }
+        }
+      } else {
+        // Pure tap / click
+        passCard.style.transform = '';
+        extractCard(e);
+      }
+      currentDeltaY = 0;
+    }
+
     holderWrap.addEventListener('click', openHolder);
-    passCard.addEventListener('click', extractCard);
+    passCard.addEventListener('pointerdown', handlePointerDown);
+    passCard.addEventListener('pointermove', handlePointerMove);
+    passCard.addEventListener('pointerup', handlePointerUp);
+    passCard.addEventListener('pointercancel', handlePointerUp);
+
     replayBtn.addEventListener('click', () => {
       runEntrance();
     });

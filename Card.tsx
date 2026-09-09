@@ -23,6 +23,8 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
   walletShareUrl = 'https://api.walletwallet.dev/p/e1f116cc-3aa7-4cd9-8362-123ea660021f',
 }) => {
   const [stageState, setStageState] = useState<'init' | 'entered' | 'opened' | 'extracting' | 'extracted' | 'tucking'>('init');
+  const cardRef = React.useRef<HTMLDivElement>(null);
+  const dragInfo = React.useRef({ isDragging: false, startY: 0, currentDeltaY: 0, hasDragged: false });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -41,21 +43,83 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
     }
   };
 
-  const handleCardClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (stageState === 'extracting' || stageState === 'tucking') return;
-
+  const triggerExtract = () => {
     if (stageState === 'opened') {
       setStageState('extracting');
       setTimeout(() => {
         setStageState('extracted');
-      }, 850);
+      }, 750);
     } else if (stageState === 'extracted') {
       setStageState('tucking');
       setTimeout(() => {
         setStageState('opened');
-      }, 750);
+      }, 650);
     }
+  };
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (stageState !== 'opened' && stageState !== 'extracted') return;
+    if (stageState === 'extracting' || stageState === 'tucking') return;
+
+    dragInfo.current = {
+      isDragging: true,
+      startY: e.clientY,
+      currentDeltaY: 0,
+      hasDragged: false,
+    };
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragInfo.current.isDragging) return;
+    const deltaY = dragInfo.current.startY - e.clientY;
+
+    if (Math.abs(deltaY) > 6) {
+      dragInfo.current.hasDragged = true;
+    }
+
+    if (stageState === 'opened' && cardRef.current) {
+      if (deltaY > 0) {
+        dragInfo.current.currentDeltaY = Math.min(deltaY, 260);
+        const isMobile = window.innerWidth <= 680;
+        if (isMobile) {
+          const progress = dragInfo.current.currentDeltaY / 260;
+          const yOffset = -32 - progress * 253;
+          const zOffset = 2 + progress * 83;
+          const rotX = -progress * 48;
+          cardRef.current.style.transition = 'none';
+          cardRef.current.style.transform = `translateY(${yOffset}px) translateZ(${zOffset}px) rotateX(${rotX}deg) scale(1)`;
+        } else {
+          const progress = dragInfo.current.currentDeltaY / 260;
+          const yOffset = -26 - progress * 50;
+          const zOffset = 2 + progress * 88;
+          cardRef.current.style.transition = 'none';
+          cardRef.current.style.transform = `translateZ(${zOffset}px) translateY(${yOffset}px) scale(${1 + progress * 0.03})`;
+        }
+      }
+    }
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragInfo.current.isDragging) return;
+    dragInfo.current.isDragging = false;
+    try {
+      (e.target as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch (_) {}
+
+    if (cardRef.current) {
+      cardRef.current.style.transition = '';
+      cardRef.current.style.transform = '';
+    }
+
+    if (dragInfo.current.hasDragged) {
+      if (stageState === 'opened' && dragInfo.current.currentDeltaY > 45) {
+        triggerExtract();
+      }
+    } else {
+      triggerExtract();
+    }
+    dragInfo.current.currentDeltaY = 0;
   };
 
   const handleReplay = () => {
@@ -106,7 +170,15 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
             <div className={styles.baseStitch} />
 
             {/* The Pass Card (Full Dimensions Matching Holder Base) */}
-            <div className={styles.passCard} onClick={handleCardClick} title="Click to pull card">
+            <div
+              ref={cardRef}
+              className={styles.passCard}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+              title="Click or drag to pull card"
+            >
               <div>
                 <div className={styles.passHeader}>
                   <img src={logoSrc} alt="LEADS Logo" className={styles.passMiniLogo} />
