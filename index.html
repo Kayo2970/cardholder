@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LEADS Next Gen Centre - Luxury Dark Blue Leather Card Holder</title>
+  <title>LEADS Next Gen Centre - Luxury Keycard Holder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -12,6 +12,8 @@
       --primary-cyan: #38bdf8;
       --primary-blue: #0284c7;
       --leather-stitch: rgba(148, 163, 184, 0.45);
+      --holder-blue: #0c1a30;
+      --holder-blue-light: #162a4d;
     }
 
     * {
@@ -84,7 +86,7 @@
     }
 
     /* 
-      LUXURY DARK BLUE LEATHER HOLDER
+      LUXURY LEATHER CARD HOLDER (CONTAINER)
     */
     .holder-wrap {
       position: relative;
@@ -111,7 +113,7 @@
     }
 
     /* 
-      GENUINE DARK BLUE LEATHER TEXTURE
+      DARK BLUE LEATHER TEXTURE
     */
     .leather-texture {
       background-image: 
@@ -127,76 +129,71 @@
     .holder-base {
       position: absolute;
       inset: 0;
-      border-radius: 26px;
+      border-radius: 24px;
       box-shadow: 
         0 35px 80px -15px rgba(0, 0, 0, 0.95),
         0 0 0 1px rgba(255, 255, 255, 0.08),
         inset 0 0 30px rgba(0, 0, 0, 0.85);
       transform-style: preserve-3d;
       overflow: hidden;
+      background-color: #0b1526;
     }
 
     /* Perimeter Saddle Stitching on Base */
     .base-stitch {
       position: absolute;
       inset: 8px;
-      border-radius: 20px;
+      border-radius: 18px;
       border: 1px dashed var(--leather-stitch);
       pointer-events: none;
       z-index: 5;
     }
 
     /* 
-      LOWER LEATHER CARD POCKET SLEEVE
+      CURVED DIE-CUT CARD POCKET SLEEVE (Matching Reference Mockup!)
+      - Sweeps in a smooth curved quarter-arc covering the card from bottom-right up to ~75%
     */
-    .pocket-sleeve {
+    .curved-pocket-sleeve {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 330px;
-      border-bottom-left-radius: 26px;
-      border-bottom-right-radius: 26px;
+      height: 380px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
       background-image: 
-        linear-gradient(175deg, rgba(20, 35, 65, 0.4) 0%, rgba(5, 9, 18, 0.75) 100%),
+        linear-gradient(145deg, rgba(20, 42, 80, 0.45) 0%, rgba(6, 12, 24, 0.8) 100%),
         url('dark-blue-leather.jpg');
       background-size: cover;
       background-position: center bottom;
+      /* Sweeping quarter-circle curve cut from top-right to lower-left */
+      border-top-left-radius: 220px;
       box-shadow: 
-        0 -14px 35px rgba(0, 0, 0, 0.85),
+        -5px -8px 25px rgba(0, 0, 0, 0.8),
         inset 0 1px 0 rgba(255, 255, 255, 0.25),
-        inset 0 -2px 15px rgba(0, 0, 0, 0.7);
-      z-index: 10;
+        inset -1px 0 15px rgba(0, 0, 0, 0.6);
+      z-index: 15;
       pointer-events: none;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 16px 20px;
-      border-top: 2px solid #060a14;
+      padding: 20px 22px;
+      border-top: 2px solid #060a14; /* Burnished leather edge */
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* Curved Cutout Notch at center top of pocket */
-    .pocket-sleeve::before {
-      content: '';
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90px;
-      height: 15px;
-      background: radial-gradient(ellipse at 50% 100%, transparent 45px, #0f1c33 46px);
-    }
-
-    /* Pocket Edge Stitching */
-    .pocket-stitch {
+    /* Curved Stitch Line following the pocket arc */
+    .curved-pocket-stitch {
       position: absolute;
       inset: 8px;
-      border-radius: 18px;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      border-top-left-radius: 210px;
       border: 1px dashed var(--leather-stitch);
       pointer-events: none;
     }
 
-    .pocket-label {
+    .pocket-footer-content {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -204,7 +201,7 @@
       z-index: 2;
     }
 
-    .pocket-brand {
+    .pocket-brand-label {
       display: flex;
       align-items: center;
       gap: 6px;
@@ -242,12 +239,13 @@
 
     /* 
       THE DIGITAL WALLET PASS (BHAWEN MAROO)
+      - Tucked inside the curved sleeve
     */
     .pass-card {
       position: absolute;
-      top: 60px;
-      left: 14px;
-      right: 14px;
+      top: 50px;
+      left: 16px;
+      right: 16px;
       height: 380px;
       background: #ebf9ff;
       border-radius: 18px;
@@ -256,35 +254,36 @@
       box-shadow: 
         0 15px 35px rgba(0, 0, 0, 0.6),
         0 0 0 1px rgba(255, 255, 255, 0.85);
-      z-index: 20;
+      z-index: 10;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transform: translateZ(20px);
+      transform: translateZ(10px);
       transition: 
         transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
         top 0.8s cubic-bezier(0.22, 1, 0.36, 1),
         box-shadow 0.8s ease;
     }
 
+    /* Subtle vertical nudge when waiting to be extracted */
     .holder-wrap.opened:not(.card-extracted) .pass-card {
       animation: card-nudge 2.6s ease-in-out infinite;
     }
 
     @keyframes card-nudge {
       0%, 60%, 100% {
-        transform: translateZ(20px) translateY(0);
+        transform: translateZ(10px) translateY(0);
       }
       75% {
-        transform: translateZ(30px) translateY(-14px);
+        transform: translateZ(25px) translateY(-16px);
       }
       85% {
-        transform: translateZ(20px) translateY(0);
+        transform: translateZ(10px) translateY(0);
       }
     }
 
-    /* EXTRACTED / HERO POPPED FORWARD ON TOP OF FLAP */
+    /* EXTRACTED / HERO POPPED UP & FORWARD OVER THE POCKET */
     .holder-wrap.card-extracted {
       overflow: visible;
     }
@@ -399,7 +398,7 @@
     .cover-leaf {
       position: absolute;
       inset: 0;
-      border-radius: 26px;
+      border-radius: 24px;
       transform-origin: left center;
       transform-style: preserve-3d;
       transition: transform 0.85s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 0.85s ease;
@@ -414,15 +413,13 @@
     .cover-back {
       position: absolute;
       inset: 0;
-      border-radius: 26px;
+      border-radius: 24px;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       overflow: hidden;
     }
 
-    /* 
-      FRONT LEATHER COVER (No box around logo!)
-    */
+    /* FRONT LEATHER COVER */
     .cover-front {
       background-image: 
         linear-gradient(135deg, rgba(20, 36, 68, 0.3) 0%, rgba(4, 7, 14, 0.7) 100%),
@@ -445,7 +442,7 @@
     .cover-stitch {
       position: absolute;
       inset: 8px;
-      border-radius: 20px;
+      border-radius: 18px;
       border: 1px dashed var(--leather-stitch);
       pointer-events: none;
     }
@@ -461,9 +458,7 @@
       box-shadow: 1px 0 0 rgba(255, 255, 255, 0.06);
     }
 
-    /* 
-      DEEPLY PRESSED HEAT-STAMPED LOGO (NO CONTAINER BOX)
-    */
+    /* Deep Stamped Logo on Cover */
     .debossed-leather-logo {
       width: 220px;
       height: auto;
@@ -501,11 +496,10 @@
       border-radius: 999px;
       border: 1px solid rgba(56, 189, 248, 0.35);
       backdrop-filter: blur(8px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
     }
 
     /* 
-      COVER BACK (Interior Left Flap)
+      COVER BACK (Interior Left Flap - Executive Credentials Layout Matching Mockup)
     */
     .cover-back {
       background-image: 
@@ -517,9 +511,8 @@
       transform: rotateY(180deg);
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: space-between;
-      padding: 30px 24px;
+      padding: 26px 22px;
       box-shadow: 
         inset 0 0 0 1px rgba(255, 255, 255, 0.08),
         inset 15px 0 25px rgba(0, 0, 0, 0.85);
@@ -528,70 +521,91 @@
     .cover-back-stitch {
       position: absolute;
       inset: 8px;
-      border-radius: 20px;
+      border-radius: 18px;
       border: 1px dashed var(--leather-stitch);
       pointer-events: none;
     }
 
-    .cover-back-header {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--primary-cyan);
-      background: rgba(14, 25, 48, 0.65);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 5px 14px;
-      border-radius: 999px;
-      display: inline-block;
-      box-shadow: inset 1px 2px 4px rgba(0,0,0,0.6);
-    }
-
-    .cover-back-body {
+    .left-panel-header {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      text-align: center;
-      margin: auto 0;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 12px;
     }
 
-    .crest-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      background: rgba(14, 25, 48, 0.6);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--primary-cyan);
-      box-shadow: 
-        inset 2px 3px 6px rgba(0,0,0,0.8),
-        0 0 20px rgba(56, 189, 248, 0.25);
-    }
-
-    .welcome-main-title {
-      font-size: 17px;
+    .left-panel-title {
+      font-size: 15px;
       font-weight: 800;
       color: #ffffff;
-      line-height: 1.3;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+      line-height: 1.2;
     }
 
-    .welcome-main-sub {
-      font-size: 11.5px;
-      color: #cbd5e1;
-      line-height: 1.5;
-      font-weight: 500;
-    }
-
-    .cover-back-footer {
+    .left-panel-sub {
       font-size: 10px;
-      color: #94a3b8;
+      color: var(--primary-cyan);
       font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .left-badge-tag {
+      font-size: 8px;
+      font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* Form-like White Pill Bars Matching Reference Mockup */
+    .left-form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .form-slot {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .form-slot-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .form-slot-pill {
+      background: rgba(255, 255, 255, 0.95);
+      color: #0f172a;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .left-panel-footer {
+      font-size: 8.5px;
+      color: #94a3b8;
+      line-height: 1.4;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 10px;
+      text-align: center;
     }
 
     /* Actions Panel */
@@ -658,7 +672,7 @@
       <div class="holder-base leather-texture">
         <div class="base-stitch"></div>
 
-        <!-- The Pass Card (Brought forward on top with 3D drop shadow) -->
+        <!-- The Pass Card (Tucked into curved die-cut pocket) -->
         <div class="pass-card" id="passCard" title="Click to pull card">
           <div>
             <div class="pass-header">
@@ -704,16 +718,16 @@
           </div>
         </div>
 
-        <!-- Lower Leather Pocket Sleeve with Saddle Stitching -->
-        <div class="pocket-sleeve">
-          <div class="pocket-stitch"></div>
-          <div class="pocket-label">
-            <div class="pocket-brand">
+        <!-- Curved Die-Cut Leather Pocket Sleeve (Matching Reference Mockup!) -->
+        <div class="curved-pocket-sleeve">
+          <div class="curved-pocket-stitch"></div>
+          <div class="pocket-footer-content">
+            <div class="pocket-brand-label">
               <svg class="pocket-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
               </svg>
-              <span>Leather Card Holder</span>
+              <span>Card Holder</span>
             </div>
             <span class="tap-hint-pill">
               Tap Card &uarr;
@@ -735,27 +749,47 @@
           <div class="cover-prompt">Tap to Open &rarr;</div>
         </div>
 
-        <!-- Cover Back: Left Interior Flap with Welcome Message and Crest -->
+        <!-- Cover Back: Interior Left Flap with Executive Credentials Layout -->
         <div class="cover-back">
           <div class="cover-back-stitch"></div>
-          <div class="cover-back-header">Official Credentials</div>
           
-          <div class="cover-back-body">
-            <div class="crest-icon">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width:28px;height:28px;">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z" />
-              </svg>
-            </div>
+          <!-- Top Header -->
+          <div class="left-panel-header">
             <div>
-              <h2 class="welcome-main-title">Welcome to the Centre</h2>
-              <p class="welcome-main-sub">
-                <strong>LEADS Next Gen Centre</strong><br />
-                M. S. Ramaiah University of Applied Sciences
-              </p>
+              <div class="left-panel-title">LEADS Centre</div>
+              <div class="left-panel-sub">RUAS Executive Pass</div>
+            </div>
+            <span class="left-badge-tag">Official</span>
+          </div>
+
+          <!-- Rounded Pill Slots (Matching Mockup) -->
+          <div class="left-form-fields">
+            <div class="form-slot">
+              <span class="form-slot-label">Name / Nombre</span>
+              <div class="form-slot-pill">Bhawen Maroo</div>
+            </div>
+
+            <div class="form-slot">
+              <span class="form-slot-label">Designation / Rol</span>
+              <div class="form-slot-pill">Alumni & Executive Fellow</div>
+            </div>
+
+            <div class="form-slot">
+              <span class="form-slot-label">Phone / Teléfono</span>
+              <div class="form-slot-pill">+91 9608768647</div>
+            </div>
+
+            <div class="form-slot">
+              <span class="form-slot-label">Email / Correo</span>
+              <div class="form-slot-pill">bhawenmaroo@gmail.com</div>
             </div>
           </div>
 
-          <div class="cover-back-footer">ruas.ac.in/leads</div>
+          <!-- Bottom Footer Note -->
+          <div class="left-panel-footer">
+            M. S. Ramaiah University of Applied Sciences<br />
+            New BEL Road, MSR Nagar, Bengaluru - 560054
+          </div>
         </div>
 
       </div>

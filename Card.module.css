@@ -95,70 +95,65 @@
 .holderBase {
   position: absolute;
   inset: 0;
-  border-radius: 26px;
+  border-radius: 24px;
   box-shadow: 
     0 35px 80px -15px rgba(0, 0, 0, 0.95),
     0 0 0 1px rgba(255, 255, 255, 0.08),
     inset 0 0 30px rgba(0, 0, 0, 0.85);
   transform-style: preserve-3d;
   overflow: hidden;
+  background-color: #0b1526;
 }
 
 .baseStitch {
   position: absolute;
   inset: 8px;
-  border-radius: 20px;
+  border-radius: 18px;
   border: 1px dashed rgba(148, 163, 184, 0.45);
   pointer-events: none;
   z-index: 5;
 }
 
-.pocketSleeve {
+/* Curved Die-Cut Blue Leather Pocket Sleeve (Matching Reference Mockup) */
+.curvedPocketSleeve {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 330px;
-  border-bottom-left-radius: 26px;
-  border-bottom-right-radius: 26px;
+  height: 380px;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
   background-image: 
-    linear-gradient(175deg, rgba(20, 35, 65, 0.4) 0%, rgba(5, 9, 18, 0.75) 100%),
+    linear-gradient(145deg, rgba(20, 42, 80, 0.45) 0%, rgba(6, 12, 24, 0.8) 100%),
     url('dark-blue-leather.jpg');
   background-size: cover;
   background-position: center bottom;
+  border-top-left-radius: 220px;
   box-shadow: 
-    0 -14px 35px rgba(0, 0, 0, 0.85),
+    -5px -8px 25px rgba(0, 0, 0, 0.8),
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    inset 0 -2px 15px rgba(0, 0, 0, 0.7);
-  z-index: 10;
+    inset -1px 0 15px rgba(0, 0, 0, 0.6);
+  z-index: 15;
   pointer-events: none;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 16px 20px;
+  padding: 20px 22px;
   border-top: 2px solid #060a14;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.pocketSleeve::before {
-  content: '';
-  position: absolute;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90px;
-  height: 15px;
-  background: radial-gradient(ellipse at 50% 100%, transparent 45px, #0f1c33 46px);
-}
-
-.pocketStitch {
+.curvedPocketStitch {
   position: absolute;
   inset: 8px;
-  border-radius: 18px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border-top-left-radius: 210px;
   border: 1px dashed rgba(148, 163, 184, 0.45);
   pointer-events: none;
 }
 
-.pocketLabel {
+.pocketFooterContent {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -166,7 +161,7 @@
   z-index: 2;
 }
 
-.pocketBrand {
+.pocketBrandLabel {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -192,200 +187,22 @@
   padding: 3px 10px;
   border-radius: 999px;
   letter-spacing: 0.05em;
-}
-
-.coverLeaf {
-  position: absolute;
-  inset: 0;
-  border-radius: 26px;
-  transform-origin: left center;
-  transform-style: preserve-3d;
-  transition: transform 0.85s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 0.85s ease;
-  z-index: 30;
-}
-
-.opened .coverLeaf {
-  transform: rotateY(-145deg);
-}
-
-.coverFront,
-.coverBack {
-  position: absolute;
-  inset: 0;
-  border-radius: 26px;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  overflow: hidden;
-}
-
-.coverFront {
-  background-image: 
-    linear-gradient(135deg, rgba(20, 36, 68, 0.3) 0%, rgba(4, 7, 14, 0.7) 100%),
-    url('dark-blue-leather.jpg');
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 28px;
-  box-shadow: 
-    12px 18px 45px rgba(0, 0, 0, 0.85),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.15),
-    inset 0 0 25px rgba(0, 0, 0, 0.75);
-  transform: rotateY(0deg);
-  position: relative;
-}
-
-.coverStitch {
-  position: absolute;
-  inset: 8px;
-  border-radius: 20px;
-  border: 1px dashed rgba(148, 163, 184, 0.45);
-  pointer-events: none;
-}
-
-.coverFront::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 14px;
-  width: 3px;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
-  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.06);
-}
-
-.debossedLeatherLogo {
-  width: 220px;
-  height: auto;
-  max-height: 220px;
-  object-fit: contain;
-  filter: 
-    drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98))
-    drop-shadow(-1px -1.5px 1px rgba(255, 255, 255, 0.4))
-    drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.85));
-  transition: transform 0.4s ease, filter 0.4s ease;
-  cursor: pointer;
-}
-
-.coverFront:hover .debossedLeatherLogo {
-  transform: scale(1.03);
-  filter: 
-    drop-shadow(2px 4px 3px rgba(0, 0, 0, 1))
-    drop-shadow(-1px -1.5px 1.5px rgba(255, 255, 255, 0.55))
-    drop-shadow(0 0 15px rgba(56, 189, 248, 0.3));
-}
-
-.coverPrompt {
-  position: absolute;
-  bottom: 26px;
-  font-size: 10.5px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #38bdf8;
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(10, 18, 32, 0.7);
-  padding: 7px 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  backdrop-filter: blur(8px);
+  gap: 4px;
+  transition: opacity 0.3s;
 }
 
-.coverBack {
-  background-image: 
-    linear-gradient(150deg, rgba(14, 25, 48, 0.45) 0%, rgba(5, 8, 16, 0.75) 100%),
-    url('dark-blue-leather.jpg');
-  background-size: cover;
-  background-position: center;
-  color: #f8fafc;
-  transform: rotateY(180deg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 30px 24px;
-  box-shadow: 
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
-    inset 15px 0 25px rgba(0, 0, 0, 0.85);
+.cardExtracted .tapHintPill {
+  opacity: 0;
 }
 
-.coverBackStitch {
-  position: absolute;
-  inset: 8px;
-  border-radius: 20px;
-  border: 1px dashed rgba(148, 163, 184, 0.45);
-  pointer-events: none;
-}
-
-.coverBackHeader {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #38bdf8;
-  background: rgba(14, 25, 48, 0.65);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  padding: 5px 14px;
-  border-radius: 999px;
-  display: inline-block;
-  box-shadow: inset 1px 2px 4px rgba(0,0,0,0.6);
-}
-
-.coverBackBody {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  text-align: center;
-  margin: auto 0;
-}
-
-.crestIcon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  background: rgba(14, 25, 48, 0.6);
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #38bdf8;
-  box-shadow: 
-    inset 2px 3px 6px rgba(0,0,0,0.8),
-    0 0 20px rgba(56, 189, 248, 0.25);
-}
-
-.welcomeMainTitle {
-  font-size: 17px;
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1.3;
-}
-
-.welcomeMainSub {
-  font-size: 11.5px;
-  color: #cbd5e1;
-  line-height: 1.5;
-  font-weight: 500;
-}
-
-.coverBackFooter {
-  font-size: 10px;
-  color: #94a3b8;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
+/* The Card inside the holder */
 .passCard {
   position: absolute;
-  top: 60px;
-  left: 14px;
-  right: 14px;
+  top: 50px;
+  left: 16px;
+  right: 16px;
   height: 380px;
   background: #ebf9ff;
   border-radius: 18px;
@@ -394,12 +211,12 @@
   box-shadow: 
     0 15px 35px rgba(0, 0, 0, 0.6),
     0 0 0 1px rgba(255, 255, 255, 0.85);
-  z-index: 20;
+  z-index: 10;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transform: translateZ(20px);
+  transform: translateZ(10px);
   transition: 
     transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
     top 0.8s cubic-bezier(0.22, 1, 0.36, 1),
@@ -412,13 +229,13 @@
 
 @keyframes cardNudge {
   0%, 60%, 100% {
-    transform: translateZ(20px) translateY(0);
+    transform: translateZ(10px) translateY(0);
   }
   75% {
-    transform: translateZ(30px) translateY(-14px);
+    transform: translateZ(25px) translateY(-16px);
   }
   85% {
-    transform: translateZ(20px) translateY(0);
+    transform: translateZ(10px) translateY(0);
   }
 }
 
@@ -521,6 +338,216 @@
   font-weight: 600;
 }
 
+/* 3D Flipping Leather Front Cover Leaf */
+.coverLeaf {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 0.85s ease;
+  z-index: 30;
+}
+
+.opened .coverLeaf {
+  transform: rotateY(-145deg);
+}
+
+.coverFront,
+.coverBack {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+/* Cover Front: Dark Blue Leather + Deep Heat-Stamped Logo (NO BOX) */
+.coverFront {
+  background-image: 
+    linear-gradient(135deg, rgba(20, 36, 68, 0.3) 0%, rgba(4, 7, 14, 0.7) 100%),
+    url('dark-blue-leather.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  box-shadow: 
+    12px 18px 45px rgba(0, 0, 0, 0.85),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+    inset 0 0 25px rgba(0, 0, 0, 0.75);
+  transform: rotateY(0deg);
+  position: relative;
+}
+
+.coverStitch {
+  position: absolute;
+  inset: 8px;
+  border-radius: 18px;
+  border: 1px dashed rgba(148, 163, 184, 0.45);
+  pointer-events: none;
+}
+
+.coverFront::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 14px;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+.debossedLeatherLogo {
+  width: 220px;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+  filter: 
+    drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98))
+    drop-shadow(-1px -1.5px 1px rgba(255, 255, 255, 0.4))
+    drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.85));
+  transition: transform 0.4s ease, filter 0.4s ease;
+  cursor: pointer;
+}
+
+.coverFront:hover .debossedLeatherLogo {
+  transform: scale(1.03);
+  filter: 
+    drop-shadow(2px 4px 3px rgba(0, 0, 0, 1))
+    drop-shadow(-1px -1.5px 1.5px rgba(255, 255, 255, 0.55))
+    drop-shadow(0 0 15px rgba(56, 189, 248, 0.3));
+}
+
+.coverPrompt {
+  position: absolute;
+  bottom: 26px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(10, 18, 32, 0.7);
+  padding: 7px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+/* Interior Left Flap (Credentials & White Pill slots matching mockup) */
+.coverBack {
+  background-image: 
+    linear-gradient(150deg, rgba(14, 25, 48, 0.45) 0%, rgba(5, 8, 16, 0.75) 100%),
+    url('dark-blue-leather.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #f8fafc;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 26px 22px;
+  box-shadow: 
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 15px 0 25px rgba(0, 0, 0, 0.85);
+}
+
+.coverBackStitch {
+  position: absolute;
+  inset: 8px;
+  border-radius: 18px;
+  border: 1px dashed rgba(148, 163, 184, 0.45);
+  pointer-events: none;
+}
+
+.leftPanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 12px;
+}
+
+.leftPanelTitle {
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.leftPanelSub {
+  font-size: 10px;
+  color: #38bdf8;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.leftBadgeTag {
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.leftFormFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.formSlot {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.formSlotLabel {
+  font-size: 9px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.formSlotPill {
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leftPanelFooter {
+  font-size: 8.5px;
+  color: #94a3b8;
+  line-height: 1.4;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 10px;
+  text-align: center;
+}
+
 .actionsPanel {
   position: absolute;
   bottom: 25px;
@@ -562,4 +589,5 @@
 .btnWallet:hover {
   background: #111827;
   border-color: #38bdf8;
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
 }
