@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LEADS Next Gen Centre - Luxury Leather 3D Card Holder</title>
+  <title>LEADS Next Gen Centre - Luxury Dark Blue Leather Card Holder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -11,7 +11,8 @@
     :root {
       --primary-cyan: #38bdf8;
       --primary-blue: #0284c7;
-      --leather-stitch: rgba(226, 232, 240, 0.45);
+      --leather-stitch: rgba(148, 163, 184, 0.45);
+      --stitch-gold: rgba(226, 183, 116, 0.5);
     }
 
     * {
@@ -23,7 +24,7 @@
     body {
       min-height: 100vh;
       width: 100vw;
-      background: radial-gradient(circle at 50% 30%, #161b2a 0%, #060709 100%);
+      background: radial-gradient(circle at 50% 30%, #151a2a 0%, #050608 100%);
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       color: #fff;
       display: flex;
@@ -54,7 +55,7 @@
       align-items: center;
       gap: 10px;
       font-weight: 700;
-      background: rgba(21, 26, 39, 0.85);
+      background: rgba(15, 23, 42, 0.85);
       padding: 8px 22px;
       border-radius: 9999px;
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -84,7 +85,7 @@
     }
 
     /* 
-      LUXURY LEATHER CARD HOLDER (CONTAINER)
+      LUXURY DARK BLUE LEATHER HOLDER (CONTAINER)
     */
     .holder-wrap {
       position: relative;
@@ -111,15 +112,14 @@
     }
 
     /* 
-      SHARED LEATHER GRAIN TEXTURE STYLING
+      GENUINE DARK BLUE LEATHER TEXTURE
     */
     .leather-texture {
-      background-color: #12151f;
       background-image: 
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(145deg, #181d2c 0%, #0d1017 60%, #08090d 100%);
-      background-size: 4px 4px, 6px 6px, 100% 100%;
+        linear-gradient(135deg, rgba(14, 25, 48, 0.35) 0%, rgba(5, 8, 16, 0.65) 100%),
+        url('dark-blue-leather.jpg');
+      background-size: cover;
+      background-position: center;
     }
 
     /* 
@@ -132,7 +132,7 @@
       box-shadow: 
         0 35px 80px -15px rgba(0, 0, 0, 0.95),
         0 0 0 1px rgba(255, 255, 255, 0.08),
-        inset 0 0 30px rgba(0, 0, 0, 0.8);
+        inset 0 0 30px rgba(0, 0, 0, 0.85);
       transform-style: preserve-3d;
       overflow: hidden;
     }
@@ -158,23 +158,22 @@
       height: 330px;
       border-bottom-left-radius: 26px;
       border-bottom-right-radius: 26px;
-      background-color: #151a27;
       background-image: 
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(175deg, #1c2233 0%, #101420 70%, #090c13 100%);
-      background-size: 4px 4px, 6px 6px, 100% 100%;
+        linear-gradient(175deg, rgba(20, 35, 65, 0.4) 0%, rgba(5, 9, 18, 0.75) 100%),
+        url('dark-blue-leather.jpg');
+      background-size: cover;
+      background-position: center bottom;
       box-shadow: 
-        0 -14px 35px rgba(0, 0, 0, 0.8),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 -2px 15px rgba(0, 0, 0, 0.6);
+        0 -14px 35px rgba(0, 0, 0, 0.85),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25),
+        inset 0 -2px 15px rgba(0, 0, 0, 0.7);
       z-index: 10;
       pointer-events: none;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       padding: 16px 20px;
-      border-top: 2px solid #080a0f;
+      border-top: 2px solid #060a14; /* Burnished edge-paint */
     }
 
     /* Curved Cutout Notch at center top of pocket */
@@ -186,7 +185,7 @@
       transform: translateX(-50%);
       width: 90px;
       height: 15px;
-      background: radial-gradient(ellipse at 50% 100%, transparent 45px, #1c2233 46px);
+      background: radial-gradient(ellipse at 50% 100%, transparent 45px, #0f1c33 46px);
     }
 
     /* Pocket Edge Stitching */
@@ -271,7 +270,6 @@
         box-shadow 0.8s ease;
     }
 
-    /* Subtle vertical nudge when opened in pocket */
     .holder-wrap.opened:not(.card-extracted) .pass-card {
       animation: card-nudge 2.6s ease-in-out infinite;
     }
@@ -398,7 +396,7 @@
     }
 
     /* 
-      3D FLIPPING LEATHER FRONT COVER
+      3D FLIPPING DARK BLUE LEATHER FRONT COVER
     */
     .cover-leaf {
       position: absolute;
@@ -424,23 +422,24 @@
       overflow: hidden;
     }
 
-    /* FRONT LEATHER COVER */
+    /* 
+      FRONT DARK BLUE LEATHER COVER
+    */
     .cover-front {
-      background-color: #121622;
       background-image: 
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-        radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(145deg, #1b2131 0%, #111520 60%, #0a0c13 100%);
-      background-size: 4px 4px, 6px 6px, 100% 100%;
+        linear-gradient(135deg, rgba(20, 36, 68, 0.3) 0%, rgba(4, 7, 14, 0.7) 100%),
+        url('dark-blue-leather.jpg');
+      background-size: cover;
+      background-position: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 28px;
       box-shadow: 
-        12px 18px 45px rgba(0, 0, 0, 0.75),
+        12px 18px 45px rgba(0, 0, 0, 0.85),
         inset 0 0 0 1px rgba(255, 255, 255, 0.15),
-        inset 0 0 25px rgba(0, 0, 0, 0.7);
+        inset 0 0 25px rgba(0, 0, 0, 0.75);
       transform: rotateY(0deg);
     }
 
@@ -459,40 +458,49 @@
       left: 14px;
       width: 3px;
       height: 100%;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
-      box-shadow: 1px 0 0 rgba(255, 255, 255, 0.05);
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+      box-shadow: 1px 0 0 rgba(255, 255, 255, 0.06);
     }
 
-    .embossed-logo-container {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 16px 20px;
-      border-radius: 20px;
-      box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(255, 255, 255, 0.3),
-        inset 0 2px 4px rgba(255, 255, 255, 0.8),
-        inset 0 -2px 6px rgba(0, 0, 0, 0.15);
+    /* 
+      DEEPLY STAMPED / DEBOSSED LEATHER EMBLEM
+    */
+    .debossed-stamp-area {
+      position: relative;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      position: relative;
-      z-index: 2;
-    }
-
-    .cover-front:hover .embossed-logo-container {
-      transform: scale(1.03);
+      padding: 26px 20px;
+      border-radius: 24px;
+      background: rgba(5, 9, 18, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 
-        0 20px 45px rgba(0, 0, 0, 0.7),
-        0 0 30px rgba(56, 189, 248, 0.3);
+        inset 2px 4px 10px rgba(0, 0, 0, 0.9),
+        inset -1px -2px 6px rgba(255, 255, 255, 0.15),
+        0 2px 6px rgba(0, 0, 0, 0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
-    .cover-logo {
-      width: 190px;
+    .cover-front:hover .debossed-stamp-area {
+      transform: scale(1.02);
+      box-shadow: 
+        inset 2px 4px 12px rgba(0, 0, 0, 0.95),
+        inset -1px -2px 8px rgba(255, 255, 255, 0.2),
+        0 4px 15px rgba(0, 0, 0, 0.6);
+    }
+
+    /* The Deep Stamped Logo Graphics */
+    .stamped-logo-img {
+      width: 200px;
       height: auto;
-      max-height: 190px;
+      max-height: 200px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 10px rgba(2, 132, 199, 0.15));
+      filter: 
+        brightness(1.1)
+        contrast(1.2)
+        drop-shadow(1.5px 2.5px 1px rgba(0, 0, 0, 0.98))
+        drop-shadow(-0.8px -0.8px 0.5px rgba(255, 255, 255, 0.55));
     }
 
     .cover-prompt {
@@ -506,21 +514,23 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(56, 189, 248, 0.1);
+      background: rgba(10, 18, 32, 0.7);
       padding: 7px 18px;
       border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      border: 1px solid rgba(56, 189, 248, 0.35);
       backdrop-filter: blur(8px);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
     }
 
-    /* COVER BACK (Interior Left Flap with Welcome Message and Crest) */
+    /* 
+      COVER BACK (Interior Left Flap with Welcome Message and Crest)
+    */
     .cover-back {
-      background-color: #0e111a;
       background-image: 
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(150deg, #131724 0%, #0a0c13 100%);
-      background-size: 4px 4px, 100% 100%;
+        linear-gradient(150deg, rgba(14, 25, 48, 0.45) 0%, rgba(5, 8, 16, 0.75) 100%),
+        url('dark-blue-leather.jpg');
+      background-size: cover;
+      background-position: center;
       color: #f8fafc;
       transform: rotateY(180deg);
       display: flex;
@@ -530,7 +540,7 @@
       padding: 30px 24px;
       box-shadow: 
         inset 0 0 0 1px rgba(255, 255, 255, 0.08),
-        inset 15px 0 25px rgba(0, 0, 0, 0.7);
+        inset 15px 0 25px rgba(0, 0, 0, 0.85);
     }
 
     .cover-back-stitch {
@@ -547,11 +557,12 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--primary-cyan);
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.25);
+      background: rgba(14, 25, 48, 0.65);
+      border: 1px solid rgba(56, 189, 248, 0.3);
       padding: 5px 14px;
       border-radius: 999px;
       display: inline-block;
+      box-shadow: inset 1px 2px 4px rgba(0,0,0,0.6);
     }
 
     .cover-back-body {
@@ -567,13 +578,15 @@
       width: 56px;
       height: 56px;
       border-radius: 16px;
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      background: rgba(14, 25, 48, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--primary-cyan);
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+      box-shadow: 
+        inset 2px 3px 6px rgba(0,0,0,0.8),
+        0 0 20px rgba(56, 189, 248, 0.25);
     }
 
     .welcome-main-title {
@@ -581,18 +594,19 @@
       font-weight: 800;
       color: #ffffff;
       line-height: 1.3;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
     }
 
     .welcome-main-sub {
       font-size: 11.5px;
-      color: #94a3b8;
+      color: #cbd5e1;
       line-height: 1.5;
       font-weight: 500;
     }
 
     .cover-back-footer {
       font-size: 10px;
-      color: #64748b;
+      color: #94a3b8;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -612,7 +626,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(15, 23, 42, 0.75);
       color: #ffffff;
       text-decoration: none;
       font-size: 12px;
@@ -626,7 +640,7 @@
     }
 
     .btn-action:hover {
-      background: rgba(255, 255, 255, 0.16);
+      background: rgba(30, 41, 59, 0.9);
       transform: translateY(-2px);
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
       border-color: rgba(255, 255, 255, 0.3);
@@ -658,7 +672,7 @@
   <div class="experience-stage">
     <div class="holder-wrap" id="holderWrap">
       
-      <!-- Base Body & Inside Right Pocket (Leather Finished) -->
+      <!-- Base Body & Inside Right Pocket (Dark Blue Leather Finished) -->
       <div class="holder-base leather-texture">
         <div class="base-stitch"></div>
 
@@ -666,7 +680,7 @@
         <div class="pass-card" id="passCard" title="Click to pull card">
           <div>
             <div class="pass-header">
-              <img src="leads-logo.png" alt="LEADS Logo" class="pass-mini-logo" />
+              <img src="leads-logo-clean.png" alt="LEADS Logo" class="pass-mini-logo" />
             </div>
 
             <div class="pass-primary">
@@ -674,7 +688,7 @@
                 <div class="pass-label">Alumni Member</div>
                 <div class="pass-name">Bhawen Maroo</div>
               </div>
-              <img src="leads-logo.png" alt="LEADS RUAS" class="pass-side-logo" />
+              <img src="leads-logo-clean.png" alt="LEADS RUAS" class="pass-side-logo" />
             </div>
 
             <div class="pass-grid">
@@ -717,7 +731,7 @@
                 <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                 <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
               </svg>
-              <span>Card Holder</span>
+              <span>Leather Card Holder</span>
             </div>
             <span class="tap-hint-pill">
               Tap Card &uarr;
@@ -727,15 +741,15 @@
 
       </div>
 
-      <!-- 3D Flipping Leather Front Cover Leaf -->
+      <!-- 3D Flipping Dark Blue Leather Front Cover Leaf -->
       <div class="cover-leaf" id="coverLeaf">
         
-        <!-- Cover Front: Midnight Leather + Stitched Edge + Embossed Crest Logo -->
+        <!-- Cover Front: Deep Stamped Debossed Logo on Dark Blue Leather -->
         <div class="cover-front">
           <div class="cover-stitch"></div>
           
-          <div class="embossed-logo-container">
-            <img src="leads-logo.png" alt="LEADS Next Gen Centre RUAS" class="cover-logo" />
+          <div class="debossed-stamp-area">
+            <img src="leads-logo-clean.png" alt="LEADS Next Gen Centre RUAS" class="stamped-logo-img" />
           </div>
 
           <div class="cover-prompt">Tap to Open &rarr;</div>
