@@ -11,7 +11,6 @@
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   color: #fff;
   overflow: hidden;
-  perspective: 2000px;
   padding: 14px 16px;
   box-sizing: border-box;
 }
@@ -111,6 +110,7 @@
   cursor: pointer;
   overflow: visible;
   will-change: transform, opacity;
+  touch-action: none;
 }
 
 .entered {
@@ -261,6 +261,7 @@
   transform: translateZ(2px) translateY(0);
   will-change: transform;
   background: transparent;
+  touch-action: none;
 }
 
 .opened:not(.cardExtracted):not(.cardExtracting):not(.cardTucking) .passCard {
@@ -599,16 +600,17 @@
 }
 
 /* Transform-only: box-shadow is never animated here (kept static on the child
-   faces) so the browser can composite this purely on the GPU without repainting. */
+   faces) so the browser can composite this purely on the GPU without repainting.
+   The Z depth also moves monotonically (16px -> 4px, no up-then-down hump) --
+   a non-monotonic path made any dropped frame look like a jump-cut, since the
+   card would visibly reverse direction between two rendered frames. A single
+   smooth sweep degrades gracefully even if the device skips frames. */
 @keyframes openCoverFromFront {
   0% {
     transform: translateZ(16px) rotateY(0deg);
   }
-  38% {
-    transform: translateZ(80px) rotateY(-75deg);
-  }
-  72% {
-    transform: translateZ(50px) rotateY(-145deg);
+  50% {
+    transform: translateZ(10px) rotateY(-90deg);
   }
   100% {
     transform: translateZ(4px) rotateY(-180deg);
@@ -619,11 +621,8 @@
   0% {
     transform: translateZ(4px) rotateY(-180deg);
   }
-  38% {
-    transform: translateZ(50px) rotateY(-145deg);
-  }
-  72% {
-    transform: translateZ(80px) rotateY(-75deg);
+  50% {
+    transform: translateZ(10px) rotateY(-90deg);
   }
   100% {
     transform: translateZ(16px) rotateY(0deg);
@@ -997,5 +996,30 @@
   .holderWrap.opened,
   .holderWrap.cardExtracted {
     transform: translateY(0) translateX(150px) scale(0.92);
+  }
+}
+
+/* Wide desktop: the holder stays a fixed 320x510px box, which leaves a lot
+   of dead space on large screens. Scale it up -- translateX is scaled by
+   the same factor so the two "open book" leaves keep the same proportional
+   gap (translateX runs in un-scaled px since it composes after `scale` in
+   the transform list, so it has to be re-tuned per breakpoint). */
+@media (min-width: 1440px) {
+  .holderWrap.entered {
+    transform: translateY(0) scale(1.25);
+  }
+  .holderWrap.opened,
+  .holderWrap.cardExtracted {
+    transform: translateY(0) translateX(200px) scale(1.25);
+  }
+}
+
+@media (min-width: 1920px) {
+  .holderWrap.entered {
+    transform: translateY(0) scale(1.45);
+  }
+  .holderWrap.opened,
+  .holderWrap.cardExtracted {
+    transform: translateY(0) translateX(232px) scale(1.45);
   }
 }
