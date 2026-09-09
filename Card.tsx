@@ -19,7 +19,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
   memberRole = 'Alumni Member',
   phone = '+91 9608768647',
   email = 'bhawenmaroo@gmail.com',
-  qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fleadsnextgencentre.online%2Fcard%2Fbhawen-maroo&color=090D16',
+  qrUrl = './leads-qr-code.png',
   walletShareUrl = 'https://api.walletwallet.dev/p/e1f116cc-3aa7-4cd9-8362-123ea660021f',
 }) => {
   const [stageState, setStageState] = useState<'init' | 'entered' | 'opened' | 'extracting' | 'extracted' | 'tucking'>('init');

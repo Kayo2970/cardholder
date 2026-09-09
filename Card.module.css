@@ -95,7 +95,7 @@
 }
 
 .leatherTexture {
-  background-image: 
+  background-image:
     linear-gradient(135deg, rgba(14, 25, 48, 0.35) 0%, rgba(5, 8, 16, 0.65) 100%),
     url('dark-blue-leather.jpg');
   background-size: cover;
@@ -109,7 +109,7 @@
   width: 100%;
   height: 100%;
   border-radius: 26px;
-  box-shadow: 
+  box-shadow:
     0 35px 80px -15px rgba(0, 0, 0, 0.95),
     0 0 0 1px rgba(255, 255, 255, 0.08),
     inset 0 0 30px rgba(0, 0, 0, 0.85);
@@ -137,13 +137,13 @@
   height: 420px;
   border-bottom-left-radius: 26px;
   border-bottom-right-radius: 26px;
-  background-image: 
+  background-image:
     linear-gradient(145deg, rgba(20, 42, 80, 0.45) 0%, rgba(6, 12, 24, 0.8) 100%),
     url('dark-blue-leather.jpg');
   background-size: cover;
   background-position: center bottom;
   border-top-left-radius: 240px;
-  box-shadow: 
+  box-shadow:
     -5px -8px 25px rgba(0, 0, 0, 0.8),
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
     inset -1px 0 15px rgba(0, 0, 0, 0.6);
@@ -225,7 +225,7 @@
   border-radius: 20px;
   padding: 18px 18px 16px;
   color: #0f172a;
-  box-shadow: 
+  box-shadow:
     0 15px 35px rgba(0, 0, 0, 0.6),
     0 0 0 1px rgba(255, 255, 255, 0.85);
   z-index: 10;
@@ -248,12 +248,17 @@
 }
 
 @keyframes cardNudge {
-  0%, 60%, 100% {
+
+  0%,
+  60%,
+  100% {
     transform: translateZ(2px) translateY(0);
   }
+
   75% {
     transform: translateZ(3px) translateY(-12px);
   }
+
   85% {
     transform: translateZ(2px) translateY(0);
   }
@@ -268,7 +273,7 @@
 .cardExtracted:not(.cardExtracting):not(.cardTucking) .passCard {
   transform: translateZ(90px) translateY(0) scale(1.03);
   z-index: 100;
-  box-shadow: 
+  box-shadow:
     0 40px 80px -10px rgba(0, 0, 0, 0.95),
     0 20px 35px rgba(0, 0, 0, 0.6),
     0 0 0 1px rgba(255, 255, 255, 0.95),
@@ -280,13 +285,15 @@
     transform: translateZ(2px) translateY(0) scale(1);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
   }
+
   50% {
     transform: translateZ(45px) translateY(-80px) scale(1.02);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
   }
+
   100% {
     transform: translateZ(90px) translateY(0) scale(1.03);
-    box-shadow: 
+    box-shadow:
       0 40px 80px -10px rgba(0, 0, 0, 0.95),
       0 20px 35px rgba(0, 0, 0, 0.6),
       0 0 0 1px rgba(255, 255, 255, 0.95),
@@ -305,10 +312,12 @@
     transform: translateZ(90px) translateY(0) scale(1.03);
     box-shadow: 0 40px 80px -10px rgba(0, 0, 0, 0.95), 0 20px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.95);
   }
+
   50% {
     transform: translateZ(45px) translateY(-80px) scale(1.02);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
   }
+
   100% {
     transform: translateZ(2px) translateY(0) scale(1);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
@@ -380,7 +389,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
+  box-shadow:
     0 4px 14px -2px rgba(2, 132, 199, 0.15),
     0 0 0 1px rgba(226, 232, 240, 0.8);
   margin: 44px auto 14px;
@@ -439,7 +448,7 @@
 
 /* Cover Front: Dark Blue Leather + Deep Heat-Stamped Logo (NO BOX) */
 .coverFront {
-  background-image: 
+  background-image:
     linear-gradient(135deg, rgba(20, 36, 68, 0.3) 0%, rgba(4, 7, 14, 0.7) 100%),
     url('dark-blue-leather.jpg');
   background-size: cover;
@@ -449,7 +458,7 @@
   align-items: center;
   justify-content: center;
   padding: 30px;
-  box-shadow: 
+  box-shadow:
     12px 18px 45px rgba(0, 0, 0, 0.85),
     inset 0 0 0 1px rgba(255, 255, 255, 0.15),
     inset 0 0 25px rgba(0, 0, 0, 0.75);
@@ -481,20 +490,16 @@
   height: auto;
   max-height: 230px;
   object-fit: contain;
-  filter: 
-    drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98))
-    drop-shadow(-1px -1.5px 1px rgba(255, 255, 255, 0.4))
-    drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.85));
+  filter:
+    drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98)) drop-shadow(-1px -1.5px 1px rgba(255, 255, 255, 0.4)) drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.85));
   transition: transform 0.4s ease, filter 0.4s ease;
   cursor: pointer;
 }
 
 .coverFront:hover .debossedLeatherLogo {
   transform: scale(1.03);
-  filter: 
-    drop-shadow(2px 4px 3px rgba(0, 0, 0, 1))
-    drop-shadow(-1px -1.5px 1.5px rgba(255, 255, 255, 0.55))
-    drop-shadow(0 0 15px rgba(56, 189, 248, 0.3));
+  filter:
+    drop-shadow(2px 4px 3px rgba(0, 0, 0, 1)) drop-shadow(-1px -1.5px 1.5px rgba(255, 255, 255, 0.55)) drop-shadow(0 0 15px rgba(56, 189, 248, 0.3));
 }
 
 .coverPrompt {
@@ -517,7 +522,7 @@
 
 /* Interior Left Flap (Credentials & White Pill slots matching mockup) */
 .coverBack {
-  background-image: 
+  background-image:
     linear-gradient(150deg, rgba(14, 25, 48, 0.45) 0%, rgba(5, 8, 16, 0.75) 100%),
     url('dark-blue-leather.jpg');
   background-size: cover;
@@ -528,7 +533,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 28px 24px;
-  box-shadow: 
+  box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.08),
     inset 15px 0 25px rgba(0, 0, 0, 0.85);
 }
@@ -605,7 +610,7 @@
   border-radius: 999px;
   font-size: 11.5px;
   font-weight: 800;
-  box-shadow: 
+  box-shadow:
     0 2px 6px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
   white-space: nowrap;
@@ -677,28 +682,35 @@
     padding: 0 12px;
     width: 100%;
   }
+
   .statusBadge {
     font-size: 10px;
     letter-spacing: 0.08em;
     padding: 6px 14px;
     gap: 6px;
   }
+
   .experienceStage {
     height: 520px;
     perspective: 1500px;
   }
+
   .holderWrap {
     transform: translateY(130vh) scale(0.74);
   }
+
   .entered {
     transform: translateY(0) rotateX(4deg) scale(0.78);
   }
+
   .opened {
     transform: translateY(0) translateX(24%) rotateX(0deg) scale(0.72);
   }
+
   .cardExtracted {
     transform: translateY(0) translateX(24%) rotateX(0deg) scale(0.72);
   }
+
   .actionsPanel {
     bottom: 15px;
     gap: 8px;
@@ -706,6 +718,7 @@
     width: 88%;
     max-width: 320px;
   }
+
   .btnAction {
     width: 100%;
     justify-content: center;
@@ -719,21 +732,27 @@
   .headerPanel {
     top: 10px;
   }
+
   .experienceStage {
     height: 440px;
   }
+
   .entered {
     transform: translateY(0) scale(0.66);
   }
+
   .opened {
     transform: translateY(0) translateX(24%) scale(0.62);
   }
+
   .cardExtracted {
     transform: translateY(0) translateX(24%) scale(0.62);
   }
+
   .actionsPanel {
     bottom: 10px;
   }
+
   .btnAction {
     padding: 7px 12px;
     font-size: 10.5px;
@@ -747,12 +766,15 @@
     height: 600px;
     perspective: 1800px;
   }
+
   .entered {
     transform: translateY(0) rotateX(5deg) scale(0.92);
   }
+
   .opened {
     transform: translateY(0) translateX(14%) scale(0.88);
   }
+
   .cardExtracted {
     transform: translateY(0) translateX(14%) scale(0.88);
   }
