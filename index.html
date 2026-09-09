@@ -11,9 +11,7 @@
     :root {
       --primary-cyan: #38bdf8;
       --primary-blue: #0284c7;
-      --leather-dark: #0f1118;
-      --leather-navy: #151a27;
-      --leather-stitch: rgba(226, 232, 240, 0.4);
+      --leather-stitch: rgba(226, 232, 240, 0.45);
     }
 
     * {
@@ -25,7 +23,7 @@
     body {
       min-height: 100vh;
       width: 100vw;
-      background: radial-gradient(circle at 50% 25%, #181d2e 0%, #06070a 100%);
+      background: radial-gradient(circle at 50% 30%, #161b2a 0%, #060709 100%);
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       color: #fff;
       display: flex;
@@ -36,20 +34,6 @@
       perspective: 1800px;
     }
 
-    /* Ambient Warm & Cool Backlight */
-    .ambient-glow {
-      position: absolute;
-      width: 650px;
-      height: 650px;
-      background: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, rgba(56, 189, 248, 0.05) 50%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: 0;
-      filter: blur(50px);
-    }
-
     /* Top Status Header */
     .header-panel {
       position: absolute;
@@ -58,7 +42,7 @@
       flex-direction: column;
       align-items: center;
       gap: 12px;
-      z-index: 100;
+      z-index: 200;
     }
 
     .status-badge {
@@ -70,7 +54,7 @@
       align-items: center;
       gap: 10px;
       font-weight: 700;
-      background: rgba(21, 26, 39, 0.7);
+      background: rgba(21, 26, 39, 0.85);
       padding: 8px 22px;
       border-radius: 9999px;
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -83,13 +67,7 @@
       height: 8px;
       background-color: var(--primary-cyan);
       border-radius: 50%;
-      box-shadow: 0 0 12px var(--primary-cyan);
-      animation: pulse 1.8s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+      box-shadow: 0 0 10px var(--primary-cyan);
     }
 
     /* 3D Stage */
@@ -113,23 +91,23 @@
       width: 320px;
       height: 480px;
       transform-style: preserve-3d;
-      transform: translateY(120vh) rotateX(25deg);
+      transform: translateY(120vh);
       opacity: 0;
       transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
       cursor: pointer;
     }
 
     .holder-wrap.entered {
-      transform: translateY(0) rotateX(8deg) rotateY(-3deg);
+      transform: translateY(0) rotateX(6deg) rotateY(-2deg);
       opacity: 1;
     }
 
     .holder-wrap.opened {
-      transform: translateY(0) rotateX(3deg) rotateY(0deg);
+      transform: translateY(0) rotateX(2deg) rotateY(0deg);
     }
 
     .holder-wrap.card-extracted {
-      transform: translateY(20px) rotateX(2deg) scale(0.97);
+      transform: translateY(15px) rotateX(0deg) scale(0.98);
     }
 
     /* 
@@ -145,7 +123,7 @@
     }
 
     /* 
-      BASE BODY OF HOLDER (Interior Right Flap)
+      BASE BODY OF HOLDER (Right Flap)
     */
     .holder-base {
       position: absolute;
@@ -190,7 +168,7 @@
         0 -14px 35px rgba(0, 0, 0, 0.8),
         inset 0 1px 0 rgba(255, 255, 255, 0.2),
         inset 0 -2px 15px rgba(0, 0, 0, 0.6);
-      z-index: 20;
+      z-index: 10;
       pointer-events: none;
       display: flex;
       flex-direction: column;
@@ -266,6 +244,7 @@
 
     /* 
       THE DIGITAL WALLET PASS (BHAWEN MAROO)
+      - Brought forward with strong 3D Drop Shadow on top of holder flap
     */
     .pass-card {
       position: absolute;
@@ -278,47 +257,38 @@
       padding: 16px 16px 14px;
       color: #0f172a;
       box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.5),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.85);
-      z-index: 10;
+        0 15px 35px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.85);
+      z-index: 20;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transform-origin: center bottom;
+      transform: translateZ(20px);
       transition: 
         transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
         top 0.8s cubic-bezier(0.22, 1, 0.36, 1),
         box-shadow 0.8s ease;
     }
 
-    /* Wiggle Animation when opened */
+    /* Subtle vertical nudge when opened in pocket */
     .holder-wrap.opened:not(.card-extracted) .pass-card {
-      animation: card-wiggle 2.4s ease-in-out infinite;
+      animation: card-nudge 2.6s ease-in-out infinite;
     }
 
-    @keyframes card-wiggle {
+    @keyframes card-nudge {
       0%, 60%, 100% {
-        transform: translateY(0) rotate(0deg);
+        transform: translateZ(20px) translateY(0);
       }
-      65% {
-        transform: translateY(-10px) rotate(-1.5deg);
+      75% {
+        transform: translateZ(30px) translateY(-14px);
       }
-      72% {
-        transform: translateY(-15px) rotate(1.5deg);
-      }
-      78% {
-        transform: translateY(-6px) rotate(-1deg);
-      }
-      84% {
-        transform: translateY(-10px) rotate(0.8deg);
-      }
-      90% {
-        transform: translateY(0) rotate(0deg);
+      85% {
+        transform: translateZ(20px) translateY(0);
       }
     }
 
-    /* EXTRACTED / POPPED UP TO CENTER */
+    /* EXTRACTED / HERO POPPED FORWARD ON TOP OF FLAP */
     .holder-wrap.card-extracted {
       overflow: visible;
     }
@@ -328,23 +298,14 @@
     }
 
     .holder-wrap.card-extracted .pass-card {
-      top: -30px;
-      transform: translateY(-85px) scale(1.06) rotateX(-4deg);
-      z-index: 50;
+      top: -35px;
+      transform: translateZ(75px) translateY(-80px) scale(1.06);
+      z-index: 100;
       box-shadow: 
-        0 40px 80px -10px rgba(0, 0, 0, 0.9),
-        0 0 50px rgba(56, 189, 248, 0.4),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.9);
-      animation: hero-float 4s ease-in-out infinite alternate;
-    }
-
-    @keyframes hero-float {
-      0% {
-        transform: translateY(-85px) scale(1.06) rotateX(-4deg) rotateY(-2deg);
-      }
-      100% {
-        transform: translateY(-95px) scale(1.06) rotateX(-1deg) rotateY(2deg);
-      }
+        0 35px 70px -10px rgba(0, 0, 0, 0.9),
+        0 20px 30px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.95),
+        0 0 40px rgba(56, 189, 248, 0.25);
     }
 
     /* Pass Internal Content */
@@ -463,9 +424,7 @@
       overflow: hidden;
     }
 
-    /* 
-      FRONT LEATHER COVER
-    */
+    /* FRONT LEATHER COVER */
     .cover-front {
       background-color: #121622;
       background-image: 
@@ -485,7 +444,6 @@
       transform: rotateY(0deg);
     }
 
-    /* Saddle Stitching on Front Cover */
     .cover-stitch {
       position: absolute;
       inset: 8px;
@@ -494,7 +452,6 @@
       pointer-events: none;
     }
 
-    /* Spine crease line on left side */
     .cover-front::before {
       content: '';
       position: absolute;
@@ -506,7 +463,6 @@
       box-shadow: 1px 0 0 rgba(255, 255, 255, 0.05);
     }
 
-    /* Embossed Logo Badge on Leather */
     .embossed-logo-container {
       background: rgba(255, 255, 255, 0.95);
       padding: 16px 20px;
@@ -558,9 +514,7 @@
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     }
 
-    /* 
-      COVER BACK (Interior Left Flap with Welcome Message & Credentials)
-    */
+    /* COVER BACK (Interior Left Flap with Welcome Message and Crest) */
     .cover-back {
       background-color: #0e111a;
       background-image: 
@@ -692,8 +646,6 @@
 </head>
 <body>
 
-  <div class="ambient-glow"></div>
-
   <!-- Stage Status -->
   <div class="header-panel">
     <div class="status-badge" id="statusBadge">
@@ -710,7 +662,7 @@
       <div class="holder-base leather-texture">
         <div class="base-stitch"></div>
 
-        <!-- The Pass Card (Tucked cleanly in the leather slit without any overlapping top text) -->
+        <!-- The Pass Card (Brought forward on top with 3D drop shadow) -->
         <div class="pass-card" id="passCard" title="Click to pull card">
           <div>
             <div class="pass-header">
@@ -858,7 +810,7 @@
       if (state === 'entered') {
         holderWrap.classList.add('opened');
         state = 'opened';
-        statusText.textContent = 'Tap the shaking card to pull out';
+        statusText.textContent = 'Tap card to pull forward';
       } else if (state === 'opened') {
         holderWrap.classList.remove('opened');
         state = 'entered';
@@ -875,7 +827,7 @@
       } else if (state === 'extracted') {
         holderWrap.classList.remove('card-extracted');
         state = 'opened';
-        statusText.textContent = 'Tap card to pull out';
+        statusText.textContent = 'Tap card to pull forward';
       }
     }
 
