@@ -1,6 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Card.module.css';
 
+// Single source of truth for animation timing: these values are threaded
+// into the CSS via custom properties (see the inline style on holderWrap)
+// so the React state transition and the CSS animation duration can never
+// drift apart and cause a snap/jump mid-animation.
+const CARD_EXTRACT_DURATION = 900;
+const CARD_TUCK_DURATION = 800;
+const COVER_OPEN_DURATION = 1050;
+const COVER_CLOSE_DURATION = 950;
+
+// Preload the assets used during the very first animation so the browser
+// isn't decoding images mid-transition, which is what causes the initial
+// entrance/open to stutter while every later replay is smooth.
+const PRELOAD_ASSETS = [
+  './dark-blue-leather.jpg',
+  './leather-debossed-logo.png',
+  './leads-logo-clean.png',
+  './leads-qr-code.png',
+];
+
+if (typeof window !== 'undefined') {
+  PRELOAD_ASSETS.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+}
+
 export interface InteractiveCardHolderProps {
   logoSrc?: string;
   debossedLogoSrc?: string;
@@ -48,7 +74,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
       setStageState('closing');
       setTimeout(() => {
         setStageState('entered');
-      }, 1000);
+      }, COVER_CLOSE_DURATION);
     } else if (stageState === 'extracted') {
       triggerExtract();
     }
@@ -60,13 +86,13 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
       setStageState('extracting');
       setTimeout(() => {
         setStageState('extracted');
-      }, 750);
+      }, CARD_EXTRACT_DURATION);
     } else if (stageState === 'extracted') {
       setIsFlipped(false);
       setStageState('tucking');
       setTimeout(() => {
         setStageState('opened');
-      }, 650);
+      }, CARD_TUCK_DURATION);
     }
   };
 
@@ -217,7 +243,16 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
 
       {/* 3D Experience Stage */}
       <div className={styles.experienceStage}>
-        <div className={getHolderClasses()} onClick={handleHolderClick}>
+        <div
+          className={getHolderClasses()}
+          onClick={handleHolderClick}
+          style={{
+            '--card-extract-duration': `${CARD_EXTRACT_DURATION}ms`,
+            '--card-tuck-duration': `${CARD_TUCK_DURATION}ms`,
+            '--cover-open-duration': `${COVER_OPEN_DURATION}ms`,
+            '--cover-close-duration': `${COVER_CLOSE_DURATION}ms`,
+          } as React.CSSProperties}
+        >
           
           {/* Base Body & Inside Right Pocket (Dark Blue Leather Finished) */}
           <div className={`${styles.holderBase} ${styles.leatherTexture}`}>
@@ -353,9 +388,9 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
               <div className={styles.coverStitch} />
               
               <div className={styles.debossedLeatherMark} aria-label="LEADS Next Gen Centre RUAS">
-                <div className={styles.debossHighlightBevel} />
-                <div className={styles.debossShadowBevel} />
                 <div className={styles.debossCavity} />
+                <div className={styles.debossShadowBevel} />
+                <div className={styles.debossHighlightBevel} />
               </div>
 
               <div className={styles.coverPrompt}>Tap to Open &rarr;</div>
