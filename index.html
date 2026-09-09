@@ -275,8 +275,9 @@
       will-change: transform, box-shadow;
     }
 
-    /* Subtle vertical nudge ONLY when idle and opened */
+    /* Subtle vertical nudge ONLY when idle and opened (peeking 5% out) */
     .holder-wrap.opened:not(.card-extracted):not(.card-extracting):not(.card-tucking) .pass-card {
+      transform: translateZ(2px) translateY(-26px);
       animation: card-nudge 2.6s ease-in-out infinite;
     }
 
@@ -287,13 +288,13 @@
 
     @keyframes card-nudge {
       0%, 60%, 100% {
-        transform: translateZ(2px) translateY(0);
+        transform: translateZ(2px) translateY(-26px);
       }
       75% {
-        transform: translateZ(3px) translateY(-12px);
+        transform: translateZ(3px) translateY(-36px);
       }
       85% {
-        transform: translateZ(2px) translateY(0);
+        transform: translateZ(2px) translateY(-26px);
       }
     }
 
@@ -318,11 +319,11 @@
 
     @keyframes extractCardFluid {
       0% {
-        transform: translateZ(2px) translateY(0) scale(1);
+        transform: translateZ(2px) translateY(-26px) scale(1);
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
       }
       50% {
-        transform: translateZ(45px) translateY(-80px) scale(1.02);
+        transform: translateZ(45px) translateY(-100px) scale(1.02);
         box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
       100% {
@@ -349,11 +350,11 @@
         box-shadow: 0 40px 80px -10px rgba(0, 0, 0, 0.95), 0 20px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.95);
       }
       50% {
-        transform: translateZ(45px) translateY(-80px) scale(1.02);
+        transform: translateZ(45px) translateY(-100px) scale(1.02);
         box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
       100% {
-        transform: translateZ(2px) translateY(0) scale(1);
+        transform: translateZ(2px) translateY(-26px) scale(1);
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
       }
     }
@@ -451,7 +452,7 @@
 
     /* 
       3D FLIPPING DARK BLUE LEATHER FRONT COVER
-      - Covers 100% of the front so card is completely concealed when closed
+      - Flat 180-degree opening so credentials information is clearly visible
     */
     .cover-leaf {
       position: absolute;
@@ -468,7 +469,7 @@
     }
 
     .holder-wrap.opened .cover-leaf {
-      transform: rotateY(-145deg) translateZ(0);
+      transform: rotateY(-180deg) translateZ(0);
     }
 
     .cover-front,

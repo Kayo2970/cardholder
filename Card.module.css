@@ -237,8 +237,9 @@
   will-change: transform, box-shadow;
 }
 
-/* Nudge when opened and idle */
+/* Nudge when opened and idle (peeking 5% out) */
 .opened:not(.cardExtracted):not(.cardExtracting):not(.cardTucking) .passCard {
+  transform: translateZ(2px) translateY(-26px);
   animation: cardNudge 2.6s ease-in-out infinite;
 }
 
@@ -248,19 +249,18 @@
 }
 
 @keyframes cardNudge {
-
   0%,
   60%,
   100% {
-    transform: translateZ(2px) translateY(0);
+    transform: translateZ(2px) translateY(-26px);
   }
 
   75% {
-    transform: translateZ(3px) translateY(-12px);
+    transform: translateZ(3px) translateY(-36px);
   }
 
   85% {
-    transform: translateZ(2px) translateY(0);
+    transform: translateZ(2px) translateY(-26px);
   }
 }
 
@@ -282,12 +282,12 @@
 
 @keyframes extractCardFluid {
   0% {
-    transform: translateZ(2px) translateY(0) scale(1);
+    transform: translateZ(2px) translateY(-26px) scale(1);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
   }
 
   50% {
-    transform: translateZ(45px) translateY(-80px) scale(1.02);
+    transform: translateZ(45px) translateY(-100px) scale(1.02);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
   }
 
@@ -314,12 +314,12 @@
   }
 
   50% {
-    transform: translateZ(45px) translateY(-80px) scale(1.02);
+    transform: translateZ(45px) translateY(-100px) scale(1.02);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
   }
 
   100% {
-    transform: translateZ(2px) translateY(0) scale(1);
+    transform: translateZ(2px) translateY(-26px) scale(1);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
   }
 }
@@ -430,7 +430,7 @@
 }
 
 .opened .coverLeaf {
-  transform: rotateY(-145deg) translateZ(0);
+  transform: rotateY(-180deg) translateZ(0);
 }
 
 .coverFront,
