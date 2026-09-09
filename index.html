@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>LEADS Next Gen Centre - Luxury Keycard Holder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -23,32 +23,39 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
     body {
-      min-height: 100vh;
-      height: 100vh;
+      min-height: 100dvh;
+      height: 100dvh;
       width: 100vw;
       background: radial-gradient(circle at 50% 45%, #151a2a 0%, #050608 100%);
       font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       color: #fff;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      padding: 14px 16px;
       perspective: 2000px;
     }
 
-    /* Top Status Header */
+    /* Top Status Header - Static Flex Item (Never Overlapped) */
     .header-panel {
-      position: absolute;
-      top: 22px;
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       z-index: 200;
-      padding: 0 16px;
+      padding: 0;
       text-align: center;
+      flex-shrink: 0;
+      width: 100%;
     }
 
     .status-badge {
@@ -61,7 +68,7 @@
       gap: 10px;
       font-weight: 700;
       background: rgba(15, 23, 42, 0.85);
-      padding: 8px 22px;
+      padding: 7px 20px;
       border-radius: 9999px;
       border: 1px solid rgba(255, 255, 255, 0.12);
       backdrop-filter: blur(12px);
@@ -77,49 +84,88 @@
       flex-shrink: 0;
     }
 
-    /* 3D Stage - Perfectly Centered in Viewport */
+    /* Mobile Flap Switcher Pill (Visible only on mobile when wallet is opened) */
+    .mobile-flap-toggle {
+      display: none;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 3px;
+      border-radius: 999px;
+      gap: 4px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .flap-tab {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: inherit;
+      padding: 5px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .flap-tab.active {
+      background: var(--primary-cyan);
+      color: #0c1a30;
+      box-shadow: 0 2px 8px rgba(56, 189, 248, 0.4);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 3D Stage - Flexible Centered Zone (Never Overlaps Header or Footer) */
     .experience-stage {
       position: relative;
       width: 100%;
       max-width: 1100px;
-      height: 680px;
+      flex: 1;
+      min-height: 0;
       display: flex;
       align-items: center;
       justify-content: center;
       perspective: 2000px;
       z-index: 10;
-      margin: auto 0;
       overflow: visible;
+      margin: 0;
     }
 
     /* 
       LUXURY LEATHER CARD HOLDER (CONTAINER)
-      - Sleek elongated rectanglish proportions: 325px x 530px
+      - Straight upright proportions: 320px x 510px
+      - Zero rotateX tilt for straight, clean, undistorted lines!
     */
     .holder-wrap {
       position: relative;
-      width: 325px;
-      height: 530px;
+      width: 320px;
+      height: 510px;
       transform-style: preserve-3d;
-      transform: translateY(130vh) scale(0.95);
+      transform: translateY(120vh) scale(0.95);
       opacity: 0;
-      transition: transform 2.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.6s ease;
+      transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
       cursor: pointer;
       overflow: visible;
     }
 
     .holder-wrap.entered {
-      transform: translateY(0) translateZ(40px) rotateX(4deg) rotateY(-2deg) scale(1.06);
+      transform: translateY(0) translateZ(0) scale(1);
       opacity: 1;
     }
 
-    /* When opened on desktop: translateX balances the opened left flap so both flaps are centered */
+    /* When opened on desktop: translateX shifts right to center both open booklet flaps */
     .holder-wrap.opened {
-      transform: translateY(0) translateX(155px) translateZ(50px) rotateX(2deg) rotateY(0deg) scale(1.06);
+      transform: translateY(0) translateX(160px) translateZ(0) scale(1);
     }
 
     .holder-wrap.card-extracted {
-      transform: translateY(0) translateX(155px) translateZ(50px) rotateX(0deg) scale(1.06);
+      transform: translateY(0) translateX(160px) translateZ(0) scale(1);
     }
 
     /* 
@@ -144,7 +190,7 @@
       height: 100%;
       border-radius: 26px;
       box-shadow: 
-        0 35px 80px -15px rgba(0, 0, 0, 0.95),
+        0 30px 70px -15px rgba(0, 0, 0, 0.95),
         0 0 0 1px rgba(255, 255, 255, 0.08),
         inset 0 0 30px rgba(0, 0, 0, 0.85);
       transform-style: preserve-3d;
@@ -171,7 +217,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 420px;
+      height: 400px;
       border-bottom-left-radius: 26px;
       border-bottom-right-radius: 26px;
       background-image: 
@@ -179,7 +225,7 @@
         url('dark-blue-leather.jpg');
       background-size: cover;
       background-position: center bottom;
-      border-top-left-radius: 240px;
+      border-top-left-radius: 230px;
       box-shadow: 
         -5px -8px 25px rgba(0, 0, 0, 0.8),
         inset 0 1px 0 rgba(255, 255, 255, 0.25),
@@ -190,7 +236,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 22px 24px;
+      padding: 20px 22px;
       border-top: 2px solid #060a14;
       border-left: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -200,7 +246,7 @@
       inset: 8px;
       border-bottom-left-radius: 18px;
       border-bottom-right-radius: 18px;
-      border-top-left-radius: 230px;
+      border-top-left-radius: 220px;
       border: 1px dashed var(--leather-stitch);
       pointer-events: none;
     }
@@ -251,17 +297,17 @@
 
     /* 
       THE DIGITAL WALLET PASS (BHAWEN MAROO)
-      - Matches the full size & aspect ratio of the card holder!
+      - Perfectly straight, crisp, pristine Apple Wallet card
     */
     .pass-card {
       position: absolute;
-      top: 12px;
-      left: 12px;
-      right: 12px;
-      height: 465px;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      height: 450px;
       background: #ebf9ff;
       border-radius: 20px;
-      padding: 18px 18px 16px;
+      padding: 16px 16px 14px;
       color: #0f172a;
       box-shadow: 
         0 15px 35px rgba(0, 0, 0, 0.6),
@@ -275,7 +321,7 @@
       will-change: transform, box-shadow;
     }
 
-    /* Subtle vertical nudge ONLY when idle and opened (peeking 5% out) */
+    /* Subtle vertical nudge when idle in pocket */
     .holder-wrap.opened:not(.card-extracted):not(.card-extracting):not(.card-tucking) .pass-card {
       transform: translateZ(2px) translateY(-26px);
       animation: card-nudge 2.6s ease-in-out infinite;
@@ -299,8 +345,7 @@
     }
 
     /* 
-      FLUID ONE-STROKE CARD EXTRACTION (NO CHOPPY STOPS)
-      - Smoothly lifts, swoops forward in 3D, and rests in one unbroken fluid stroke!
+      FLUID CARD EXTRACTION - 100% Straight, No Slant / Skew!
     */
     .holder-wrap.card-extracting .pass-card {
       animation: extractCardFluid 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -323,7 +368,7 @@
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
       }
       50% {
-        transform: translateZ(45px) translateY(-100px) scale(1.02);
+        transform: translateZ(50px) translateY(-60px) scale(1.02);
         box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
       100% {
@@ -337,7 +382,7 @@
     }
 
     /* 
-      FLUID ONE-STROKE TUCK REVERSE
+      FLUID CARD TUCK REVERSE
     */
     .holder-wrap.card-tucking .pass-card {
       animation: tuckCardFluid 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -350,7 +395,7 @@
         box-shadow: 0 40px 80px -10px rgba(0, 0, 0, 0.95), 0 20px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.95);
       }
       50% {
-        transform: translateZ(45px) translateY(-100px) scale(1.02);
+        transform: translateZ(50px) translateY(-60px) scale(1.02);
         box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
       100% {
@@ -363,11 +408,11 @@
     .pass-header {
       display: flex;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .pass-mini-logo {
-      width: 34px;
+      width: 32px;
       height: auto;
       object-fit: contain;
     }
@@ -376,11 +421,11 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .pass-label {
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -389,14 +434,14 @@
     }
 
     .pass-name {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
       color: #090d16;
       line-height: 1.2;
     }
 
     .pass-side-logo {
-      width: 60px;
+      width: 54px;
       height: auto;
       object-fit: contain;
     }
@@ -404,12 +449,12 @@
     .pass-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
     .pass-val {
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
       color: #0f172a;
       white-space: nowrap;
@@ -417,20 +462,20 @@
       text-overflow: ellipsis;
     }
 
-    /* QR Code positioned centered with balanced proportions */
+    /* QR Code centered */
     .pass-qr-box {
       background: #ffffff;
-      border-radius: 16px;
-      padding: 10px;
+      border-radius: 14px;
+      padding: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: 
         0 4px 14px -2px rgba(2, 132, 199, 0.15),
         0 0 0 1px rgba(226, 232, 240, 0.8);
-      margin: 14px auto 12px;
-      width: 155px;
-      height: 155px;
+      margin: 10px auto;
+      width: 145px;
+      height: 145px;
     }
 
     .pass-qr-box img {
@@ -441,18 +486,18 @@
 
     .pass-card-footer {
       margin-top: auto;
-      padding-top: 10px;
+      padding-top: 8px;
       display: flex;
       flex-direction: column;
-      gap: 3px;
-      font-size: 9.5px;
+      gap: 2px;
+      font-size: 9px;
       color: #64748b;
       font-weight: 600;
     }
 
     /* 
       3D FLIPPING DARK BLUE LEATHER FRONT COVER
-      - Flat 180-degree opening so credentials information is clearly visible
+      - Opens out towards the viewer from the FRONT with realistic 3D arc
     */
     .cover-leaf {
       position: absolute;
@@ -463,13 +508,55 @@
       border-radius: 26px;
       transform-origin: left center;
       transform-style: preserve-3d;
-      transform: translateZ(15px) rotateY(0deg);
-      transition: transform 2s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 2s ease;
-      z-index: 30;
+      transform: translateZ(16px) rotateY(0deg);
+      z-index: 50;
+      pointer-events: auto;
     }
 
     .holder-wrap.opened .cover-leaf {
-      transform: rotateY(-180deg) translateZ(0);
+      animation: openCoverFromFront 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+    }
+
+    .holder-wrap.closing .cover-leaf {
+      animation: closeCoverToFront 1.0s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+    }
+
+    @keyframes openCoverFromFront {
+      0% {
+        transform: translateZ(16px) rotateY(0deg);
+        box-shadow: 12px 18px 45px rgba(0, 0, 0, 0.85);
+      }
+      38% {
+        transform: translateZ(80px) rotateY(-75deg);
+        box-shadow: 35px 45px 85px rgba(0, 0, 0, 0.95);
+      }
+      72% {
+        transform: translateZ(50px) rotateY(-145deg);
+        box-shadow: -15px 30px 60px rgba(0, 0, 0, 0.7);
+      }
+      100% {
+        transform: translateZ(4px) rotateY(-180deg);
+        box-shadow: -10px 20px 45px rgba(0, 0, 0, 0.6);
+      }
+    }
+
+    @keyframes closeCoverToFront {
+      0% {
+        transform: translateZ(4px) rotateY(-180deg);
+        box-shadow: -10px 20px 45px rgba(0, 0, 0, 0.6);
+      }
+      38% {
+        transform: translateZ(50px) rotateY(-145deg);
+        box-shadow: -15px 30px 60px rgba(0, 0, 0, 0.7);
+      }
+      72% {
+        transform: translateZ(80px) rotateY(-75deg);
+        box-shadow: 35px 45px 85px rgba(0, 0, 0, 0.95);
+      }
+      100% {
+        transform: translateZ(16px) rotateY(0deg);
+        box-shadow: 12px 18px 45px rgba(0, 0, 0, 0.85);
+      }
     }
 
     .cover-front,
@@ -496,7 +583,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 30px;
+      padding: 24px;
       box-shadow: 
         12px 18px 45px rgba(0, 0, 0, 0.85),
         inset 0 0 0 1px rgba(255, 255, 255, 0.15),
@@ -526,9 +613,9 @@
 
     /* Deep Stamped Logo on Cover */
     .debossed-leather-logo {
-      width: 230px;
+      width: 220px;
       height: auto;
-      max-height: 230px;
+      max-height: 220px;
       object-fit: contain;
       filter: 
         drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98))
@@ -548,7 +635,7 @@
 
     .cover-prompt {
       position: absolute;
-      bottom: 28px;
+      bottom: 24px;
       font-size: 10.5px;
       font-weight: 800;
       letter-spacing: 0.16em;
@@ -557,7 +644,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(10, 18, 32, 0.7);
+      background: rgba(10, 18, 32, 0.75);
       padding: 7px 18px;
       border-radius: 999px;
       border: 1px solid rgba(56, 189, 248, 0.35);
@@ -578,7 +665,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 28px 24px;
+      padding: 24px 20px;
       box-shadow: 
         inset 0 0 0 1px rgba(255, 255, 255, 0.08),
         inset 15px 0 25px rgba(0, 0, 0, 0.85);
@@ -597,53 +684,52 @@
       justify-content: space-between;
       align-items: flex-start;
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      padding-bottom: 14px;
+      padding-bottom: 12px;
     }
 
     .left-panel-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       color: #ffffff;
       line-height: 1.2;
     }
 
     .left-panel-sub {
-      font-size: 10px;
+      font-size: 9.5px;
       color: var(--primary-cyan);
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-top: 3px;
+      margin-top: 2px;
     }
 
     .left-badge-tag {
-      font-size: 8.5px;
+      font-size: 8px;
       font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #fff;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 3px 8px;
+      padding: 3px 7px;
       border-radius: 6px;
     }
 
-    /* Form-like White Pill Bars Matching Reference Mockup */
     .left-form-fields {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin: 16px 0;
+      gap: 10px;
+      margin: 12px 0;
     }
 
     .form-slot {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     .form-slot-label {
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 700;
       color: #94a3b8;
       text-transform: uppercase;
@@ -653,9 +739,9 @@
     .form-slot-pill {
       background: rgba(255, 255, 255, 0.95);
       color: #0f172a;
-      padding: 7px 14px;
+      padding: 6px 12px;
       border-radius: 999px;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 800;
       box-shadow: 
         0 2px 6px rgba(0, 0, 0, 0.3),
@@ -666,39 +752,45 @@
     }
 
     .left-panel-footer {
-      font-size: 9px;
+      font-size: 8.5px;
       color: #94a3b8;
-      line-height: 1.45;
+      line-height: 1.4;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 12px;
+      padding-top: 10px;
       text-align: center;
     }
 
-    /* Actions Panel */
+    /* Actions Panel - Static Bottom Flex Item (Never Overlaps) */
     .actions-panel {
-      position: absolute;
-      bottom: 22px;
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 14px;
-      z-index: 100;
+      justify-content: center;
+      gap: 12px;
+      z-index: 200;
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 480px;
+      padding-top: 4px;
     }
 
     .btn-action {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(15, 23, 42, 0.8);
       color: #ffffff;
       text-decoration: none;
       font-size: 12px;
       font-weight: 700;
-      padding: 10px 20px;
+      padding: 9px 18px;
       border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
       cursor: pointer;
       transition: all 0.3s ease;
+      font-family: inherit;
     }
 
     .btn-action:hover {
@@ -720,205 +812,116 @@
     }
 
     /* ==========================================================================
-       RESPONSIVENESS: MOBILE, TABLET, LAPTOP, DESKTOP
+       RESPONSIVENESS: MOBILE, TABLET, DESKTOP
        ========================================================================== */
-    
-    /* Mobile Screen Optimization (< 680px) - Realistic Tabletop Leather Holder */
-    @media (max-width: 680px) {
+
+    /* Mobile Devices (< 768px) */
+    @media (max-width: 767px) {
       body {
-        padding: 6px 0;
-        overflow: hidden;
+        padding: 10px 12px;
       }
-      .header-panel {
-        top: 14px;
-        padding: 0 10px;
-        width: 100%;
-      }
+
       .status-badge {
         font-size: 10px;
-        letter-spacing: 0.08em;
         padding: 6px 14px;
         gap: 6px;
       }
-      .experience-stage {
-        height: 580px;
-        max-width: 100vw;
-        perspective: 1400px;
-      }
-      .holder-wrap {
-        transform: translateY(120vh) scale(0.8);
-      }
-      .holder-wrap.entered {
-        transform: translateY(0) rotateX(6deg) scale(0.84);
-      }
-      
-      /* STEP 3: Holder settles flat on the tabletop at a natural elevated angle */
-      .holder-wrap.opened,
-      .holder-wrap.card-extracted {
-        transform: translateY(175px) translateZ(-30px) rotateX(48deg) rotateY(0deg) scale(0.82);
+
+      .mobile-flap-toggle {
+        display: none; /* controlled by JS when opened */
       }
 
-      /* On mobile: cover opens 180deg flat onto the table beside the base */
+      .mobile-flap-toggle.visible {
+        display: flex;
+      }
+
+      .holder-wrap {
+        transform: translateY(100vh) scale(0.82);
+      }
+
+      .holder-wrap.entered {
+        transform: translateY(0) scale(0.82);
+      }
+
+      /* Default opened view on mobile: Card in Pocket is centered */
+      .holder-wrap.opened,
+      .holder-wrap.card-extracted {
+        transform: translateY(0) translateX(0) scale(0.82);
+      }
+
+      /* When user switches to Credentials flap on mobile */
+      .holder-wrap.opened.show-creds,
+      .holder-wrap.card-extracted.show-creds {
+        transform: translateY(0) translateX(160px) scale(0.82);
+      }
+
       .holder-wrap.opened .cover-leaf {
         transform: rotateY(-180deg) translateZ(0);
-        opacity: 0.25;
-        transition: transform 2s cubic-bezier(0.25, 1, 0.3, 1), opacity 1.5s ease;
-      }
-
-      /* STEP 4: Card peeking ~5-8% from the pocket with subtle affordance */
-      .holder-wrap.opened:not(.card-extracted):not(.card-extracting):not(.card-tucking) .pass-card {
-        transform: translateZ(2px) translateY(-32px);
-        animation: card-peek-breath 3s ease-in-out infinite;
-        touch-action: none;
-      }
-
-      /* STEP 6: Card brought more forward in front of screen, holder fades out */
-      .holder-wrap.card-extracted:not(.card-extracting):not(.card-tucking) .pass-card {
-        transform: translateY(-235px) translateZ(180px) rotateX(-48deg) scale(1);
-        z-index: 1000;
-        box-shadow: 
-          0 45px 100px -10px rgba(0, 0, 0, 0.95),
-          0 20px 45px rgba(0, 0, 0, 0.75),
-          0 0 0 1px rgba(255, 255, 255, 0.95),
-          0 0 50px rgba(56, 189, 248, 0.35);
-      }
-
-      /* Card holder fades out when card is pulled in front */
-      .holder-wrap.card-extracted .curved-pocket-sleeve,
-      .holder-wrap.card-extracted .base-stitch,
-      .holder-wrap.card-extracted .cover-leaf {
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.6s cubic-bezier(0.25, 1, 0.3, 1);
-      }
-      .holder-wrap.card-extracted .holder-base {
-        background-color: transparent !important;
-        background-image: none !important;
-        box-shadow: none !important;
-        transition: all 0.6s cubic-bezier(0.25, 1, 0.3, 1);
-      }
-
-      .holder-wrap.card-extracting .pass-card {
-        animation: extractCardMobileSmooth 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        z-index: 1000;
-      }
-
-      .holder-wrap.card-tucking .pass-card {
-        animation: tuckCardMobileSmooth 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        z-index: 1000;
       }
 
       .actions-panel {
-        bottom: 14px;
         gap: 8px;
-        flex-direction: column;
-        width: 88%;
-        max-width: 320px;
-      }
-      .btn-action {
+        flex-direction: row;
         width: 100%;
-        justify-content: center;
-        padding: 9px 14px;
-        font-size: 11.5px;
+      }
+
+      .btn-action {
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 11px;
+        white-space: nowrap;
       }
     }
 
-    @keyframes card-peek-breath {
-      0%, 70%, 100% {
-        transform: translateZ(2px) translateY(-32px);
+    /* Short Mobile Screens (height < 700px) */
+    @media (max-height: 700px) and (max-width: 767px) {
+      .holder-wrap {
+        transform: translateY(100vh) scale(0.72);
       }
-      85% {
-        transform: translateZ(4px) translateY(-40px);
-      }
-    }
 
-    @keyframes extractCardMobileSmooth {
-      0% {
-        transform: translateZ(2px) translateY(-32px) rotateX(0deg) scale(1);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
-      }
-      40% {
-        transform: translateZ(70px) translateY(-145px) rotateX(-20deg) scale(1);
-        box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
-      }
-      100% {
-        transform: translateY(-235px) translateZ(180px) rotateX(-48deg) scale(1);
-        box-shadow: 
-          0 45px 100px -10px rgba(0, 0, 0, 0.95),
-          0 20px 45px rgba(0, 0, 0, 0.75),
-          0 0 0 1px rgba(255, 255, 255, 0.95),
-          0 0 50px rgba(56, 189, 248, 0.35);
-      }
-    }
-
-    @keyframes tuckCardMobileSmooth {
-      0% {
-        transform: translateY(-235px) translateZ(180px) rotateX(-48deg) scale(1);
-        box-shadow: 0 45px 100px -10px rgba(0, 0, 0, 0.95), 0 20px 45px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.95);
-      }
-      50% {
-        transform: translateZ(70px) translateY(-145px) rotateX(-20deg) scale(1);
-        box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
-      }
-      100% {
-        transform: translateZ(2px) translateY(-32px) rotateX(0deg) scale(1);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
-      }
-    }
-
-    /* Extra Small / Short Mobile Screens (< 700px height) */
-    @media (max-height: 700px) and (max-width: 680px) {
-      .header-panel {
-        top: 8px;
-      }
-      .experience-stage {
-        height: 480px;
-      }
       .holder-wrap.entered {
-        transform: translateY(-8px) scale(0.72);
+        transform: translateY(0) scale(0.72);
       }
+
       .holder-wrap.opened,
       .holder-wrap.card-extracted {
-        transform: translateY(180px) translateZ(-40px) rotateX(65deg) scale(0.66);
+        transform: translateY(0) translateX(0) scale(0.72);
       }
-      .holder-wrap.card-extracted:not(.card-extracting):not(.card-tucking) .pass-card {
-        transform: translateY(-260px) translateZ(170px) rotateX(-65deg) scale(1.14);
+
+      .holder-wrap.opened.show-creds,
+      .holder-wrap.card-extracted.show-creds {
+        transform: translateY(0) translateX(160px) scale(0.72);
       }
-      .actions-panel {
-        bottom: 8px;
-      }
+
       .btn-action {
-        padding: 7px 12px;
+        padding: 7px 10px;
         font-size: 10.5px;
       }
     }
 
-    /* Tablet Screen Optimization (681px to 1024px) */
-    @media (min-width: 681px) and (max-width: 1024px) {
-      .experience-stage {
-        max-width: 800px;
-        height: 600px;
-        perspective: 1800px;
-      }
+    /* Tablet & Medium Screens (768px to 1024px) */
+    @media (min-width: 768px) and (max-width: 1024px) {
       .holder-wrap.entered {
-        transform: translateY(0) rotateX(5deg) scale(0.95);
+        transform: translateY(0) scale(0.92);
       }
-      .holder-wrap.opened {
-        transform: translateY(0) translateX(50%) scale(0.82);
-      }
+      .holder-wrap.opened,
       .holder-wrap.card-extracted {
-        transform: translateY(0) translateX(50%) scale(0.82);
+        transform: translateY(0) translateX(150px) scale(0.92);
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Stage Status -->
+  <!-- Stage Status & Mobile Toggle Header -->
   <div class="header-panel">
     <div class="status-badge" id="statusBadge">
       <span class="status-dot"></span>
       <span id="statusText">Loading Leather Card Holder...</span>
+    </div>
+    <div class="mobile-flap-toggle" id="mobileFlapToggle">
+      <button class="flap-tab active" id="tabCard">💳 Keycard</button>
+      <button class="flap-tab" id="tabCreds">📋 Executive Info</button>
     </div>
   </div>
 
@@ -927,7 +930,7 @@
     <div class="holder-wrap" id="holderWrap">
       
       <!-- Base Body & Inside Right Pocket (Dark Blue Leather Finished) -->
-      <div class="holder-base leather-texture">
+      <div class="holder-base leather-texture" id="holderBase">
         <div class="base-stitch"></div>
 
         <!-- The Pass Card (Matches size of holder base, tucked inside) -->
@@ -976,7 +979,7 @@
           </div>
         </div>
 
-        <!-- Curved Die-Cut Leather Pocket Sleeve (Matching Reference Mockup!) -->
+        <!-- Curved Die-Cut Leather Pocket Sleeve -->
         <div class="curved-pocket-sleeve">
           <div class="curved-pocket-stitch"></div>
           <div class="pocket-footer-content">
@@ -998,7 +1001,7 @@
       <!-- 3D Flipping Dark Blue Leather Front Cover Leaf -->
       <div class="cover-leaf" id="coverLeaf">
         
-        <!-- Cover Front: Direct Deep Pressed Leather Logo (NO BOX) -->
+        <!-- Cover Front: Direct Deep Pressed Leather Logo -->
         <div class="cover-front">
           <div class="cover-stitch"></div>
           
@@ -1008,7 +1011,7 @@
         </div>
 
         <!-- Cover Back: Interior Left Flap with Executive Credentials Layout -->
-        <div class="cover-back">
+        <div class="cover-back" id="coverBack">
           <div class="cover-back-stitch"></div>
           
           <!-- Top Header -->
@@ -1020,7 +1023,7 @@
             <span class="left-badge-tag">Official</span>
           </div>
 
-          <!-- Rounded Pill Slots (Matching Mockup) -->
+          <!-- Rounded Pill Slots -->
           <div class="left-form-fields">
             <div class="form-slot">
               <span class="form-slot-label">Name / Nombre</span>
@@ -1055,7 +1058,7 @@
     </div>
   </div>
 
-  <!-- Bottom Controls -->
+  <!-- Bottom Controls (Never overlaps stage or holder) -->
   <div class="actions-panel">
     <button class="btn-action" id="replayBtn">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1077,14 +1080,24 @@
     const passCard = document.getElementById('passCard');
     const statusText = document.getElementById('statusText');
     const replayBtn = document.getElementById('replayBtn');
+    const mobileFlapToggle = document.getElementById('mobileFlapToggle');
+    const tabCard = document.getElementById('tabCard');
+    const tabCreds = document.getElementById('tabCreds');
+    const coverBack = document.getElementById('coverBack');
 
-    let state = 'init';
+    let state = 'init'; // 'init' | 'entered' | 'opened' | 'extracted'
     let isAnimatingCard = false;
+
+    let isTransitioningHolder = false;
 
     function runEntrance() {
       state = 'init';
       isAnimatingCard = false;
+      isTransitioningHolder = false;
       holderWrap.className = 'holder-wrap';
+      mobileFlapToggle.classList.remove('visible');
+      tabCard.classList.add('active');
+      tabCreds.classList.remove('active');
       statusText.textContent = 'Arriving into view...';
 
       setTimeout(() => {
@@ -1095,21 +1108,38 @@
     }
 
     function openHolder() {
-      if (isAnimatingCard) return;
+      if (isAnimatingCard || isTransitioningHolder) return;
 
       if (state === 'entered') {
+        isTransitioningHolder = true;
+        holderWrap.classList.remove('closing');
         holderWrap.classList.add('opened');
         state = 'opened';
         statusText.textContent = 'Tap card to pull forward';
+        if (window.innerWidth < 768) {
+          mobileFlapToggle.classList.add('visible');
+        }
+        setTimeout(() => {
+          isTransitioningHolder = false;
+        }, 1200);
       } else if (state === 'opened') {
-        holderWrap.classList.remove('opened');
-        state = 'entered';
-        statusText.textContent = 'Tap leather holder to open';
+        isTransitioningHolder = true;
+        holderWrap.classList.remove('opened', 'show-creds');
+        holderWrap.classList.add('closing');
+        mobileFlapToggle.classList.remove('visible');
+        statusText.textContent = 'Closing leather holder...';
+        
+        setTimeout(() => {
+          holderWrap.classList.remove('closing');
+          state = 'entered';
+          statusText.textContent = 'Tap leather holder to open';
+          isTransitioningHolder = false;
+        }, 1000);
       }
     }
 
     function extractCard(e) {
-      e.stopPropagation();
+      if (e) e.stopPropagation();
       if (isAnimatingCard) return;
 
       if (state === 'opened') {
@@ -1136,6 +1166,30 @@
         }, 750);
       }
     }
+
+    // Mobile Flap Switcher
+    tabCard.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tabCard.classList.add('active');
+      tabCreds.classList.remove('active');
+      holderWrap.classList.remove('show-creds');
+    });
+
+    tabCreds.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tabCreds.classList.add('active');
+      tabCard.classList.remove('active');
+      holderWrap.classList.add('show-creds');
+    });
+
+    coverBack.addEventListener('click', (e) => {
+      if (state === 'opened' && window.innerWidth < 768) {
+        e.stopPropagation();
+        tabCreds.classList.add('active');
+        tabCard.classList.remove('active');
+        holderWrap.classList.add('show-creds');
+      }
+    });
 
     let isDragging = false;
     let startY = 0;
@@ -1164,22 +1218,12 @@
       if (state === 'opened') {
         // Dragging upward to pull card out
         if (deltaY > 0) {
-          currentDeltaY = Math.min(deltaY, 260);
-          const isMobile = window.innerWidth <= 680;
-          if (isMobile) {
-            const progress = currentDeltaY / 260;
-            const yOffset = -32 - (progress * 253);
-            const zOffset = 2 + (progress * 83);
-            const rotX = -progress * 48;
-            passCard.style.transition = 'none';
-            passCard.style.transform = `translateY(${yOffset}px) translateZ(${zOffset}px) rotateX(${rotX}deg) scale(1)`;
-          } else {
-            const progress = currentDeltaY / 260;
-            const yOffset = -26 - (progress * 50);
-            const zOffset = 2 + (progress * 88);
-            passCard.style.transition = 'none';
-            passCard.style.transform = `translateZ(${zOffset}px) translateY(${yOffset}px) scale(${1 + progress * 0.03})`;
-          }
+          currentDeltaY = Math.min(deltaY, 200);
+          const progress = currentDeltaY / 200;
+          const zOffset = 2 + (progress * 88);
+          const yOffset = -26 * (1 - progress);
+          passCard.style.transition = 'none';
+          passCard.style.transform = `translateZ(${zOffset}px) translateY(${yOffset}px) scale(${1 + progress * 0.03})`;
         }
       }
     }
@@ -1192,7 +1236,7 @@
 
       if (hasDragged) {
         if (state === 'opened') {
-          if (currentDeltaY > 45) {
+          if (currentDeltaY > 40) {
             passCard.style.transform = '';
             extractCard(e);
           } else {
@@ -1207,7 +1251,11 @@
       currentDeltaY = 0;
     }
 
-    holderWrap.addEventListener('click', openHolder);
+    holderWrap.addEventListener('click', (e) => {
+      if (e.target.closest('#passCard') || e.target.closest('#coverBack')) return;
+      openHolder();
+    });
+
     passCard.addEventListener('pointerdown', handlePointerDown);
     passCard.addEventListener('pointermove', handlePointerMove);
     passCard.addEventListener('pointerup', handlePointerUp);
@@ -1215,6 +1263,15 @@
 
     replayBtn.addEventListener('click', () => {
       runEntrance();
+    });
+
+    window.addEventListener('resize', () => {
+      if (state === 'opened' && window.innerWidth < 768) {
+        mobileFlapToggle.classList.add('visible');
+      } else {
+        mobileFlapToggle.classList.remove('visible');
+        holderWrap.classList.remove('show-creds');
+      }
     });
 
     window.addEventListener('DOMContentLoaded', () => {

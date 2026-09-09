@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './Card.module.css';
 
 export interface InteractiveCardHolderProps {
@@ -22,9 +22,10 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
   qrUrl = './leads-qr-code.png',
   walletShareUrl = 'https://api.walletwallet.dev/p/e1f116cc-3aa7-4cd9-8362-123ea660021f',
 }) => {
-  const [stageState, setStageState] = useState<'init' | 'entered' | 'opened' | 'extracting' | 'extracted' | 'tucking'>('init');
-  const cardRef = React.useRef<HTMLDivElement>(null);
-  const dragInfo = React.useRef({ isDragging: false, startY: 0, currentDeltaY: 0, hasDragged: false });
+  const [stageState, setStageState] = useState<'init' | 'entered' | 'opened' | 'extracting' | 'extracted' | 'tucking' | 'closing'>('init');
+  const [activeTab, setActiveTab] = useState<'card' | 'creds'>('card');
+  const cardRef = useRef<HTMLDivElement>(null);
+  const dragInfo = useRef({ isDragging: false, startY: 0, currentDeltaY: 0, hasDragged: false });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -33,13 +34,20 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
     return () => clearTimeout(timer);
   }, []);
 
-  const handleHolderClick = () => {
-    if (stageState === 'extracting' || stageState === 'tucking') return;
+  const handleHolderClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest(`.${styles.passCard}`) || (e.target as HTMLElement).closest(`.${styles.coverBack}`)) {
+      return;
+    }
+    if (stageState === 'extracting' || stageState === 'tucking' || stageState === 'closing') return;
 
     if (stageState === 'entered') {
       setStageState('opened');
+      setActiveTab('card');
     } else if (stageState === 'opened') {
-      setStageState('entered');
+      setStageState('closing');
+      setTimeout(() => {
+        setStageState('entered');
+      }, 1000);
     }
   };
 
@@ -80,22 +88,12 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
 
     if (stageState === 'opened' && cardRef.current) {
       if (deltaY > 0) {
-        dragInfo.current.currentDeltaY = Math.min(deltaY, 260);
-        const isMobile = window.innerWidth <= 680;
-        if (isMobile) {
-          const progress = dragInfo.current.currentDeltaY / 260;
-          const yOffset = -32 - progress * 253;
-          const zOffset = 2 + progress * 83;
-          const rotX = -progress * 48;
-          cardRef.current.style.transition = 'none';
-          cardRef.current.style.transform = `translateY(${yOffset}px) translateZ(${zOffset}px) rotateX(${rotX}deg) scale(1)`;
-        } else {
-          const progress = dragInfo.current.currentDeltaY / 260;
-          const yOffset = -26 - progress * 50;
-          const zOffset = 2 + progress * 88;
-          cardRef.current.style.transition = 'none';
-          cardRef.current.style.transform = `translateZ(${zOffset}px) translateY(${yOffset}px) scale(${1 + progress * 0.03})`;
-        }
+        dragInfo.current.currentDeltaY = Math.min(deltaY, 200);
+        const progress = dragInfo.current.currentDeltaY / 200;
+        const zOffset = 2 + progress * 88;
+        const yOffset = -26 * (1 - progress);
+        cardRef.current.style.transition = 'none';
+        cardRef.current.style.transform = `translateZ(${zOffset}px) translateY(${yOffset}px) scale(${1 + progress * 0.03})`;
       }
     }
   };
@@ -113,7 +111,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
     }
 
     if (dragInfo.current.hasDragged) {
-      if (stageState === 'opened' && dragInfo.current.currentDeltaY > 45) {
+      if (stageState === 'opened' && dragInfo.current.currentDeltaY > 40) {
         triggerExtract();
       }
     } else {
@@ -124,6 +122,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
 
   const handleReplay = () => {
     setStageState('init');
+    setActiveTab('card');
     setTimeout(() => {
       setStageState('entered');
     }, 400);
@@ -142,12 +141,18 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
     } else if (stageState === 'tucking') {
       classes.push(styles.cardTucking);
     }
+    if (stageState === 'closing') {
+      classes.push(styles.closing);
+    }
+    if (activeTab === 'creds') {
+      classes.push(styles.showCreds);
+    }
     return classes.join(' ');
   };
 
   return (
     <div className={styles.stageContainer}>
-      {/* Top Status Badge */}
+      {/* Top Status Badge & Mobile Switcher */}
       <div className={styles.headerPanel}>
         <div className={styles.statusBadge}>
           <span className={styles.statusDot} />
@@ -159,6 +164,23 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
             {stageState === 'tucking' && 'Tucking card back...'}
           </span>
         </div>
+
+        {stageState === 'opened' && (
+          <div className={styles.mobileFlapToggle}>
+            <button
+              className={`${styles.flapTab} ${activeTab === 'card' ? styles.flapTabActive : ''}`}
+              onClick={() => setActiveTab('card')}
+            >
+              💳 Keycard
+            </button>
+            <button
+              className={`${styles.flapTab} ${activeTab === 'creds' ? styles.flapTabActive : ''}`}
+              onClick={() => setActiveTab('creds')}
+            >
+              📋 Executive Info
+            </button>
+          </div>
+        )}
       </div>
 
       {/* 3D Experience Stage */}
@@ -242,7 +264,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
           {/* 3D Flipping Leather Front Cover Leaf */}
           <div className={styles.coverLeaf}>
             
-            {/* Front Side: Dark Blue Leather + Deep Heat-Stamped Debossed Logo (NO BOX) */}
+            {/* Front Side: Dark Blue Leather + Deep Heat-Stamped Debossed Logo */}
             <div className={styles.coverFront}>
               <div className={styles.coverStitch} />
               <img src={debossedLogoSrc} alt="LEADS Next Gen Centre" className={styles.debossedLeatherLogo} />
@@ -250,7 +272,12 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
             </div>
 
             {/* Back Side: Interior Left Flap with Executive Credentials Layout */}
-            <div className={styles.coverBack}>
+            <div
+              className={styles.coverBack}
+              onClick={() => {
+                if (stageState === 'opened') setActiveTab('creds');
+              }}
+            >
               <div className={styles.coverBackStitch} />
               
               <div className={styles.leftPanelHeader}>

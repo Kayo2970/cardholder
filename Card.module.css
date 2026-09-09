@@ -1,29 +1,32 @@
 .stageContainer {
   position: relative;
-  min-height: 100vh;
-  height: 100vh;
-  width: 100%;
+  min-height: 100dvh;
+  height: 100dvh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
   background: radial-gradient(circle at 50% 45%, #151a2a 0%, #050608 100%);
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   color: #fff;
   overflow: hidden;
   perspective: 2000px;
+  padding: 14px 16px;
+  box-sizing: border-box;
 }
 
 .headerPanel {
-  position: absolute;
-  top: 22px;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   z-index: 200;
-  padding: 0 16px;
+  padding: 0;
   text-align: center;
+  flex-shrink: 0;
+  width: 100%;
 }
 
 .statusBadge {
@@ -36,7 +39,7 @@
   gap: 10px;
   font-weight: 700;
   background: rgba(15, 23, 42, 0.85);
-  padding: 8px 22px;
+  padding: 7px 20px;
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(12px);
@@ -52,46 +55,78 @@
   flex-shrink: 0;
 }
 
+.mobileFlapToggle {
+  display: none;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 3px;
+  border-radius: 999px;
+  gap: 4px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.flapTab {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 5px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.flapTabActive {
+  background: #38bdf8;
+  color: #0c1a30;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.4);
+}
+
 .experienceStage {
   position: relative;
   width: 100%;
   max-width: 1100px;
-  height: 680px;
+  flex: 1;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   perspective: 2000px;
   z-index: 10;
-  margin: auto 0;
+  margin: 0;
   overflow: visible;
 }
 
-/* 
-  Sleek Elongated Rectanglish Dimensions: 325px x 530px
-*/
 .holderWrap {
   position: relative;
-  width: 325px;
-  height: 530px;
+  width: 320px;
+  height: 510px;
   transform-style: preserve-3d;
-  transform: translateY(130vh) scale(0.95);
+  transform: translateY(120vh) scale(0.95);
   opacity: 0;
-  transition: transform 2.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.6s ease;
+  transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
   cursor: pointer;
   overflow: visible;
 }
 
 .entered {
-  transform: translateY(0) translateZ(40px) rotateX(4deg) rotateY(-2deg) scale(1.06);
+  transform: translateY(0) translateZ(0) scale(1);
   opacity: 1;
 }
 
 .opened {
-  transform: translateY(0) translateX(155px) translateZ(50px) rotateX(2deg) rotateY(0deg) scale(1.06);
+  transform: translateY(0) translateX(160px) translateZ(0) scale(1);
 }
 
 .cardExtracted {
-  transform: translateY(0) translateX(155px) translateZ(50px) rotateX(0deg) scale(1.06);
+  transform: translateY(0) translateX(160px) translateZ(0) scale(1);
+}
+
+.showCreds {
+  transform: translateY(0) translateX(160px) scale(0.82) !important;
 }
 
 .leatherTexture {
@@ -110,7 +145,7 @@
   height: 100%;
   border-radius: 26px;
   box-shadow:
-    0 35px 80px -15px rgba(0, 0, 0, 0.95),
+    0 30px 70px -15px rgba(0, 0, 0, 0.95),
     0 0 0 1px rgba(255, 255, 255, 0.08),
     inset 0 0 30px rgba(0, 0, 0, 0.85);
   transform-style: preserve-3d;
@@ -128,13 +163,12 @@
   z-index: 5;
 }
 
-/* Curved Die-Cut Blue Leather Pocket Sleeve */
 .curvedPocketSleeve {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 420px;
+  height: 400px;
   border-bottom-left-radius: 26px;
   border-bottom-right-radius: 26px;
   background-image:
@@ -142,7 +176,7 @@
     url('dark-blue-leather.jpg');
   background-size: cover;
   background-position: center bottom;
-  border-top-left-radius: 240px;
+  border-top-left-radius: 230px;
   box-shadow:
     -5px -8px 25px rgba(0, 0, 0, 0.8),
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
@@ -153,7 +187,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 22px 24px;
+  padding: 20px 22px;
   border-top: 2px solid #060a14;
   border-left: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -163,7 +197,7 @@
   inset: 8px;
   border-bottom-left-radius: 18px;
   border-bottom-right-radius: 18px;
-  border-top-left-radius: 230px;
+  border-top-left-radius: 220px;
   border: 1px dashed rgba(148, 163, 184, 0.45);
   pointer-events: none;
 }
@@ -212,18 +246,15 @@
   opacity: 0;
 }
 
-/* 
-  The Card - Matches the full dimensions and aspect ratio of the holder base
-*/
 .passCard {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  height: 465px;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  height: 450px;
   background: #ebf9ff;
   border-radius: 20px;
-  padding: 18px 18px 16px;
+  padding: 16px 16px 14px;
   color: #0f172a;
   box-shadow:
     0 15px 35px rgba(0, 0, 0, 0.6),
@@ -237,34 +268,23 @@
   will-change: transform, box-shadow;
 }
 
-/* Nudge when opened and idle (peeking 5% out) */
 .opened:not(.cardExtracted):not(.cardExtracting):not(.cardTucking) .passCard {
   transform: translateZ(2px) translateY(-26px);
   animation: cardNudge 2.6s ease-in-out infinite;
 }
 
-.holderWrap:not(.opened) .passCard {
-  animation: none;
-  transform: translateZ(2px) translateY(0);
-}
-
 @keyframes cardNudge {
-  0%,
-  60%,
-  100% {
+  0%, 60%, 100% {
     transform: translateZ(2px) translateY(-26px);
   }
-
   75% {
     transform: translateZ(3px) translateY(-36px);
   }
-
   85% {
     transform: translateZ(2px) translateY(-26px);
   }
 }
 
-/* Fluid Single-Stroke Card Extraction */
 .cardExtracting .passCard {
   animation: extractCardFluid 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   z-index: 100;
@@ -285,12 +305,10 @@
     transform: translateZ(2px) translateY(-26px) scale(1);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
   }
-
   50% {
-    transform: translateZ(45px) translateY(-100px) scale(1.02);
+    transform: translateZ(50px) translateY(-60px) scale(1.02);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
   }
-
   100% {
     transform: translateZ(90px) translateY(0) scale(1.03);
     box-shadow:
@@ -301,7 +319,6 @@
   }
 }
 
-/* Fluid Single-Stroke Reverse Tucking */
 .cardTucking .passCard {
   animation: tuckCardFluid 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   z-index: 100;
@@ -312,12 +329,10 @@
     transform: translateZ(90px) translateY(0) scale(1.03);
     box-shadow: 0 40px 80px -10px rgba(0, 0, 0, 0.95), 0 20px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.95);
   }
-
   50% {
-    transform: translateZ(45px) translateY(-100px) scale(1.02);
+    transform: translateZ(50px) translateY(-60px) scale(1.02);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
   }
-
   100% {
     transform: translateZ(2px) translateY(-26px) scale(1);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
@@ -327,11 +342,11 @@
 .passHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .passMiniLogo {
-  width: 34px;
+  width: 32px;
   height: auto;
   object-fit: contain;
 }
@@ -340,11 +355,11 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .passLabel {
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -353,14 +368,14 @@
 }
 
 .passName {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
   color: #090d16;
   line-height: 1.2;
 }
 
 .passSideLogo {
-  width: 60px;
+  width: 54px;
   height: auto;
   object-fit: contain;
 }
@@ -368,12 +383,12 @@
 .passGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .passVal {
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 700;
   color: #0f172a;
   white-space: nowrap;
@@ -381,20 +396,19 @@
   text-overflow: ellipsis;
 }
 
-/* QR Code positioned centered with balanced proportions */
 .passQrBox {
   background: #ffffff;
-  border-radius: 16px;
-  padding: 10px;
+  border-radius: 14px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow:
     0 4px 14px -2px rgba(2, 132, 199, 0.15),
     0 0 0 1px rgba(226, 232, 240, 0.8);
-  margin: 14px auto 12px;
-  width: 155px;
-  height: 155px;
+  margin: 10px auto;
+  width: 145px;
+  height: 145px;
 }
 
 .passQrBox img {
@@ -405,16 +419,15 @@
 
 .passCardFooter {
   margin-top: auto;
-  padding-top: 10px;
+  padding-top: 8px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  font-size: 9.5px;
+  gap: 2px;
+  font-size: 9px;
   color: #64748b;
   font-weight: 600;
 }
 
-/* 3D Flipping Leather Front Cover Leaf */
 .coverLeaf {
   position: absolute;
   top: 0;
@@ -424,13 +437,55 @@
   border-radius: 26px;
   transform-origin: left center;
   transform-style: preserve-3d;
-  transform: translateZ(15px) rotateY(0deg);
-  transition: transform 2s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 2s ease;
-  z-index: 30;
+  transform: translateZ(16px) rotateY(0deg);
+  z-index: 50;
+  pointer-events: auto;
 }
 
 .opened .coverLeaf {
-  transform: rotateY(-180deg) translateZ(0);
+  animation: openCoverFromFront 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+}
+
+.closing .coverLeaf {
+  animation: closeCoverToFront 1.0s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+}
+
+@keyframes openCoverFromFront {
+  0% {
+    transform: translateZ(16px) rotateY(0deg);
+    box-shadow: 12px 18px 45px rgba(0, 0, 0, 0.85);
+  }
+  38% {
+    transform: translateZ(80px) rotateY(-75deg);
+    box-shadow: 35px 45px 85px rgba(0, 0, 0, 0.95);
+  }
+  72% {
+    transform: translateZ(50px) rotateY(-145deg);
+    box-shadow: -15px 30px 60px rgba(0, 0, 0, 0.7);
+  }
+  100% {
+    transform: translateZ(4px) rotateY(-180deg);
+    box-shadow: -10px 20px 45px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@keyframes closeCoverToFront {
+  0% {
+    transform: translateZ(4px) rotateY(-180deg);
+    box-shadow: -10px 20px 45px rgba(0, 0, 0, 0.6);
+  }
+  38% {
+    transform: translateZ(50px) rotateY(-145deg);
+    box-shadow: -15px 30px 60px rgba(0, 0, 0, 0.7);
+  }
+  72% {
+    transform: translateZ(80px) rotateY(-75deg);
+    box-shadow: 35px 45px 85px rgba(0, 0, 0, 0.95);
+  }
+  100% {
+    transform: translateZ(16px) rotateY(0deg);
+    box-shadow: 12px 18px 45px rgba(0, 0, 0, 0.85);
+  }
 }
 
 .coverFront,
@@ -446,7 +501,6 @@
   overflow: hidden;
 }
 
-/* Cover Front: Dark Blue Leather + Deep Heat-Stamped Logo (NO BOX) */
 .coverFront {
   background-image:
     linear-gradient(135deg, rgba(20, 36, 68, 0.3) 0%, rgba(4, 7, 14, 0.7) 100%),
@@ -457,7 +511,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 30px;
+  padding: 24px;
   box-shadow:
     12px 18px 45px rgba(0, 0, 0, 0.85),
     inset 0 0 0 1px rgba(255, 255, 255, 0.15),
@@ -474,37 +528,22 @@
   pointer-events: none;
 }
 
-.coverFront::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 14px;
-  width: 3px;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
-  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.06);
-}
-
 .debossedLeatherLogo {
-  width: 230px;
+  width: 220px;
   height: auto;
-  max-height: 230px;
+  max-height: 220px;
   object-fit: contain;
   filter:
-    drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98)) drop-shadow(-1px -1.5px 1px rgba(255, 255, 255, 0.4)) drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.85));
+    drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98))
+    drop-shadow(-1px -1.5px 1px rgba(255, 255, 255, 0.4))
+    drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.85));
   transition: transform 0.4s ease, filter 0.4s ease;
   cursor: pointer;
 }
 
-.coverFront:hover .debossedLeatherLogo {
-  transform: scale(1.03);
-  filter:
-    drop-shadow(2px 4px 3px rgba(0, 0, 0, 1)) drop-shadow(-1px -1.5px 1.5px rgba(255, 255, 255, 0.55)) drop-shadow(0 0 15px rgba(56, 189, 248, 0.3));
-}
-
 .coverPrompt {
   position: absolute;
-  bottom: 28px;
+  bottom: 24px;
   font-size: 10.5px;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -513,14 +552,13 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(10, 18, 32, 0.7);
+  background: rgba(10, 18, 32, 0.75);
   padding: 7px 18px;
   border-radius: 999px;
   border: 1px solid rgba(56, 189, 248, 0.35);
   backdrop-filter: blur(8px);
 }
 
-/* Interior Left Flap (Credentials & White Pill slots matching mockup) */
 .coverBack {
   background-image:
     linear-gradient(150deg, rgba(14, 25, 48, 0.45) 0%, rgba(5, 8, 16, 0.75) 100%),
@@ -532,7 +570,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 28px 24px;
+  padding: 24px 20px;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.08),
     inset 15px 0 25px rgba(0, 0, 0, 0.85);
@@ -551,52 +589,52 @@
   justify-content: space-between;
   align-items: flex-start;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding-bottom: 14px;
+  padding-bottom: 12px;
 }
 
 .leftPanelTitle {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
   color: #ffffff;
   line-height: 1.2;
 }
 
 .leftPanelSub {
-  font-size: 10px;
+  font-size: 9.5px;
   color: #38bdf8;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
 .leftBadgeTag {
-  font-size: 8.5px;
+  font-size: 8px;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #fff;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 3px 8px;
+  padding: 3px 7px;
   border-radius: 6px;
 }
 
 .leftFormFields {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin: 16px 0;
+  gap: 10px;
+  margin: 12px 0;
 }
 
 .formSlot {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .formSlotLabel {
-  font-size: 9px;
+  font-size: 8.5px;
   font-weight: 700;
   color: #94a3b8;
   text-transform: uppercase;
@@ -606,9 +644,9 @@
 .formSlotPill {
   background: rgba(255, 255, 255, 0.95);
   color: #0f172a;
-  padding: 7px 14px;
+  padding: 6px 12px;
   border-radius: 999px;
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 800;
   box-shadow:
     0 2px 6px rgba(0, 0, 0, 0.3),
@@ -619,38 +657,44 @@
 }
 
 .leftPanelFooter {
-  font-size: 9px;
+  font-size: 8.5px;
   color: #94a3b8;
-  line-height: 1.45;
+  line-height: 1.4;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 12px;
+  padding-top: 10px;
   text-align: center;
 }
 
 .actionsPanel {
-  position: absolute;
-  bottom: 22px;
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 14px;
-  z-index: 100;
+  justify-content: center;
+  gap: 12px;
+  z-index: 200;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 480px;
+  padding-top: 4px;
 }
 
 .btnAction {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(15, 23, 42, 0.8);
   color: #ffffff;
   text-decoration: none;
   font-size: 12px;
   font-weight: 700;
-  padding: 10px 20px;
+  padding: 9px 18px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: inherit;
 }
 
 .btnAction:hover {
@@ -671,204 +715,79 @@
   box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
 }
 
-/* ==========================================================================
-   RESPONSIVENESS: MOBILE, TABLET, LAPTOP, DESKTOP
-   ========================================================================== */
-
-/* Mobile Screen Optimization (< 680px) - Realistic Tabletop Leather Holder */
-@media (max-width: 680px) {
-  .headerPanel {
-    top: 14px;
-    padding: 0 10px;
-    width: 100%;
+/* Responsiveness */
+@media (max-width: 767px) {
+  .stageContainer {
+    padding: 10px 12px;
   }
 
   .statusBadge {
     font-size: 10px;
-    letter-spacing: 0.08em;
     padding: 6px 14px;
     gap: 6px;
   }
 
-  .experienceStage {
-    height: 580px;
-    max-width: 100vw;
-    perspective: 1400px;
+  .mobileFlapToggle {
+    display: flex;
   }
 
   .holderWrap {
-    transform: translateY(120vh) scale(0.8);
+    transform: translateY(100vh) scale(0.82);
   }
 
   .entered {
-    transform: translateY(0) rotateX(6deg) scale(0.84);
+    transform: translateY(0) scale(0.82);
   }
 
-  /* STEP 3: Holder settles flat on the tabletop at a natural elevated angle */
   .opened,
   .cardExtracted {
-    transform: translateY(175px) translateZ(-30px) rotateX(48deg) rotateY(0deg) scale(0.82);
+    transform: translateY(0) translateX(0) scale(0.82);
   }
 
-  /* On mobile: cover opens 180deg flat onto the table beside the base */
   .opened .coverLeaf {
     transform: rotateY(-180deg) translateZ(0);
-    opacity: 0.2;
-    transition: transform 2s cubic-bezier(0.25, 1, 0.3, 1), opacity 1.5s ease;
-  }
-
-  /* STEP 4: Card peeking ~5-8% from the pocket with subtle affordance */
-  .opened:not(.cardExtracted):not(.cardExtracting):not(.cardTucking) .passCard {
-    transform: translateZ(2px) translateY(-32px);
-    animation: cardPeekBreath 3s ease-in-out infinite;
-    touch-action: none;
-  }
-
-  /* STEP 6: Card brought more forward in front of screen, holder fades out */
-  .cardExtracted:not(.cardExtracting):not(.cardTucking) .passCard {
-    transform: translateY(-235px) translateZ(180px) rotateX(-48deg) scale(1);
-    z-index: 1000;
-    box-shadow:
-      0 45px 100px -10px rgba(0, 0, 0, 0.95),
-      0 20px 45px rgba(0, 0, 0, 0.75),
-      0 0 0 1px rgba(255, 255, 255, 0.95),
-      0 0 50px rgba(56, 189, 248, 0.35);
-  }
-
-  /* Card holder fades out when card is pulled in front */
-  .cardExtracted .curvedPocketSleeve,
-  .cardExtracted .baseStitch,
-  .cardExtracted .coverLeaf {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.3, 1);
-  }
-  .cardExtracted .holderBase {
-    background-color: transparent !important;
-    background-image: none !important;
-    box-shadow: none !important;
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.3, 1);
-  }
-
-  .cardExtracting .passCard {
-    animation: extractCardMobileSmooth 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    z-index: 1000;
-  }
-
-  .cardTucking .passCard {
-    animation: tuckCardMobileSmooth 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    z-index: 1000;
   }
 
   .actionsPanel {
-    bottom: 14px;
     gap: 8px;
-    flex-direction: column;
-    width: 88%;
-    max-width: 320px;
+    flex-direction: row;
+    width: 100%;
   }
 
   .btnAction {
-    width: 100%;
-    justify-content: center;
-    padding: 9px 14px;
-    font-size: 11.5px;
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 11px;
+    white-space: nowrap;
   }
 }
 
-@keyframes cardPeekBreath {
-  0%, 70%, 100% {
-    transform: translateZ(2px) translateY(-32px);
-  }
-  85% {
-    transform: translateZ(4px) translateY(-40px);
-  }
-}
-
-@keyframes extractCardMobileSmooth {
-  0% {
-    transform: translateZ(2px) translateY(-32px) rotateX(0deg) scale(1);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
-  }
-  40% {
-    transform: translateZ(70px) translateY(-145px) rotateX(-20deg) scale(1);
-    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
-  }
-  100% {
-    transform: translateY(-235px) translateZ(180px) rotateX(-48deg) scale(1);
-    box-shadow:
-      0 45px 100px -10px rgba(0, 0, 0, 0.95),
-      0 20px 45px rgba(0, 0, 0, 0.75),
-      0 0 0 1px rgba(255, 255, 255, 0.95),
-      0 0 50px rgba(56, 189, 248, 0.35);
-  }
-}
-
-@keyframes tuckCardMobileSmooth {
-  0% {
-    transform: translateY(-235px) translateZ(180px) rotateX(-48deg) scale(1);
-    box-shadow: 0 45px 100px -10px rgba(0, 0, 0, 0.95), 0 20px 45px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.95);
-  }
-  50% {
-    transform: translateZ(70px) translateY(-145px) rotateX(-20deg) scale(1);
-    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
-  }
-  100% {
-    transform: translateZ(2px) translateY(-32px) rotateX(0deg) scale(1);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
-  }
-}
-
-/* Extra Small / Short Mobile Screens (< 700px height) */
-@media (max-height: 700px) and (max-width: 680px) {
-  .headerPanel {
-    top: 8px;
-  }
-
-  .experienceStage {
-    height: 480px;
+@media (max-height: 700px) and (max-width: 767px) {
+  .holderWrap {
+    transform: translateY(100vh) scale(0.72);
   }
 
   .entered {
-    transform: translateY(-8px) scale(0.72);
+    transform: translateY(0) scale(0.72);
   }
 
   .opened,
   .cardExtracted {
-    transform: translateY(180px) translateZ(-40px) rotateX(65deg) scale(0.66);
-  }
-
-  .cardExtracted:not(.cardExtracting):not(.cardTucking) .passCard {
-    transform: translateY(-260px) translateZ(170px) rotateX(-65deg) scale(1.14);
-  }
-
-  .actionsPanel {
-    bottom: 8px;
+    transform: translateY(0) translateX(0) scale(0.72);
   }
 
   .btnAction {
-    padding: 7px 12px;
+    padding: 7px 10px;
     font-size: 10.5px;
   }
 }
 
-/* Tablet Screen Optimization (681px to 1024px) */
-@media (min-width: 681px) and (max-width: 1024px) {
-  .experienceStage {
-    max-width: 800px;
-    height: 600px;
-    perspective: 1800px;
+@media (min-width: 768px) and (max-width: 1024px) {
+  .holderWrap.entered {
+    transform: translateY(0) scale(0.92);
   }
-
-  .entered {
-    transform: translateY(0) rotateX(5deg) scale(0.95);
-  }
-
-  .opened {
-    transform: translateY(0) translateX(50%) scale(0.82);
-  }
-
-  .cardExtracted {
-    transform: translateY(0) translateX(50%) scale(0.82);
+  .holderWrap.opened,
+  .holderWrap.cardExtracted {
+    transform: translateY(0) translateX(150px) scale(0.92);
   }
 }
