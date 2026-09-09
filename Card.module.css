@@ -282,7 +282,7 @@
 }
 
 .cardExtracting .passCard {
-  animation: extractCardFluid var(--card-extract-duration, 900ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: extractCardFluid var(--card-extract-duration, 850ms) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   z-index: 100;
 }
 
@@ -295,25 +295,19 @@
   0% {
     transform: translateZ(2px) translateY(-26px) scale(1);
   }
-  50% {
-    transform: translateZ(50px) translateY(-60px) scale(1.02);
-  }
   100% {
     transform: translateZ(90px) translateY(0) scale(1.03);
   }
 }
 
 .cardTucking .passCard {
-  animation: tuckCardFluid var(--card-tuck-duration, 800ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: tuckCardFluid var(--card-tuck-duration, 800ms) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   z-index: 100;
 }
 
 @keyframes tuckCardFluid {
   0% {
     transform: translateZ(90px) translateY(0) scale(1.03);
-  }
-  50% {
-    transform: translateZ(50px) translateY(-60px) scale(1.02);
   }
   100% {
     transform: translateZ(2px) translateY(-26px) scale(1);
@@ -590,27 +584,19 @@
 }
 
 .opened .coverLeaf {
-  animation: openCoverFromFront var(--cover-open-duration, 1050ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: openCoverFromFront var(--cover-open-duration, 900ms) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   will-change: transform;
 }
 
 .closing .coverLeaf {
-  animation: closeCoverToFront var(--cover-close-duration, 950ms) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: closeCoverToFront var(--cover-close-duration, 850ms) cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   will-change: transform;
 }
 
-/* Transform-only: box-shadow is never animated here (kept static on the child
-   faces) so the browser can composite this purely on the GPU without repainting.
-   The Z depth also moves monotonically (16px -> 4px, no up-then-down hump) --
-   a non-monotonic path made any dropped frame look like a jump-cut, since the
-   card would visibly reverse direction between two rendered frames. A single
-   smooth sweep degrades gracefully even if the device skips frames. */
+/* Single Continuous Fluid Cover Rotation (Zero mid-way stutter/pause) */
 @keyframes openCoverFromFront {
   0% {
     transform: translateZ(16px) rotateY(0deg);
-  }
-  50% {
-    transform: translateZ(10px) rotateY(-90deg);
   }
   100% {
     transform: translateZ(4px) rotateY(-180deg);
@@ -620,9 +606,6 @@
 @keyframes closeCoverToFront {
   0% {
     transform: translateZ(4px) rotateY(-180deg);
-  }
-  50% {
-    transform: translateZ(10px) rotateY(-90deg);
   }
   100% {
     transform: translateZ(16px) rotateY(0deg);

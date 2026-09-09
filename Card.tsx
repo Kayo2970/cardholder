@@ -5,10 +5,10 @@ import styles from './Card.module.css';
 // into the CSS via custom properties (see the inline style on holderWrap)
 // so the React state transition and the CSS animation duration can never
 // drift apart and cause a snap/jump mid-animation.
-const CARD_EXTRACT_DURATION = 900;
+const CARD_EXTRACT_DURATION = 850;
 const CARD_TUCK_DURATION = 800;
-const COVER_OPEN_DURATION = 1050;
-const COVER_CLOSE_DURATION = 950;
+const COVER_OPEN_DURATION = 900;
+const COVER_CLOSE_DURATION = 850;
 
 // Preload the assets used during the very first animation so the browser
 // isn't decoding images mid-transition, which is what causes the initial
