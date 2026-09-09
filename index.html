@@ -770,21 +770,21 @@
         transition: transform 0.8s cubic-bezier(0.25, 1, 0.3, 1), opacity 0.5s ease;
       }
 
-      /* Mobile Pass Card: Idle peeking when holder is on floor */
+      /* Mobile Pass Card: Idle peeking flat when holder is on floor */
       .holder-wrap.opened:not(.card-extracted):not(.card-extracting):not(.card-tucking) .pass-card {
-        transform: translateZ(12px) translateY(-60px) rotateX(-22deg);
+        transform: translateZ(20px) translateY(-70px) rotateX(-68deg) scale(1.04);
         animation: card-nudge-mobile 2.4s ease-in-out infinite;
       }
 
-      /* Mobile Pass Card: Floating upright in absolute center of screen */
+      /* Mobile Pass Card: Pulled out flat and positioned above pocket, closer to bottom */
       .holder-wrap.card-extracted:not(.card-extracting):not(.card-tucking) .pass-card {
-        transform: translateY(-310px) translateZ(200px) rotateX(-68deg) scale(1.18);
+        transform: translateY(-235px) translateZ(140px) rotateX(-68deg) scale(1.12);
         z-index: 100;
         box-shadow: 
-          0 45px 100px -10px rgba(0, 0, 0, 0.98),
-          0 25px 45px rgba(0, 0, 0, 0.75),
+          0 35px 80px -10px rgba(0, 0, 0, 0.95),
+          0 15px 35px rgba(0, 0, 0, 0.65),
           0 0 0 1px rgba(255, 255, 255, 0.95),
-          0 0 50px rgba(56, 189, 248, 0.35);
+          0 0 45px rgba(56, 189, 248, 0.3);
       }
 
       .holder-wrap.card-extracting .pass-card {
@@ -814,46 +814,46 @@
 
     @keyframes card-nudge-mobile {
       0%, 60%, 100% {
-        transform: translateZ(12px) translateY(-60px) rotateX(-22deg);
+        transform: translateZ(20px) translateY(-70px) rotateX(-68deg) scale(1.04);
       }
       75% {
-        transform: translateZ(16px) translateY(-78px) rotateX(-26deg);
+        transform: translateZ(25px) translateY(-90px) rotateX(-68deg) scale(1.05);
       }
       85% {
-        transform: translateZ(12px) translateY(-60px) rotateX(-22deg);
+        transform: translateZ(20px) translateY(-70px) rotateX(-68deg) scale(1.04);
       }
     }
 
     @keyframes extractCardFluidMobile {
       0% {
-        transform: translateZ(12px) translateY(-60px) rotateX(-22deg) scale(1);
+        transform: translateZ(20px) translateY(-70px) rotateX(-68deg) scale(1.04);
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
       }
       50% {
-        transform: translateZ(110px) translateY(-190px) rotateX(-45deg) scale(1.1);
-        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.9);
+        transform: translateZ(90px) translateY(-160px) rotateX(-68deg) scale(1.08);
+        box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
       100% {
-        transform: translateY(-310px) translateZ(200px) rotateX(-68deg) scale(1.18);
+        transform: translateY(-235px) translateZ(140px) rotateX(-68deg) scale(1.12);
         box-shadow: 
-          0 45px 100px -10px rgba(0, 0, 0, 0.98),
-          0 25px 45px rgba(0, 0, 0, 0.75),
+          0 35px 80px -10px rgba(0, 0, 0, 0.95),
+          0 15px 35px rgba(0, 0, 0, 0.65),
           0 0 0 1px rgba(255, 255, 255, 0.95),
-          0 0 50px rgba(56, 189, 248, 0.35);
+          0 0 45px rgba(56, 189, 248, 0.3);
       }
     }
 
     @keyframes tuckCardFluidMobile {
       0% {
-        transform: translateY(-310px) translateZ(200px) rotateX(-68deg) scale(1.18);
-        box-shadow: 0 45px 100px -10px rgba(0, 0, 0, 0.98), 0 25px 45px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.95);
+        transform: translateY(-235px) translateZ(140px) rotateX(-68deg) scale(1.12);
+        box-shadow: 0 35px 80px -10px rgba(0, 0, 0, 0.95), 0 15px 35px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.95);
       }
       50% {
-        transform: translateZ(110px) translateY(-190px) rotateX(-45deg) scale(1.1);
-        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.9);
+        transform: translateZ(90px) translateY(-160px) rotateX(-68deg) scale(1.08);
+        box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
       100% {
-        transform: translateZ(12px) translateY(-60px) rotateX(-22deg) scale(1);
+        transform: translateZ(20px) translateY(-70px) rotateX(-68deg) scale(1.04);
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
       }
     }
