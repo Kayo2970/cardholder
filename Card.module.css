@@ -724,25 +724,40 @@
     touch-action: none;
   }
 
-  /* STEP 6: Card fully extracted - rigid, front-facing, perfectly undistorted */
+  /* STEP 6: Card completely brought to front of screen, holder fades out */
   .cardExtracted:not(.cardExtracting):not(.cardTucking) .passCard {
-    transform: translateY(-285px) translateZ(85px) rotateX(-48deg) scale(1);
-    z-index: 100;
+    transform: translateY(-240px) translateZ(120px) rotateX(-48deg) scale(0.96);
+    z-index: 1000;
     box-shadow:
-      0 35px 80px -10px rgba(0, 0, 0, 0.95),
-      0 15px 35px rgba(0, 0, 0, 0.65),
+      0 40px 90px -10px rgba(0, 0, 0, 0.95),
+      0 20px 40px rgba(0, 0, 0, 0.7),
       0 0 0 1px rgba(255, 255, 255, 0.95),
-      0 0 45px rgba(56, 189, 248, 0.3);
+      0 0 50px rgba(56, 189, 248, 0.35);
+  }
+
+  /* Card holder fades out when card is pulled in front */
+  .cardExtracted .curvedPocketSleeve,
+  .cardExtracted .baseStitch,
+  .cardExtracted .coverLeaf {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.3, 1);
+  }
+  .cardExtracted .holderBase {
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.3, 1);
   }
 
   .cardExtracting .passCard {
-    animation: extractCardMobileSmooth 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    z-index: 100;
+    animation: extractCardMobileSmooth 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    z-index: 1000;
   }
 
   .cardTucking .passCard {
-    animation: tuckCardMobileSmooth 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-    z-index: 100;
+    animation: tuckCardMobileSmooth 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    z-index: 1000;
   }
 
   .actionsPanel {
