@@ -107,7 +107,7 @@
   transform-style: preserve-3d;
   transform: translateY(120vh) scale(0.95);
   opacity: 0;
-  transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
+  transition: transform 1.2s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 1.2s ease;
   cursor: pointer;
   overflow: visible;
 }
@@ -246,26 +246,20 @@
   opacity: 0;
 }
 
+/* 3D PASS CARD */
 .passCard {
   position: absolute;
   top: 10px;
   left: 10px;
   right: 10px;
   height: 450px;
-  background: #ebf9ff;
   border-radius: 20px;
-  padding: 16px 16px 14px;
-  color: #0f172a;
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.85);
+  perspective: 1200px;
   z-index: 10;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   transform: translateZ(2px) translateY(0);
   will-change: transform, box-shadow;
+  background: transparent;
 }
 
 .opened:not(.cardExtracted):not(.cardExtracting):not(.cardTucking) .passCard {
@@ -293,29 +287,17 @@
 .cardExtracted:not(.cardExtracting):not(.cardTucking) .passCard {
   transform: translateZ(90px) translateY(0) scale(1.03);
   z-index: 100;
-  box-shadow:
-    0 40px 80px -10px rgba(0, 0, 0, 0.95),
-    0 20px 35px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.95),
-    0 0 45px rgba(56, 189, 248, 0.25);
 }
 
 @keyframes extractCardFluid {
   0% {
     transform: translateZ(2px) translateY(-26px) scale(1);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
   }
   50% {
     transform: translateZ(50px) translateY(-60px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
   }
   100% {
     transform: translateZ(90px) translateY(0) scale(1.03);
-    box-shadow:
-      0 40px 80px -10px rgba(0, 0, 0, 0.95),
-      0 20px 35px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(255, 255, 255, 0.95),
-      0 0 45px rgba(56, 189, 248, 0.25);
   }
 }
 
@@ -327,21 +309,59 @@
 @keyframes tuckCardFluid {
   0% {
     transform: translateZ(90px) translateY(0) scale(1.03);
-    box-shadow: 0 40px 80px -10px rgba(0, 0, 0, 0.95), 0 20px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.95);
   }
   50% {
     transform: translateZ(50px) translateY(-60px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
   }
   100% {
     transform: translateZ(2px) translateY(-26px) scale(1);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
   }
+}
+
+/* 3D Flip Engine */
+.passInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-style: preserve-3d;
+  border-radius: 20px;
+}
+
+.isFlipped .passInner {
+  transform: rotateY(180deg);
+}
+
+.passFace {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.85);
+  overflow: hidden;
+}
+
+.passFront {
+  background: #ebf9ff;
+  color: #0f172a;
+  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: rotateY(0deg);
+  z-index: 2;
 }
 
 .passHeader {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 6px;
 }
 
@@ -351,11 +371,22 @@
   object-fit: contain;
 }
 
+.passBadgePill {
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #0284c7;
+  background: rgba(2, 132, 199, 0.12);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
 .passPrimary {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .passLabel {
@@ -384,7 +415,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .passVal {
@@ -406,9 +437,9 @@
   box-shadow:
     0 4px 14px -2px rgba(2, 132, 199, 0.15),
     0 0 0 1px rgba(226, 232, 240, 0.8);
-  margin: 10px auto;
-  width: 145px;
-  height: 145px;
+  margin: 4px auto 8px;
+  width: 140px;
+  height: 140px;
 }
 
 .passQrBox img {
@@ -419,15 +450,129 @@
 
 .passCardFooter {
   margin-top: auto;
-  padding-top: 8px;
+  padding-top: 6px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   font-size: 9px;
   color: #64748b;
   font-weight: 600;
 }
 
+.flipAffordanceHint {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #0284c7;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px dashed rgba(2, 132, 199, 0.35);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+/* BACK SIDE */
+.passBack {
+  background: #f8fafc;
+  background-image:
+    radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
+    linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
+  color: #0f172a;
+  padding: 16px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: rotateY(180deg);
+  z-index: 1;
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.95),
+    inset 0 0 20px rgba(56, 189, 248, 0.08);
+}
+
+.passBackHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(2, 132, 199, 0.15);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.passBackTitle {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #090d16;
+}
+
+.btnFlipPill {
+  font-size: 9px;
+  font-weight: 800;
+  color: #0284c7;
+  background: rgba(56, 189, 248, 0.16);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  padding: 4px 9px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.passBackFields {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+}
+
+.backFieldRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 5px 9px;
+  border-radius: 8px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.backFieldLabel {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.backFieldVal {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+}
+
+.backNoticeText {
+  font-size: 8px;
+  color: #64748b;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.passBackFooter {
+  border-top: 1px solid rgba(2, 132, 199, 0.12);
+  padding-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 8.5px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* COVER LEAF */
 .coverLeaf {
   position: absolute;
   top: 0;
@@ -745,7 +890,7 @@
   }
 
   .opened .coverLeaf {
-    transform: rotateY(-180deg) translateZ(0);
+    animation: openCoverFromFront 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
   }
 
   .actionsPanel {

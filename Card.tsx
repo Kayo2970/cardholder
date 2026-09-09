@@ -24,6 +24,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
 }) => {
   const [stageState, setStageState] = useState<'init' | 'entered' | 'opened' | 'extracting' | 'extracted' | 'tucking' | 'closing'>('init');
   const [activeTab, setActiveTab] = useState<'card' | 'creds'>('card');
+  const [isFlipped, setIsFlipped] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const dragInfo = useRef({ isDragging: false, startY: 0, currentDeltaY: 0, hasDragged: false });
 
@@ -48,16 +49,20 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
       setTimeout(() => {
         setStageState('entered');
       }, 1000);
+    } else if (stageState === 'extracted') {
+      triggerExtract();
     }
   };
 
   const triggerExtract = () => {
     if (stageState === 'opened') {
+      setIsFlipped(false);
       setStageState('extracting');
       setTimeout(() => {
         setStageState('extracted');
       }, 750);
     } else if (stageState === 'extracted') {
+      setIsFlipped(false);
       setStageState('tucking');
       setTimeout(() => {
         setStageState('opened');
@@ -65,9 +70,16 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
     }
   };
 
+  const toggleFlip = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (stageState === 'extracted') {
+      setIsFlipped((prev) => !prev);
+    }
+  };
+
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (stageState !== 'opened' && stageState !== 'extracted') return;
-    if (stageState === 'extracting' || stageState === 'tucking') return;
+    if (stageState === 'extracting' || stageState === 'tucking' || stageState === 'closing') return;
 
     dragInfo.current = {
       isDragging: true,
@@ -82,7 +94,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
     if (!dragInfo.current.isDragging) return;
     const deltaY = dragInfo.current.startY - e.clientY;
 
-    if (Math.abs(deltaY) > 6) {
+    if (Math.abs(deltaY) > 8) {
       dragInfo.current.hasDragged = true;
     }
 
@@ -111,11 +123,21 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
     }
 
     if (dragInfo.current.hasDragged) {
-      if (stageState === 'opened' && dragInfo.current.currentDeltaY > 40) {
-        triggerExtract();
+      if (stageState === 'opened') {
+        if (dragInfo.current.currentDeltaY > 40) {
+          triggerExtract();
+        }
+      } else if (stageState === 'extracted') {
+        if (dragInfo.current.currentDeltaY < -40) {
+          triggerExtract();
+        }
       }
     } else {
-      triggerExtract();
+      if (stageState === 'opened') {
+        triggerExtract();
+      } else if (stageState === 'extracted') {
+        toggleFlip();
+      }
     }
     dragInfo.current.currentDeltaY = 0;
   };
@@ -123,6 +145,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
   const handleReplay = () => {
     setStageState('init');
     setActiveTab('card');
+    setIsFlipped(false);
     setTimeout(() => {
       setStageState('entered');
     }, 400);
@@ -150,6 +173,12 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
     return classes.join(' ');
   };
 
+  const getPassCardClasses = () => {
+    const classes = [styles.passCard];
+    if (isFlipped) classes.push(styles.isFlipped);
+    return classes.join(' ');
+  };
+
   return (
     <div className={styles.stageContainer}>
       {/* Top Status Badge & Mobile Switcher */}
@@ -160,8 +189,11 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
             {stageState === 'init' && 'Arriving into view...'}
             {stageState === 'entered' && 'Tap leather holder to open'}
             {stageState === 'opened' && 'Tap card to pull forward'}
-            {(stageState === 'extracting' || stageState === 'extracted') && 'Welcome to the Centre! Card Ready'}
+            {stageState === 'extracting' && 'Extracting card...'}
+            {stageState === 'extracted' &&
+              (isFlipped ? 'Viewing Back Details (5 Fields) · Tap to Flip ↻' : 'Card Ready · Tap card to flip ↻')}
             {stageState === 'tucking' && 'Tucking card back...'}
+            {stageState === 'closing' && 'Closing leather holder...'}
           </span>
         </div>
 
@@ -191,54 +223,106 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
           <div className={`${styles.holderBase} ${styles.leatherTexture}`}>
             <div className={styles.baseStitch} />
 
-            {/* The Pass Card (Full Dimensions Matching Holder Base) */}
+            {/* The Pass Card with 3D Flip Engine */}
             <div
               ref={cardRef}
-              className={styles.passCard}
+              className={getPassCardClasses()}
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
               onPointerUp={handlePointerUp}
               onPointerCancel={handlePointerUp}
-              title="Click or drag to pull card"
+              title="Click or drag to pull / flip card"
             >
-              <div>
-                <div className={styles.passHeader}>
-                  <img src={logoSrc} alt="LEADS Logo" className={styles.passMiniLogo} />
-                </div>
-
-                <div className={styles.passPrimary}>
+              <div className={styles.passInner}>
+                
+                {/* FRONT FACE */}
+                <div className={`${styles.passFace} ${styles.passFront}`}>
                   <div>
-                    <div className={styles.passLabel}>{memberRole}</div>
-                    <div className={styles.passName}>{memberName}</div>
+                    <div className={styles.passHeader}>
+                      <img src={logoSrc} alt="LEADS Logo" className={styles.passMiniLogo} />
+                      <span className={styles.passBadgePill}>ACTIVE PASS</span>
+                    </div>
+
+                    <div className={styles.passPrimary}>
+                      <div>
+                        <div className={styles.passLabel}>{memberRole}</div>
+                        <div className={styles.passName}>{memberName}</div>
+                      </div>
+                      <img src={logoSrc} alt="LEADS RUAS" className={styles.passSideLogo} />
+                    </div>
+
+                    <div className={styles.passGrid}>
+                      <div>
+                        <div className={styles.passLabel}>Phone Number</div>
+                        <div className={styles.passVal}>{phone}</div>
+                      </div>
+                      <div>
+                        <div className={styles.passLabel}>Email ID</div>
+                        <div className={styles.passVal} title={email}>{email}</div>
+                      </div>
+                    </div>
+
+                    <div className={styles.passQrBox}>
+                      <img src={qrUrl} alt="QR Code" />
+                    </div>
                   </div>
-                  <img src={logoSrc} alt="LEADS RUAS" className={styles.passSideLogo} />
+
+                  <div className={styles.passCardFooter}>
+                    <div className={styles.flipAffordanceHint}>
+                      <span>↻</span>
+                      <span>Tap to Flip for 5 Back Fields</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '8.5px' }}>
+                      <span>💳</span>
+                      <span>Leads Next Gen Centre</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className={styles.passGrid}>
-                  <div>
-                    <div className={styles.passLabel}>Phone Number</div>
-                    <div className={styles.passVal}>{phone}</div>
+                {/* BACK FACE */}
+                <div className={`${styles.passFace} ${styles.passBack}`}>
+                  <div className={styles.passBackHeader}>
+                    <div>
+                      <div className={styles.passLabel}>PASS DETAILS</div>
+                      <div className={styles.passBackTitle}>LEADS RUAS Pass Info</div>
+                    </div>
+                    <button className={styles.btnFlipPill} onClick={toggleFlip} title="Flip to front">
+                      <span>↺</span>
+                      <span>Front</span>
+                    </button>
                   </div>
-                  <div>
-                    <div className={styles.passLabel}>Email ID</div>
-                    <div className={styles.passVal} title={email}>{email}</div>
+
+                  <div className={styles.passBackFields}>
+                    <div className={styles.backFieldRow}>
+                      <span className={styles.backFieldLabel}>1. Access Level</span>
+                      <span className={styles.backFieldVal}>Executive & Alumni Fellow (Tier 1)</span>
+                    </div>
+                    <div className={styles.backFieldRow}>
+                      <span className={styles.backFieldLabel}>2. Pass Serial ID</span>
+                      <span className={styles.backFieldVal}>RUAS-LEADS-2026-08842</span>
+                    </div>
+                    <div className={styles.backFieldRow}>
+                      <span className={styles.backFieldLabel}>3. Validity Period</span>
+                      <span className={styles.backFieldVal}>Jan 2026 – Dec 2028 (3 Years)</span>
+                    </div>
+                    <div className={styles.backFieldRow}>
+                      <span className={styles.backFieldLabel}>4. Issuing Authority</span>
+                      <span className={styles.backFieldVal}>M. S. Ramaiah Univ. of Applied Sciences</span>
+                    </div>
+                    <div className={styles.backFieldRow}>
+                      <span className={styles.backFieldLabel}>5. Terms & Entry Verification</span>
+                      <p className={styles.backNoticeText}>
+                        Scan front QR code at entry turnstiles. Non-transferable pass.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className={styles.passBackFooter}>
+                    <span>© 2026 LEADS Next Gen Centre</span>
+                    <span>Tap card to flip</span>
                   </div>
                 </div>
 
-                <div className={styles.passQrBox}>
-                  <img src={qrUrl} alt="QR Code" />
-                </div>
-              </div>
-
-              <div className={styles.passCardFooter}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <span>&#x21C5;</span>
-                  <span>5 back fields</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <span>&#128179;</span>
-                  <span>Leads Next Gen Centre</span>
-                </div>
               </div>
             </div>
 
@@ -288,7 +372,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
                 <span className={styles.leftBadgeTag}>Official</span>
               </div>
 
-              {/* White Pill Slot Fields Matching Mockup */}
+              {/* White Pill Slot Fields */}
               <div className={styles.leftFormFields}>
                 <div className={styles.formSlot}>
                   <span className={styles.formSlotLabel}>Name / Nombre</span>
