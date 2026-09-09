@@ -22,7 +22,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
   qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https%3A%2F%2Fleadsnextgencentre.online%2Fcard%2Fbhawen-maroo&color=090D16',
   walletShareUrl = 'https://api.walletwallet.dev/p/e1f116cc-3aa7-4cd9-8362-123ea660021f',
 }) => {
-  const [stageState, setStageState] = useState<'init' | 'entered' | 'opened' | 'extracted'>('init');
+  const [stageState, setStageState] = useState<'init' | 'entered' | 'opened' | 'extracting' | 'extracted' | 'tucking'>('init');
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -32,6 +32,8 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
   }, []);
 
   const handleHolderClick = () => {
+    if (stageState === 'extracting' || stageState === 'tucking') return;
+
     if (stageState === 'entered') {
       setStageState('opened');
     } else if (stageState === 'opened') {
@@ -41,10 +43,18 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
 
   const handleCardClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (stageState === 'extracting' || stageState === 'tucking') return;
+
     if (stageState === 'opened') {
-      setStageState('extracted');
+      setStageState('extracting');
+      setTimeout(() => {
+        setStageState('extracted');
+      }, 1200);
     } else if (stageState === 'extracted') {
-      setStageState('opened');
+      setStageState('tucking');
+      setTimeout(() => {
+        setStageState('opened');
+      }, 1000);
     }
   };
 
@@ -52,14 +62,22 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
     setStageState('init');
     setTimeout(() => {
       setStageState('entered');
-    }, 350);
+    }, 400);
   };
 
   const getHolderClasses = () => {
     const classes = [styles.holderWrap];
     if (stageState !== 'init') classes.push(styles.entered);
-    if (stageState === 'opened' || stageState === 'extracted') classes.push(styles.opened);
-    if (stageState === 'extracted') classes.push(styles.cardExtracted);
+    if (stageState === 'opened' || stageState === 'extracting' || stageState === 'extracted' || stageState === 'tucking') {
+      classes.push(styles.opened);
+    }
+    if (stageState === 'extracting') {
+      classes.push(styles.cardExtracting, styles.cardExtracted);
+    } else if (stageState === 'extracted') {
+      classes.push(styles.cardExtracted);
+    } else if (stageState === 'tucking') {
+      classes.push(styles.cardTucking);
+    }
     return classes.join(' ');
   };
 
@@ -73,7 +91,8 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
             {stageState === 'init' && 'Arriving into view...'}
             {stageState === 'entered' && 'Tap leather holder to open'}
             {stageState === 'opened' && 'Tap card to pull forward'}
-            {stageState === 'extracted' && 'Welcome to the Centre! Card Ready'}
+            {(stageState === 'extracting' || stageState === 'extracted') && 'Welcome to the Centre! Card Ready'}
+            {stageState === 'tucking' && 'Tucking card back...'}
           </span>
         </div>
       </div>
@@ -140,7 +159,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
                   </svg>
                   <span>Card Holder</span>
                 </div>
-                {stageState !== 'extracted' && (
+                {stageState !== 'extracted' && stageState !== 'extracting' && (
                   <span className={styles.tapHintPill}>Tap Card &uarr;</span>
                 )}
               </div>
