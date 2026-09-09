@@ -678,8 +678,8 @@
 /* Mobile Screen Optimization (< 680px) */
 @media (max-width: 680px) {
   .headerPanel {
-    top: 15px;
-    padding: 0 12px;
+    top: 14px;
+    padding: 0 10px;
     width: 100%;
   }
 
@@ -692,7 +692,8 @@
 
   .experienceStage {
     height: 520px;
-    perspective: 1500px;
+    max-width: 100vw;
+    perspective: 1600px;
   }
 
   .holderWrap {
@@ -700,19 +701,20 @@
   }
 
   .entered {
-    transform: translateY(0) rotateX(4deg) scale(0.78);
+    transform: translateY(0) rotateX(4deg) scale(0.82);
   }
 
+  /* translateX(50%) places spine at screen center, clamp scale fits both 180deg flaps in full view */
   .opened {
-    transform: translateY(0) translateX(24%) rotateX(0deg) scale(0.72);
+    transform: translateY(0) translateX(50%) rotateX(0deg) scale(clamp(0.48, 92vw / 650, 0.62));
   }
 
   .cardExtracted {
-    transform: translateY(0) translateX(24%) rotateX(0deg) scale(0.72);
+    transform: translateY(0) translateX(50%) rotateX(0deg) scale(clamp(0.48, 92vw / 650, 0.62));
   }
 
   .actionsPanel {
-    bottom: 15px;
+    bottom: 14px;
     gap: 8px;
     flex-direction: column;
     width: 88%;
@@ -730,7 +732,7 @@
 /* Extra Small / Short Mobile Screens (< 700px height) */
 @media (max-height: 700px) and (max-width: 680px) {
   .headerPanel {
-    top: 10px;
+    top: 8px;
   }
 
   .experienceStage {
@@ -738,19 +740,19 @@
   }
 
   .entered {
-    transform: translateY(0) scale(0.66);
+    transform: translateY(0) scale(0.7);
   }
 
   .opened {
-    transform: translateY(0) translateX(24%) scale(0.62);
+    transform: translateY(0) translateX(50%) scale(clamp(0.44, 90vw / 650, 0.55));
   }
 
   .cardExtracted {
-    transform: translateY(0) translateX(24%) scale(0.62);
+    transform: translateY(0) translateX(50%) scale(clamp(0.44, 90vw / 650, 0.55));
   }
 
   .actionsPanel {
-    bottom: 10px;
+    bottom: 8px;
   }
 
   .btnAction {
@@ -762,20 +764,20 @@
 /* Tablet Screen Optimization (681px to 1024px) */
 @media (min-width: 681px) and (max-width: 1024px) {
   .experienceStage {
-    max-width: 760px;
+    max-width: 800px;
     height: 600px;
     perspective: 1800px;
   }
 
   .entered {
-    transform: translateY(0) rotateX(5deg) scale(0.92);
+    transform: translateY(0) rotateX(5deg) scale(0.95);
   }
 
   .opened {
-    transform: translateY(0) translateX(14%) scale(0.88);
+    transform: translateY(0) translateX(50%) scale(0.82);
   }
 
   .cardExtracted {
-    transform: translateY(0) translateX(14%) scale(0.88);
+    transform: translateY(0) translateX(50%) scale(0.82);
   }
 }

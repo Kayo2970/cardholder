@@ -726,11 +726,11 @@
     /* Mobile Screen Optimization (< 680px) */
     @media (max-width: 680px) {
       body {
-        padding: 10px 0;
+        padding: 8px 0;
       }
       .header-panel {
-        top: 15px;
-        padding: 0 12px;
+        top: 14px;
+        padding: 0 10px;
         width: 100%;
       }
       .status-badge {
@@ -741,22 +741,24 @@
       }
       .experience-stage {
         height: 520px;
-        perspective: 1500px;
+        max-width: 100vw;
+        perspective: 1600px;
       }
       .holder-wrap {
         transform: translateY(130vh) scale(0.74);
       }
       .holder-wrap.entered {
-        transform: translateY(0) rotateX(4deg) scale(0.78);
+        transform: translateY(0) rotateX(4deg) scale(0.82);
       }
+      /* translateX(50%) places the spine at screen center, scale keeps both 180deg flaps in full view */
       .holder-wrap.opened {
-        transform: translateY(0) translateX(24%) rotateX(0deg) scale(0.72);
+        transform: translateY(0) translateX(50%) rotateX(0deg) scale(clamp(0.48, 92vw / 650, 0.62));
       }
       .holder-wrap.card-extracted {
-        transform: translateY(0) translateX(24%) rotateX(0deg) scale(0.72);
+        transform: translateY(0) translateX(50%) rotateX(0deg) scale(clamp(0.48, 92vw / 650, 0.62));
       }
       .actions-panel {
-        bottom: 15px;
+        bottom: 14px;
         gap: 8px;
         flex-direction: column;
         width: 88%;
@@ -773,22 +775,22 @@
     /* Extra Small / Short Mobile Screens (< 700px height) */
     @media (max-height: 700px) and (max-width: 680px) {
       .header-panel {
-        top: 10px;
+        top: 8px;
       }
       .experience-stage {
         height: 440px;
       }
       .holder-wrap.entered {
-        transform: translateY(0) scale(0.66);
+        transform: translateY(0) scale(0.7);
       }
       .holder-wrap.opened {
-        transform: translateY(0) translateX(24%) scale(0.62);
+        transform: translateY(0) translateX(50%) scale(clamp(0.44, 90vw / 650, 0.55));
       }
       .holder-wrap.card-extracted {
-        transform: translateY(0) translateX(24%) scale(0.62);
+        transform: translateY(0) translateX(50%) scale(clamp(0.44, 90vw / 650, 0.55));
       }
       .actions-panel {
-        bottom: 10px;
+        bottom: 8px;
       }
       .btn-action {
         padding: 7px 12px;
@@ -799,18 +801,18 @@
     /* Tablet Screen Optimization (681px to 1024px) */
     @media (min-width: 681px) and (max-width: 1024px) {
       .experience-stage {
-        max-width: 760px;
+        max-width: 800px;
         height: 600px;
         perspective: 1800px;
       }
       .holder-wrap.entered {
-        transform: translateY(0) rotateX(5deg) scale(0.92);
+        transform: translateY(0) rotateX(5deg) scale(0.95);
       }
       .holder-wrap.opened {
-        transform: translateY(0) translateX(14%) scale(0.88);
+        transform: translateY(0) translateX(50%) scale(0.82);
       }
       .holder-wrap.card-extracted {
-        transform: translateY(0) translateX(14%) scale(0.88);
+        transform: translateY(0) translateX(50%) scale(0.82);
       }
     }
   </style>
