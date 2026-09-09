@@ -133,55 +133,12 @@
   z-index: 5;
 }
 
-.interiorWelcome {
-  padding: 26px 20px 10px;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.5s 0.3s ease, transform 0.5s 0.3s ease;
-}
-
-.opened .interiorWelcome {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.welcomeBadge {
-  font-size: 9.5px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  background: rgba(56, 189, 248, 0.12);
-  color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  display: inline-block;
-  margin-bottom: 6px;
-}
-
-.welcomeTitle {
-  font-size: 16px;
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1.3;
-}
-
-.welcomeSub {
-  font-size: 11px;
-  color: #94a3b8;
-  margin-top: 3px;
-  font-weight: 500;
-}
-
 .pocketSleeve {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 310px;
+  height: 330px;
   border-bottom-left-radius: 26px;
   border-bottom-right-radius: 26px;
   background-color: #151a27;
@@ -366,7 +323,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 24px;
+  padding: 30px 24px;
   box-shadow: 
     inset 0 0 0 1px rgba(255, 255, 255, 0.08),
     inset 15px 0 25px rgba(0, 0, 0, 0.7);
@@ -381,60 +338,71 @@
 }
 
 .coverBackHeader {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #38bdf8;
-  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-  padding-bottom: 8px;
-  width: 100%;
-  text-align: center;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 5px 14px;
+  border-radius: 999px;
+  display: inline-block;
 }
 
 .coverBackBody {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-align: center;
+  margin: auto 0;
 }
 
 .crestIcon {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
   background: rgba(56, 189, 248, 0.1);
   border: 1px solid rgba(56, 189, 248, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #38bdf8;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
 }
 
-.coverBackText {
-  font-size: 12px;
-  color: #cbd5e1;
+.welcomeMainTitle {
+  font-size: 17px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.welcomeMainSub {
+  font-size: 11.5px;
+  color: #94a3b8;
   line-height: 1.5;
+  font-weight: 500;
 }
 
 .coverBackFooter {
-  font-size: 9.5px;
+  font-size: 10px;
   color: #64748b;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .passCard {
   position: absolute;
-  top: 96px;
+  top: 60px;
   left: 14px;
   right: 14px;
-  height: 360px;
+  height: 380px;
   background: #ebf9ff;
   border-radius: 18px;
-  padding: 16px 16px 12px;
+  padding: 16px 16px 14px;
   color: #0f172a;
   box-shadow: 
     0 15px 35px rgba(0, 0, 0, 0.5),
@@ -477,11 +445,11 @@
 .passHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .passMiniLogo {
-  width: 28px;
+  width: 32px;
   height: auto;
   object-fit: contain;
 }
@@ -490,11 +458,11 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .passLabel {
-  font-size: 8px;
+  font-size: 8.5px;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -503,14 +471,14 @@
 }
 
 .passName {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 800;
   color: #090d16;
   line-height: 1.2;
 }
 
 .passSideLogo {
-  width: 50px;
+  width: 56px;
   height: auto;
   object-fit: contain;
 }
@@ -523,7 +491,7 @@
 }
 
 .passVal {
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
   color: #0f172a;
   white-space: nowrap;
@@ -533,17 +501,17 @@
 
 .passQrBox {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 6px;
+  border-radius: 14px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 
-    0 4px 12px -2px rgba(2, 132, 199, 0.15),
+    0 4px 14px -2px rgba(2, 132, 199, 0.15),
     0 0 0 1px rgba(226, 232, 240, 0.8);
   margin: 0 auto;
-  width: 110px;
-  height: 110px;
+  width: 125px;
+  height: 125px;
 }
 
 .passQrBox img {
@@ -553,11 +521,11 @@
 }
 
 .passCardFooter {
-  margin-top: 4px;
+  margin-top: 6px;
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-size: 8.5px;
+  font-size: 9px;
   color: #64748b;
   font-weight: 600;
 }
