@@ -3,6 +3,7 @@ import styles from './Card.module.css';
 
 export interface InteractiveCardHolderProps {
   logoSrc?: string;
+  debossedLogoSrc?: string;
   memberName?: string;
   memberRole?: string;
   phone?: string;
@@ -13,6 +14,7 @@ export interface InteractiveCardHolderProps {
 
 export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
   logoSrc = './leads-logo-clean.png',
+  debossedLogoSrc = './leather-debossed-logo.png',
   memberName = 'Bhawen Maroo',
   memberRole = 'Alumni Member',
   phone = '9608768647',
@@ -133,7 +135,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
               <div className={styles.pocketLabel}>
                 <div className={styles.pocketBrand}>
                   <svg className={styles.pocketIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
                     <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                   </svg>
                   <span>Leather Card Holder</span>
@@ -148,13 +150,11 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
           {/* 3D Flipping Leather Front Cover Leaf */}
           <div className={styles.coverLeaf}>
             
-            {/* Front Side: Dark Blue Leather + Stitched Edge + Deep Stamped Debossed Logo */}
+            {/* Front Side: Dark Blue Leather + Deep Pressed Debossed Logo (NO BOX) */}
             <div className={styles.coverFront}>
               <div className={styles.coverStitch} />
               
-              <div className={styles.debossedStampArea}>
-                <img src={logoSrc} alt="LEADS Next Gen Centre" className={styles.stampedLogoImg} />
-              </div>
+              <img src={debossedLogoSrc} alt="LEADS Next Gen Centre" className={styles.debossedLeatherLogo} />
 
               <div className={styles.coverPrompt}>Tap to Open &rarr;</div>
             </div>

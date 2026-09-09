@@ -234,6 +234,7 @@
     inset 0 0 0 1px rgba(255, 255, 255, 0.15),
     inset 0 0 25px rgba(0, 0, 0, 0.75);
   transform: rotateY(0deg);
+  position: relative;
 }
 
 .coverStitch {
@@ -244,37 +245,36 @@
   pointer-events: none;
 }
 
-.debossedStampArea {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 26px 20px;
-  border-radius: 24px;
-  background: rgba(5, 9, 18, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 
-    inset 2px 4px 10px rgba(0, 0, 0, 0.9),
-    inset -1px -2px 6px rgba(255, 255, 255, 0.15),
-    0 2px 6px rgba(0, 0, 0, 0.5);
-  transition: transform 0.4s ease;
+.coverFront::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 14px;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.06);
 }
 
-.coverFront:hover .debossedStampArea {
-  transform: scale(1.02);
-}
-
-.stampedLogoImg {
-  width: 200px;
+.debossedLeatherLogo {
+  width: 220px;
   height: auto;
-  max-height: 200px;
+  max-height: 220px;
   object-fit: contain;
   filter: 
-    brightness(1.1)
-    contrast(1.2)
-    drop-shadow(1.5px 2.5px 1px rgba(0, 0, 0, 0.98))
-    drop-shadow(-0.8px -0.8px 0.5px rgba(255, 255, 255, 0.55));
+    drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98))
+    drop-shadow(-1px -1.5px 1px rgba(255, 255, 255, 0.4))
+    drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.85));
+  transition: transform 0.4s ease, filter 0.4s ease;
+  cursor: pointer;
+}
+
+.coverFront:hover .debossedLeatherLogo {
+  transform: scale(1.03);
+  filter: 
+    drop-shadow(2px 4px 3px rgba(0, 0, 0, 1))
+    drop-shadow(-1px -1.5px 1.5px rgba(255, 255, 255, 0.55))
+    drop-shadow(0 0 15px rgba(56, 189, 248, 0.3));
 }
 
 .coverPrompt {
@@ -332,6 +332,7 @@
   padding: 5px 14px;
   border-radius: 999px;
   display: inline-block;
+  box-shadow: inset 1px 2px 4px rgba(0,0,0,0.6);
 }
 
 .coverBackBody {

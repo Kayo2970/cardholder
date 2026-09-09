@@ -12,7 +12,6 @@
       --primary-cyan: #38bdf8;
       --primary-blue: #0284c7;
       --leather-stitch: rgba(148, 163, 184, 0.45);
-      --stitch-gold: rgba(226, 183, 116, 0.5);
     }
 
     * {
@@ -85,7 +84,7 @@
     }
 
     /* 
-      LUXURY DARK BLUE LEATHER HOLDER (CONTAINER)
+      LUXURY DARK BLUE LEATHER HOLDER
     */
     .holder-wrap {
       position: relative;
@@ -173,7 +172,7 @@
       flex-direction: column;
       justify-content: flex-end;
       padding: 16px 20px;
-      border-top: 2px solid #060a14; /* Burnished edge-paint */
+      border-top: 2px solid #060a14;
     }
 
     /* Curved Cutout Notch at center top of pocket */
@@ -243,7 +242,6 @@
 
     /* 
       THE DIGITAL WALLET PASS (BHAWEN MAROO)
-      - Brought forward with strong 3D Drop Shadow on top of holder flap
     */
     .pass-card {
       position: absolute;
@@ -423,7 +421,7 @@
     }
 
     /* 
-      FRONT DARK BLUE LEATHER COVER
+      FRONT LEATHER COVER (No box around logo!)
     */
     .cover-front {
       background-image: 
@@ -441,6 +439,7 @@
         inset 0 0 0 1px rgba(255, 255, 255, 0.15),
         inset 0 0 25px rgba(0, 0, 0, 0.75);
       transform: rotateY(0deg);
+      position: relative;
     }
 
     .cover-stitch {
@@ -463,44 +462,27 @@
     }
 
     /* 
-      DEEPLY STAMPED / DEBOSSED LEATHER EMBLEM
+      DEEPLY PRESSED HEAT-STAMPED LOGO (NO CONTAINER BOX)
     */
-    .debossed-stamp-area {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 26px 20px;
-      border-radius: 24px;
-      background: rgba(5, 9, 18, 0.45);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 
-        inset 2px 4px 10px rgba(0, 0, 0, 0.9),
-        inset -1px -2px 6px rgba(255, 255, 255, 0.15),
-        0 2px 6px rgba(0, 0, 0, 0.5);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-
-    .cover-front:hover .debossed-stamp-area {
-      transform: scale(1.02);
-      box-shadow: 
-        inset 2px 4px 12px rgba(0, 0, 0, 0.95),
-        inset -1px -2px 8px rgba(255, 255, 255, 0.2),
-        0 4px 15px rgba(0, 0, 0, 0.6);
-    }
-
-    /* The Deep Stamped Logo Graphics */
-    .stamped-logo-img {
-      width: 200px;
+    .debossed-leather-logo {
+      width: 220px;
       height: auto;
-      max-height: 200px;
+      max-height: 220px;
       object-fit: contain;
       filter: 
-        brightness(1.1)
-        contrast(1.2)
-        drop-shadow(1.5px 2.5px 1px rgba(0, 0, 0, 0.98))
-        drop-shadow(-0.8px -0.8px 0.5px rgba(255, 255, 255, 0.55));
+        drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98))
+        drop-shadow(-1px -1.5px 1px rgba(255, 255, 255, 0.4))
+        drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.85));
+      transition: transform 0.4s ease, filter 0.4s ease;
+      cursor: pointer;
+    }
+
+    .cover-front:hover .debossed-leather-logo {
+      transform: scale(1.03);
+      filter: 
+        drop-shadow(2px 4px 3px rgba(0, 0, 0, 1))
+        drop-shadow(-1px -1.5px 1.5px rgba(255, 255, 255, 0.55))
+        drop-shadow(0 0 15px rgba(56, 189, 248, 0.3));
     }
 
     .cover-prompt {
@@ -523,7 +505,7 @@
     }
 
     /* 
-      COVER BACK (Interior Left Flap with Welcome Message and Crest)
+      COVER BACK (Interior Left Flap)
     */
     .cover-back {
       background-image: 
@@ -744,13 +726,11 @@
       <!-- 3D Flipping Dark Blue Leather Front Cover Leaf -->
       <div class="cover-leaf" id="coverLeaf">
         
-        <!-- Cover Front: Deep Stamped Debossed Logo on Dark Blue Leather -->
+        <!-- Cover Front: Direct Deep Pressed Leather Logo (NO BOX) -->
         <div class="cover-front">
           <div class="cover-stitch"></div>
           
-          <div class="debossed-stamp-area">
-            <img src="leads-logo-clean.png" alt="LEADS Next Gen Centre RUAS" class="stamped-logo-img" />
-          </div>
+          <img src="leather-debossed-logo.png" alt="LEADS Next Gen Centre RUAS" class="debossed-leather-logo" />
 
           <div class="cover-prompt">Tap to Open &rarr;</div>
         </div>
