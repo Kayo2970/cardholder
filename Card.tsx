@@ -49,12 +49,12 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
       setStageState('extracting');
       setTimeout(() => {
         setStageState('extracted');
-      }, 1200);
+      }, 850);
     } else if (stageState === 'extracted') {
       setStageState('tucking');
       setTimeout(() => {
         setStageState('opened');
-      }, 1000);
+      }, 750);
     }
   };
 
@@ -105,7 +105,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
           <div className={`${styles.holderBase} ${styles.leatherTexture}`}>
             <div className={styles.baseStitch} />
 
-            {/* The Pass Card (Tucked into curved die-cut pocket) */}
+            {/* The Pass Card (Full Dimensions Matching Holder Base) */}
             <div className={styles.passCard} onClick={handleCardClick} title="Click to pull card">
               <div>
                 <div className={styles.passHeader}>
@@ -148,7 +148,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
               </div>
             </div>
 
-            {/* Curved Die-Cut Leather Pocket Sleeve (Matching Reference Mockup!) */}
+            {/* Curved Die-Cut Leather Pocket Sleeve */}
             <div className={styles.curvedPocketSleeve}>
               <div className={styles.curvedPocketStitch} />
               <div className={styles.pocketFooterContent}>
@@ -177,7 +177,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
               <div className={styles.coverPrompt}>Tap to Open &rarr;</div>
             </div>
 
-            {/* Back Side: Interior Left Flap with Executive Credentials Layout (Matching Reference Mockup) */}
+            {/* Back Side: Interior Left Flap with Executive Credentials Layout */}
             <div className={styles.coverBack}>
               <div className={styles.coverBackStitch} />
               
@@ -198,7 +198,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
 
                 <div className={styles.formSlot}>
                   <span className={styles.formSlotLabel}>Designation / Rol</span>
-                  <div className={styles.formSlotPill}>Alumni & Executive Fellow</div>
+                  <div className={styles.formSlotPill}>{memberRole}</div>
                 </div>
 
                 <div className={styles.formSlot}>

@@ -41,7 +41,7 @@
     /* Top Status Header */
     .header-panel {
       position: absolute;
-      top: 25px;
+      top: 22px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -52,7 +52,7 @@
     }
 
     .status-badge {
-      font-size: 11.5px;
+      font-size: 11px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: #cbd5e1;
@@ -82,7 +82,7 @@
       position: relative;
       width: 100%;
       max-width: 1100px;
-      height: 660px;
+      height: 680px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -94,12 +94,12 @@
 
     /* 
       LUXURY LEATHER CARD HOLDER (CONTAINER)
-      - Scaled up & brought forward in 3D for desktop
+      - Sleek elongated rectanglish proportions: 325px x 530px
     */
     .holder-wrap {
       position: relative;
-      width: 340px;
-      height: 500px;
+      width: 325px;
+      height: 530px;
       transform-style: preserve-3d;
       transform: translateY(130vh) scale(0.95);
       opacity: 0;
@@ -109,17 +109,17 @@
     }
 
     .holder-wrap.entered {
-      transform: translateY(0) translateZ(40px) rotateX(4deg) rotateY(-2deg) scale(1.08);
+      transform: translateY(0) translateZ(40px) rotateX(4deg) rotateY(-2deg) scale(1.06);
       opacity: 1;
     }
 
-    /* When opened on desktop: translateX(160px) balances the opened left flap so both flaps are centered */
+    /* When opened on desktop: translateX balances the opened left flap so both flaps are centered */
     .holder-wrap.opened {
-      transform: translateY(0) translateX(160px) translateZ(50px) rotateX(2deg) rotateY(0deg) scale(1.08);
+      transform: translateY(0) translateX(155px) translateZ(50px) rotateX(2deg) rotateY(0deg) scale(1.06);
     }
 
     .holder-wrap.card-extracted {
-      transform: translateY(0) translateX(160px) translateZ(50px) rotateX(0deg) scale(1.08);
+      transform: translateY(0) translateX(155px) translateZ(50px) rotateX(0deg) scale(1.06);
     }
 
     /* 
@@ -135,7 +135,6 @@
 
     /* 
       BASE BODY OF HOLDER (Right Flap)
-      - overflow: visible ensures card is NEVER clipped or masked when sliding up!
     */
     .holder-base {
       position: absolute;
@@ -143,7 +142,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: 24px;
+      border-radius: 26px;
       box-shadow: 
         0 35px 80px -15px rgba(0, 0, 0, 0.95),
         0 0 0 1px rgba(255, 255, 255, 0.08),
@@ -158,29 +157,29 @@
     .base-stitch {
       position: absolute;
       inset: 8px;
-      border-radius: 18px;
+      border-radius: 20px;
       border: 1px dashed var(--leather-stitch);
       pointer-events: none;
       z-index: 5;
     }
 
     /* 
-      CURVED DIE-CUT CARD POCKET SLEEVE (Matching Reference Mockup!)
+      CURVED DIE-CUT CARD POCKET SLEEVE
     */
     .curved-pocket-sleeve {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 400px;
-      border-bottom-left-radius: 24px;
-      border-bottom-right-radius: 24px;
+      height: 420px;
+      border-bottom-left-radius: 26px;
+      border-bottom-right-radius: 26px;
       background-image: 
         linear-gradient(145deg, rgba(20, 42, 80, 0.45) 0%, rgba(6, 12, 24, 0.8) 100%),
         url('dark-blue-leather.jpg');
       background-size: cover;
       background-position: center bottom;
-      border-top-left-radius: 230px;
+      border-top-left-radius: 240px;
       box-shadow: 
         -5px -8px 25px rgba(0, 0, 0, 0.8),
         inset 0 1px 0 rgba(255, 255, 255, 0.25),
@@ -191,7 +190,7 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 20px 22px;
+      padding: 22px 24px;
       border-top: 2px solid #060a14;
       border-left: 1px solid rgba(255, 255, 255, 0.08);
     }
@@ -199,9 +198,9 @@
     .curved-pocket-stitch {
       position: absolute;
       inset: 8px;
-      border-bottom-left-radius: 16px;
-      border-bottom-right-radius: 16px;
-      border-top-left-radius: 220px;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      border-top-left-radius: 230px;
       border: 1px dashed var(--leather-stitch);
       pointer-events: none;
     }
@@ -252,16 +251,17 @@
 
     /* 
       THE DIGITAL WALLET PASS (BHAWEN MAROO)
+      - Matches the full size & aspect ratio of the card holder!
     */
     .pass-card {
       position: absolute;
-      top: 50px;
-      left: 16px;
-      right: 16px;
-      height: 400px;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      height: calc(100% - 24px);
       background: #ebf9ff;
-      border-radius: 18px;
-      padding: 16px 16px 14px;
+      border-radius: 20px;
+      padding: 18px 18px 16px;
       color: #0f172a;
       box-shadow: 
         0 15px 35px rgba(0, 0, 0, 0.6),
@@ -290,7 +290,7 @@
         transform: translateZ(2px) translateY(0);
       }
       75% {
-        transform: translateZ(3px) translateY(-14px);
+        transform: translateZ(3px) translateY(-12px);
       }
       85% {
         transform: translateZ(2px) translateY(0);
@@ -298,18 +298,16 @@
     }
 
     /* 
-      ULTRA-SMOOTH ARC EXTRACTION ANIMATION
-      1. Slides straight UP completely out of pocket (no masking!)
-      2. Clears pocket rim & moves forward in 3D depth
-      3. Glides smoothly down to rest centered on top of holder
+      FLUID ONE-STROKE CARD EXTRACTION (NO CHOPPY STOPS)
+      - Smoothly lifts, swoops forward in 3D, and rests in one unbroken fluid stroke!
     */
     .holder-wrap.card-extracting .pass-card {
-      animation: extractCard 1.25s cubic-bezier(0.25, 1, 0.35, 1) forwards;
+      animation: extractCardFluid 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       z-index: 100;
     }
 
     .holder-wrap.card-extracted:not(.card-extracting):not(.card-tucking) .pass-card {
-      transform: translateZ(85px) translateY(-15px) scale(1.03);
+      transform: translateZ(90px) translateY(0) scale(1.03);
       z-index: 100;
       box-shadow: 
         0 40px 80px -10px rgba(0, 0, 0, 0.95),
@@ -318,21 +316,17 @@
         0 0 45px rgba(56, 189, 248, 0.25);
     }
 
-    @keyframes extractCard {
+    @keyframes extractCardFluid {
       0% {
         transform: translateZ(2px) translateY(0) scale(1);
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
       }
-      40% {
-        transform: translateZ(3px) translateY(-220px) scale(1);
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.85);
-      }
-      65% {
-        transform: translateZ(85px) translateY(-190px) scale(1.03);
-        box-shadow: 0 35px 70px -10px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.95), 0 0 35px rgba(56, 189, 248, 0.2);
+      50% {
+        transform: translateZ(45px) translateY(-80px) scale(1.02);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
       100% {
-        transform: translateZ(85px) translateY(-15px) scale(1.03);
+        transform: translateZ(90px) translateY(0) scale(1.03);
         box-shadow: 
           0 40px 80px -10px rgba(0, 0, 0, 0.95),
           0 20px 35px rgba(0, 0, 0, 0.6),
@@ -342,25 +336,21 @@
     }
 
     /* 
-      ULTRA-SMOOTH TUCK REVERSE ANIMATION
+      FLUID ONE-STROKE TUCK REVERSE
     */
     .holder-wrap.card-tucking .pass-card {
-      animation: tuckCard 1.05s cubic-bezier(0.25, 1, 0.35, 1) forwards;
+      animation: tuckCardFluid 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       z-index: 100;
     }
 
-    @keyframes tuckCard {
+    @keyframes tuckCardFluid {
       0% {
-        transform: translateZ(85px) translateY(-15px) scale(1.03);
+        transform: translateZ(90px) translateY(0) scale(1.03);
         box-shadow: 0 40px 80px -10px rgba(0, 0, 0, 0.95), 0 20px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.95);
       }
-      38% {
-        transform: translateZ(85px) translateY(-190px) scale(1.03);
-        box-shadow: 0 35px 70px -10px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.95);
-      }
-      60% {
-        transform: translateZ(3px) translateY(-220px) scale(1);
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.85);
+      50% {
+        transform: translateZ(45px) translateY(-80px) scale(1.02);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.9);
       }
       100% {
         transform: translateZ(2px) translateY(0) scale(1);
@@ -372,11 +362,11 @@
     .pass-header {
       display: flex;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .pass-mini-logo {
-      width: 32px;
+      width: 34px;
       height: auto;
       object-fit: contain;
     }
@@ -385,11 +375,11 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .pass-label {
-      font-size: 8.5px;
+      font-size: 9px;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -398,14 +388,14 @@
     }
 
     .pass-name {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 800;
       color: #090d16;
       line-height: 1.2;
     }
 
     .pass-side-logo {
-      width: 56px;
+      width: 60px;
       height: auto;
       object-fit: contain;
     }
@@ -413,12 +403,12 @@
     .pass-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      margin-bottom: 8px;
+      gap: 8px;
+      margin-bottom: 14px;
     }
 
     .pass-val {
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 700;
       color: #0f172a;
       white-space: nowrap;
@@ -428,8 +418,8 @@
 
     .pass-qr-box {
       background: #ffffff;
-      border-radius: 14px;
-      padding: 8px;
+      border-radius: 16px;
+      padding: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -437,8 +427,8 @@
         0 4px 14px -2px rgba(2, 132, 199, 0.15),
         0 0 0 1px rgba(226, 232, 240, 0.8);
       margin: 0 auto;
-      width: 125px;
-      height: 125px;
+      width: 145px;
+      height: 145px;
     }
 
     .pass-qr-box img {
@@ -448,17 +438,18 @@
     }
 
     .pass-card-footer {
-      margin-top: 6px;
+      margin-top: 10px;
       display: flex;
       flex-direction: column;
-      gap: 2px;
-      font-size: 9px;
+      gap: 3px;
+      font-size: 9.5px;
       color: #64748b;
       font-weight: 600;
     }
 
     /* 
       3D FLIPPING DARK BLUE LEATHER FRONT COVER
+      - Covers 100% of the front so card is completely concealed when closed
     */
     .cover-leaf {
       position: absolute;
@@ -466,10 +457,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: 24px;
+      border-radius: 26px;
       transform-origin: left center;
       transform-style: preserve-3d;
-      transform: translateZ(12px) rotateY(0deg);
+      transform: translateZ(15px) rotateY(0deg);
       transition: transform 0.95s cubic-bezier(0.25, 1, 0.3, 1), box-shadow 0.95s ease;
       z-index: 30;
     }
@@ -485,7 +476,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: 24px;
+      border-radius: 26px;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       overflow: hidden;
@@ -502,7 +493,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 28px;
+      padding: 30px;
       box-shadow: 
         12px 18px 45px rgba(0, 0, 0, 0.85),
         inset 0 0 0 1px rgba(255, 255, 255, 0.15),
@@ -514,7 +505,7 @@
     .cover-stitch {
       position: absolute;
       inset: 8px;
-      border-radius: 18px;
+      border-radius: 20px;
       border: 1px dashed var(--leather-stitch);
       pointer-events: none;
     }
@@ -532,9 +523,9 @@
 
     /* Deep Stamped Logo on Cover */
     .debossed-leather-logo {
-      width: 220px;
+      width: 230px;
       height: auto;
-      max-height: 220px;
+      max-height: 230px;
       object-fit: contain;
       filter: 
         drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.98))
@@ -554,7 +545,7 @@
 
     .cover-prompt {
       position: absolute;
-      bottom: 26px;
+      bottom: 28px;
       font-size: 10.5px;
       font-weight: 800;
       letter-spacing: 0.16em;
@@ -584,7 +575,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 26px 22px;
+      padding: 28px 24px;
       box-shadow: 
         inset 0 0 0 1px rgba(255, 255, 255, 0.08),
         inset 15px 0 25px rgba(0, 0, 0, 0.85);
@@ -593,7 +584,7 @@
     .cover-back-stitch {
       position: absolute;
       inset: 8px;
-      border-radius: 18px;
+      border-radius: 20px;
       border: 1px dashed var(--leather-stitch);
       pointer-events: none;
     }
@@ -603,11 +594,11 @@
       justify-content: space-between;
       align-items: flex-start;
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      padding-bottom: 12px;
+      padding-bottom: 14px;
     }
 
     .left-panel-title {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
       color: #ffffff;
       line-height: 1.2;
@@ -619,11 +610,11 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
     .left-badge-tag {
-      font-size: 8px;
+      font-size: 8.5px;
       font-weight: 800;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -638,14 +629,14 @@
     .left-form-fields {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin: 14px 0;
+      gap: 12px;
+      margin: 16px 0;
     }
 
     .form-slot {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 4px;
     }
 
     .form-slot-label {
@@ -659,9 +650,9 @@
     .form-slot-pill {
       background: rgba(255, 255, 255, 0.95);
       color: #0f172a;
-      padding: 6px 12px;
+      padding: 7px 14px;
       border-radius: 999px;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 800;
       box-shadow: 
         0 2px 6px rgba(0, 0, 0, 0.3),
@@ -672,18 +663,18 @@
     }
 
     .left-panel-footer {
-      font-size: 8.5px;
+      font-size: 9px;
       color: #94a3b8;
-      line-height: 1.4;
+      line-height: 1.45;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 10px;
+      padding-top: 12px;
       text-align: center;
     }
 
     /* Actions Panel */
     .actions-panel {
       position: absolute;
-      bottom: 25px;
+      bottom: 22px;
       display: flex;
       align-items: center;
       gap: 14px;
@@ -750,16 +741,16 @@
         perspective: 1500px;
       }
       .holder-wrap {
-        transform: translateY(130vh) scale(0.78);
+        transform: translateY(130vh) scale(0.74);
       }
       .holder-wrap.entered {
-        transform: translateY(0) rotateX(4deg) scale(0.8);
+        transform: translateY(0) rotateX(4deg) scale(0.78);
       }
       .holder-wrap.opened {
-        transform: translateY(0) translateX(24%) rotateX(0deg) scale(0.74);
+        transform: translateY(0) translateX(24%) rotateX(0deg) scale(0.72);
       }
       .holder-wrap.card-extracted {
-        transform: translateY(8px) translateX(24%) rotateX(0deg) scale(0.74);
+        transform: translateY(0) translateX(24%) rotateX(0deg) scale(0.72);
       }
       .actions-panel {
         bottom: 15px;
@@ -785,13 +776,13 @@
         height: 440px;
       }
       .holder-wrap.entered {
-        transform: translateY(0) scale(0.68);
+        transform: translateY(0) scale(0.66);
       }
       .holder-wrap.opened {
-        transform: translateY(0) translateX(24%) scale(0.65);
+        transform: translateY(0) translateX(24%) scale(0.62);
       }
       .holder-wrap.card-extracted {
-        transform: translateY(6px) translateX(24%) scale(0.65);
+        transform: translateY(0) translateX(24%) scale(0.62);
       }
       .actions-panel {
         bottom: 10px;
@@ -806,7 +797,7 @@
     @media (min-width: 681px) and (max-width: 1024px) {
       .experience-stage {
         max-width: 760px;
-        height: 580px;
+        height: 600px;
         perspective: 1800px;
       }
       .holder-wrap.entered {
@@ -816,7 +807,7 @@
         transform: translateY(0) translateX(14%) scale(0.88);
       }
       .holder-wrap.card-extracted {
-        transform: translateY(8px) translateX(14%) scale(0.88);
+        transform: translateY(0) translateX(14%) scale(0.88);
       }
     }
   </style>
@@ -839,7 +830,7 @@
       <div class="holder-base leather-texture">
         <div class="base-stitch"></div>
 
-        <!-- The Pass Card (Tucked into curved die-cut pocket) -->
+        <!-- The Pass Card (Matches size of holder base, tucked inside) -->
         <div class="pass-card" id="passCard" title="Click to pull card">
           <div>
             <div class="pass-header">
@@ -1031,7 +1022,7 @@
           holderWrap.classList.remove('card-extracting');
           state = 'extracted';
           isAnimatingCard = false;
-        }, 1200);
+        }, 850);
       } else if (state === 'extracted') {
         isAnimatingCard = true;
         holderWrap.classList.remove('card-extracting', 'card-extracted');
@@ -1042,7 +1033,7 @@
           holderWrap.classList.remove('card-tucking');
           state = 'opened';
           isAnimatingCard = false;
-        }, 1000);
+        }, 750);
       }
     }
 
