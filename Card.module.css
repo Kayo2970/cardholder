@@ -55,14 +55,15 @@
 .experienceStage {
   position: relative;
   width: 100%;
-  max-width: 900px;
-  height: 520px;
+  max-width: 1100px;
+  height: 660px;
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 2200px;
+  perspective: 2000px;
   z-index: 10;
   margin: auto 0;
+  overflow: visible;
 }
 
 /* 
@@ -70,26 +71,27 @@
 */
 .holderWrap {
   position: relative;
-  width: 320px;
-  height: 480px;
+  width: 340px;
+  height: 500px;
   transform-style: preserve-3d;
-  transform: translateY(130vh) scale(0.9);
+  transform: translateY(130vh) scale(0.95);
   opacity: 0;
   transition: transform 2.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.6s ease;
   cursor: pointer;
+  overflow: visible;
 }
 
 .entered {
-  transform: translateY(0) rotateX(4deg) rotateY(-2deg) scale(1);
+  transform: translateY(0) translateZ(40px) rotateX(4deg) rotateY(-2deg) scale(1.08);
   opacity: 1;
 }
 
 .opened {
-  transform: translateY(0) translateX(140px) rotateX(2deg) rotateY(0deg) scale(1);
+  transform: translateY(0) translateX(160px) translateZ(50px) rotateX(2deg) rotateY(0deg) scale(1.08);
 }
 
 .cardExtracted {
-  transform: translateY(0) translateX(140px) rotateX(0deg) scale(1);
+  transform: translateY(0) translateX(160px) translateZ(50px) rotateX(0deg) scale(1.08);
 }
 
 .leatherTexture {
@@ -113,7 +115,7 @@
     inset 0 0 30px rgba(0, 0, 0, 0.85);
   transform-style: preserve-3d;
   transform: translateZ(0);
-  overflow: hidden;
+  overflow: visible;
   background-color: #0b1526;
 }
 
@@ -132,7 +134,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 380px;
+  height: 400px;
   border-bottom-left-radius: 24px;
   border-bottom-right-radius: 24px;
   background-image: 
@@ -140,7 +142,7 @@
     url('dark-blue-leather.jpg');
   background-size: cover;
   background-position: center bottom;
-  border-top-left-radius: 220px;
+  border-top-left-radius: 230px;
   box-shadow: 
     -5px -8px 25px rgba(0, 0, 0, 0.8),
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
@@ -161,7 +163,7 @@
   inset: 8px;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
-  border-top-left-radius: 210px;
+  border-top-left-radius: 220px;
   border: 1px dashed rgba(148, 163, 184, 0.45);
   pointer-events: none;
 }
@@ -216,7 +218,7 @@
   top: 50px;
   left: 16px;
   right: 16px;
-  height: 380px;
+  height: 400px;
   background: #ebf9ff;
   border-radius: 18px;
   padding: 16px 16px 14px;
@@ -257,12 +259,12 @@
 
 /* Ultra-smooth 3-stage Extraction */
 .cardExtracting .passCard {
-  animation: extractCard 1.15s cubic-bezier(0.25, 1, 0.35, 1) forwards;
+  animation: extractCard 1.25s cubic-bezier(0.25, 1, 0.35, 1) forwards;
   z-index: 100;
 }
 
 .cardExtracted:not(.cardExtracting):not(.cardTucking) .passCard {
-  transform: translateZ(75px) translateY(-10px) scale(1.02);
+  transform: translateZ(85px) translateY(-15px) scale(1.03);
   z-index: 100;
   box-shadow: 
     0 40px 80px -10px rgba(0, 0, 0, 0.95),
@@ -277,15 +279,15 @@
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.85);
   }
   40% {
-    transform: translateZ(3px) translateY(-135px) scale(1);
-    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.85);
+    transform: translateZ(3px) translateY(-220px) scale(1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.85);
   }
   65% {
-    transform: translateZ(75px) translateY(-115px) scale(1.02);
+    transform: translateZ(85px) translateY(-190px) scale(1.03);
     box-shadow: 0 35px 70px -10px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.95), 0 0 35px rgba(56, 189, 248, 0.2);
   }
   100% {
-    transform: translateZ(75px) translateY(-10px) scale(1.02);
+    transform: translateZ(85px) translateY(-15px) scale(1.03);
     box-shadow: 
       0 40px 80px -10px rgba(0, 0, 0, 0.95),
       0 20px 35px rgba(0, 0, 0, 0.6),
@@ -296,22 +298,22 @@
 
 /* Ultra-smooth Reverse Tucking */
 .cardTucking .passCard {
-  animation: tuckCard 0.95s cubic-bezier(0.25, 1, 0.35, 1) forwards;
+  animation: tuckCard 1.05s cubic-bezier(0.25, 1, 0.35, 1) forwards;
   z-index: 100;
 }
 
 @keyframes tuckCard {
   0% {
-    transform: translateZ(75px) translateY(-10px) scale(1.02);
+    transform: translateZ(85px) translateY(-15px) scale(1.03);
     box-shadow: 0 40px 80px -10px rgba(0, 0, 0, 0.95), 0 20px 35px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.95);
   }
   38% {
-    transform: translateZ(75px) translateY(-115px) scale(1.02);
+    transform: translateZ(85px) translateY(-190px) scale(1.03);
     box-shadow: 0 35px 70px -10px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.95);
   }
   60% {
-    transform: translateZ(3px) translateY(-135px) scale(1);
-    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.85);
+    transform: translateZ(3px) translateY(-220px) scale(1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.85);
   }
   100% {
     transform: translateZ(2px) translateY(0) scale(1);
