@@ -47,7 +47,6 @@
       justify-content: space-between;
       align-items: center;
       padding: 14px 16px;
-      perspective: 2000px;
     }
 
     /* Top Status Header - Static Flex Item (Never Overlapped) */
@@ -159,6 +158,7 @@
       cursor: pointer;
       overflow: visible;
       will-change: transform, opacity;
+      touch-action: none;
     }
 
     .holder-wrap.entered {
@@ -318,6 +318,7 @@
       transform: translateZ(2px) translateY(0);
       will-change: transform;
       background: transparent;
+      touch-action: none;
     }
 
     /* Subtle vertical nudge when idle in pocket */
@@ -543,12 +544,16 @@
     }
 
     .holder-wrap.card-extracted .flip-affordance-hint {
+      /* opacity-only: this runs indefinitely while the card is extracted, so
+         animating background/border-color here meant a continuous repaint
+         for as long as the user looked at the card. Opacity is compositor-
+         only and gives the same "pulsing" read. */
       animation: pulseFlipHint 2s infinite ease-in-out;
     }
 
     @keyframes pulseFlipHint {
-      0%, 100% { background: rgba(56, 189, 248, 0.12); border-color: rgba(2, 132, 199, 0.35); }
-      50% { background: rgba(56, 189, 248, 0.25); border-color: #0284c7; }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.55; }
     }
 
     /* BACK SIDE (5 BACK FIELDS & EXECUTIVE DETAILS) */
@@ -689,16 +694,17 @@
 
     /* Transform-only: box-shadow is never animated here (kept static on the
        child faces) so the browser can composite this purely on the GPU
-       without repainting every frame. */
+       without repainting every frame. The Z depth also moves monotonically
+       (16px -> 4px, no up-then-down hump) -- a non-monotonic path made any
+       dropped frame look like a jump-cut, since the cover would visibly
+       reverse direction between two rendered frames. A single smooth sweep
+       degrades gracefully even if the device skips frames. */
     @keyframes openCoverFromFront {
       0% {
         transform: translateZ(16px) rotateY(0deg);
       }
-      38% {
-        transform: translateZ(80px) rotateY(-75deg);
-      }
-      72% {
-        transform: translateZ(50px) rotateY(-145deg);
+      50% {
+        transform: translateZ(10px) rotateY(-90deg);
       }
       100% {
         transform: translateZ(4px) rotateY(-180deg);
@@ -709,11 +715,8 @@
       0% {
         transform: translateZ(4px) rotateY(-180deg);
       }
-      38% {
-        transform: translateZ(50px) rotateY(-145deg);
-      }
-      72% {
-        transform: translateZ(80px) rotateY(-75deg);
+      50% {
+        transform: translateZ(10px) rotateY(-90deg);
       }
       100% {
         transform: translateZ(16px) rotateY(0deg);
@@ -1129,6 +1132,32 @@
       .holder-wrap.opened,
       .holder-wrap.card-extracted {
         transform: translateY(0) translateX(150px) scale(0.92);
+      }
+    }
+
+    /* Wide desktop: the holder stays a fixed 320x510px box, which leaves a
+       lot of dead space on large screens. Scale it up -- translateX is
+       scaled by the same factor so the two "open book" leaves keep the same
+       proportional gap (translateX runs in un-scaled px since it composes
+       after `scale` in the transform list, so it has to be re-tuned per
+       breakpoint). */
+    @media (min-width: 1440px) {
+      .holder-wrap.entered {
+        transform: translateY(0) scale(1.25);
+      }
+      .holder-wrap.opened,
+      .holder-wrap.card-extracted {
+        transform: translateY(0) translateX(200px) scale(1.25);
+      }
+    }
+
+    @media (min-width: 1920px) {
+      .holder-wrap.entered {
+        transform: translateY(0) scale(1.45);
+      }
+      .holder-wrap.opened,
+      .holder-wrap.card-extracted {
+        transform: translateY(0) translateX(232px) scale(1.45);
       }
     }
   </style>
@@ -1572,14 +1601,60 @@
       currentDeltaY = 0;
     }
 
-    holderWrap.addEventListener('click', (e) => {
+    // Unified tap-or-swipe handler for the holder itself: a plain tap opens/
+    // closes exactly like before, and on touch devices a vertical swipe does
+    // the same thing (swipe up opens, swipe down closes/tucks) so the
+    // interaction feels native on a phone instead of requiring a precise tap.
+    let holderIsDragging = false;
+    let holderStartY = 0;
+    let holderHasDragged = false;
+
+    function handleHolderPointerDown(e) {
       if (e.target.closest('#passCard') || e.target.closest('#coverBack')) return;
-      if (state === 'extracted') {
-        extractCard();
-      } else {
-        openHolder();
+      if (isAnimatingCard || isTransitioningHolder) return;
+
+      holderIsDragging = true;
+      holderStartY = e.clientY;
+      holderHasDragged = false;
+    }
+
+    function handleHolderPointerMove(e) {
+      if (!holderIsDragging) return;
+      const deltaY = holderStartY - e.clientY;
+      if (Math.abs(deltaY) > 8) {
+        holderHasDragged = true;
       }
-    });
+    }
+
+    function handleHolderPointerUp(e) {
+      if (!holderIsDragging) return;
+      holderIsDragging = false;
+      if (isAnimatingCard || isTransitioningHolder) return;
+
+      const deltaY = holderStartY - e.clientY;
+      const wasSwipe = holderHasDragged;
+
+      if (state === 'entered') {
+        // Tap, or a clear swipe up.
+        if (!wasSwipe || deltaY > 40) {
+          openHolder();
+        }
+      } else if (state === 'opened') {
+        // Tap, or a clear swipe down.
+        if (!wasSwipe || deltaY < -40) {
+          openHolder();
+        }
+      } else if (state === 'extracted') {
+        if (!wasSwipe || deltaY < -40) {
+          extractCard();
+        }
+      }
+    }
+
+    holderWrap.addEventListener('pointerdown', handleHolderPointerDown);
+    holderWrap.addEventListener('pointermove', handleHolderPointerMove);
+    holderWrap.addEventListener('pointerup', handleHolderPointerUp);
+    holderWrap.addEventListener('pointercancel', handleHolderPointerUp);
 
     passCard.addEventListener('pointerdown', handlePointerDown);
     passCard.addEventListener('pointermove', handlePointerMove);

@@ -53,6 +53,7 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
   const [isFlipped, setIsFlipped] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const dragInfo = useRef({ isDragging: false, startY: 0, currentDeltaY: 0, hasDragged: false });
+  const holderDragInfo = useRef({ isDragging: false, startY: 0, hasDragged: false });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -61,22 +62,53 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
     return () => clearTimeout(timer);
   }, []);
 
-  const handleHolderClick = (e: React.MouseEvent) => {
+  // Unified tap-or-swipe handler for the holder itself: a plain tap opens/
+  // closes exactly like before, and on touch devices a vertical swipe does
+  // the same thing (swipe up opens, swipe down closes/tucks) so the
+  // interaction feels native on a phone instead of requiring a precise tap.
+  const handleHolderPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest(`.${styles.passCard}`) || (e.target as HTMLElement).closest(`.${styles.coverBack}`)) {
       return;
     }
     if (stageState === 'extracting' || stageState === 'tucking' || stageState === 'closing') return;
 
+    holderDragInfo.current = { isDragging: true, startY: e.clientY, hasDragged: false };
+  };
+
+  const handleHolderPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!holderDragInfo.current.isDragging) return;
+    const deltaY = holderDragInfo.current.startY - e.clientY;
+    if (Math.abs(deltaY) > 8) {
+      holderDragInfo.current.hasDragged = true;
+    }
+  };
+
+  const handleHolderPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!holderDragInfo.current.isDragging) return;
+    holderDragInfo.current.isDragging = false;
+    if (stageState === 'extracting' || stageState === 'tucking' || stageState === 'closing') return;
+
+    const deltaY = holderDragInfo.current.startY - e.clientY;
+    const wasSwipe = holderDragInfo.current.hasDragged;
+
     if (stageState === 'entered') {
-      setStageState('opened');
-      setActiveTab('card');
+      // Tap, or a clear swipe up.
+      if (!wasSwipe || deltaY > 40) {
+        setStageState('opened');
+        setActiveTab('card');
+      }
     } else if (stageState === 'opened') {
-      setStageState('closing');
-      setTimeout(() => {
-        setStageState('entered');
-      }, COVER_CLOSE_DURATION);
+      // Tap, or a clear swipe down.
+      if (!wasSwipe || deltaY < -40) {
+        setStageState('closing');
+        setTimeout(() => {
+          setStageState('entered');
+        }, COVER_CLOSE_DURATION);
+      }
     } else if (stageState === 'extracted') {
-      triggerExtract();
+      if (!wasSwipe || deltaY < -40) {
+        triggerExtract();
+      }
     }
   };
 
@@ -245,7 +277,10 @@ export const InteractiveCardHolder: React.FC<InteractiveCardHolderProps> = ({
       <div className={styles.experienceStage}>
         <div
           className={getHolderClasses()}
-          onClick={handleHolderClick}
+          onPointerDown={handleHolderPointerDown}
+          onPointerMove={handleHolderPointerMove}
+          onPointerUp={handleHolderPointerUp}
+          onPointerCancel={handleHolderPointerUp}
           style={{
             '--card-extract-duration': `${CARD_EXTRACT_DURATION}ms`,
             '--card-tuck-duration': `${CARD_TUCK_DURATION}ms`,
